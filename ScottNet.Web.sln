@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.136
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ScottNet.Web", "ScottNet.Web\ScottNet.Web.csproj", "{BE12DD64-165A-4785-B0E8-F1EB20C32A32}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{BE12DD64-165A-4785-B0E8-F1EB20C32A32}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BE12DD64-165A-4785-B0E8-F1EB20C32A32}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BE12DD64-165A-4785-B0E8-F1EB20C32A32}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BE12DD64-165A-4785-B0E8-F1EB20C32A32}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {23A4C48E-5C10-4BAE-86B6-55993BE6D784}
+	EndGlobalSection
+EndGlobal
