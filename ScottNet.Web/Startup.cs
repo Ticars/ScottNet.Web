@@ -3,8 +3,12 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SpaServices.AngularCli;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using ScottNet.Data;
+using ScottNet.Web.AzureStorage;
+using AutoMapper;
 
 namespace ScottNet.Web
 {
@@ -20,13 +24,26 @@ namespace ScottNet.Web
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
-
+            services.AddDbContext<ScottDbContext>(cfg =>
+            {
+                cfg.UseSqlServer(Configuration.GetConnectionString("ScottConnectionString"));
+            });
             // In production, the Angular files will be served from this directory
             services.AddSpaStaticFiles(configuration =>
             {
                 configuration.RootPath = "ClientApp/dist";
             });
+
+            services.AddTransient<ScottDbSeeder>();
+            // services.AddScoped<ScottDataRepository, ScottDataRepository>();
+            services.AddScoped<IStorageService, StorageService>();
+            services.AddAutoMapper();
+            services.AddMvc()
+                .SetCompatibilityVersion(CompatibilityVersion.Version_2_2)
+                .AddJsonOptions(options =>
+                {
+                    options.SerializerSettings.DateTimeZoneHandling = Newtonsoft.Json.DateTimeZoneHandling.Local;
+                });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

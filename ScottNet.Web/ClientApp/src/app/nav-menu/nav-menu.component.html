@@ -1,7 +1,7 @@
 <header>
   <nav class='navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3'>
     <div class="container">
-      <a class="navbar-brand" [routerLink]='["/"]'>ScottNet.Web</a>
+      <a class="navbar-brand" [routerLink]='["/"]'>ScottNet</a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-label="Toggle navigation"
         [attr.aria-expanded]="isExpanded" (click)="toggle()">
         <span class="navbar-toggler-icon"></span>
@@ -12,10 +12,16 @@
             <a class="nav-link text-dark" [routerLink]='["/"]'>Home</a>
           </li>
           <li class="nav-item" [routerLinkActive]='["link-active"]'>
-            <a class="nav-link text-dark" [routerLink]='["/counter"]'>Counter</a>
+            <a class="nav-link text-dark" [routerLink]='["/weather"]'>Weather</a>
           </li>
           <li class="nav-item" [routerLinkActive]='["link-active"]'>
-            <a class="nav-link text-dark" [routerLink]='["/fetch-data"]'>Fetch data</a>
+            <a class="nav-link text-dark" [routerLink]='["/"]'>Movie reviews</a>
+          </li>
+          <li class="nav-item" [routerLinkActive]='["link-active"]'>
+            <a class="nav-link text-dark" [routerLink]='["/"]'>Recipes</a>
+          </li>
+          <li class="nav-item" [routerLinkActive]='["link-active"]'>
+            <a class="nav-link text-dark" [routerLink]='["/to-do"]'>In the works</a>
           </li>
         </ul>
       </div>

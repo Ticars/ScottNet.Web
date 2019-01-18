@@ -1,0 +1,7 @@
+<b>Weather</b>
+<div *ngIf="currentWeather != null">
+
+</div>
+<raw-weather [reading]="currentWeather"></raw-weather>
+<button (click)="updateReading()">Update</button>{{currentWeather.consoleTime | date: 'medium'}}
+

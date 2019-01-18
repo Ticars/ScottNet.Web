@@ -1,0 +1,30 @@
+export class WeatherReadingModel {
+  consoleTime: Date
+  barometerTrendCode: number
+  barometer: number
+  indoorTemp: number
+  indoorHumidity: number
+  outdoorHumidity: number
+  outdoorTemp: number
+  windDirection: number
+  windSpeed: number
+  windSpeed10M: number
+  windSpeed2M: number
+  windGustSpeed10M: number
+  windGustDirection10M: number
+  rainRate: number
+  rainStorm: number
+  rainDay: number
+  rainMonth: number
+  rainYear: number
+  rain15M: number
+  rain1H: number
+  dewPoint: number
+  heatIndex: number
+  windChill: number
+  forecastRain: boolean
+  forecastSnow: boolean
+  forecastCloudy: boolean
+  forecastSun: boolean
+  forecastPartlyCloudy: boolean
+}
