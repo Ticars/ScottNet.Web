@@ -5,7 +5,7 @@ import { WeatherDataService, WeatherReadingModel, CurrentWeatherService } from "
   templateUrl:'currentWeather.component.html'
 })
 export class CurrentWeather {
-  constructor(private currentWeatherService: CurrentWeatherService) {
+  constructor(public currentWeatherService: CurrentWeatherService) {
   }
   
   updateReading() {

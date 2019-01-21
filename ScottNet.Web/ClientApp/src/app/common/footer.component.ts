@@ -9,7 +9,7 @@ import { CurrentWeatherService } from "../shared";
 })
 export class SNFooter {
   toggleChecked: boolean
-  constructor(private curWeatherSvc: CurrentWeatherService) {
+  constructor(public curWeatherSvc: CurrentWeatherService) {
 
   }
   ngOnInit() {

@@ -14,6 +14,6 @@ import { Component, Input } from "@angular/core";
   selector: 'raw-weather'
 })
 export class RawWeather {
-  constructor(private currentWeatherService: CurrentWeatherService) {
+  constructor(public currentWeatherService: CurrentWeatherService) {
   }
 }

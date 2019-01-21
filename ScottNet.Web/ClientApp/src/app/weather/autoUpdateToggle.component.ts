@@ -8,7 +8,7 @@ import { CurrentWeatherService } from "../shared";
   selector: "auto-update"
 })
 export class AutoUpdateToggle {
-  constructor(private curWeatherSvc: CurrentWeatherService) {
+  constructor(public curWeatherSvc: CurrentWeatherService) {
 
   }
 
