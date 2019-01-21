@@ -1,11 +1,11 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations.Schema;
 
-
-namespace ScottNet.Data.Entities
+namespace ScottNet.Web.Data.Entities
 {
     public class WeatherReading
     {
+
         public int WeatherReadingId { get; set; }
         [Column(TypeName = "DateTime2(1)")]
         public DateTime ConsoleTime { get; set; }

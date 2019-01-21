@@ -13,6 +13,7 @@ var CurrentWeatherService = /** @class */ (function () {
         this.data = data;
         this.updaterId = -1;
         this.updates = 0;
+        this.dataRetrieved = new core_1.EventEmitter();
         this.currentReading = new weatherModels_1.WeatherReadingModel();
         this.updateReading();
         this.setAutoRefresh(true);
@@ -39,6 +40,7 @@ var CurrentWeatherService = /** @class */ (function () {
         console.log("Updating Current Weather");
         this.data.getCurrentReading().subscribe(function (data) {
             _this.currentReading = data;
+            _this.dataRetrieved.emit(_this.updates);
         });
     };
     CurrentWeatherService = __decorate([

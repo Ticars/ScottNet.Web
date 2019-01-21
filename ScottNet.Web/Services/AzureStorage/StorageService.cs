@@ -1,12 +1,10 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.WindowsAzure.Storage;
 using Microsoft.WindowsAzure.Storage.Table;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+using ScottNet.Web.Data.Entities;
 using System.Threading.Tasks;
 
-namespace ScottNet.Web.AzureStorage
+namespace ScottNet.Web.Services.AzureStorage
 {
     public class StorageService : IStorageService
     {

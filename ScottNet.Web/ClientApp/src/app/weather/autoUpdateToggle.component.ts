@@ -9,7 +9,16 @@ import { CurrentWeatherService } from "../shared";
 })
 export class AutoUpdateToggle {
   constructor(public curWeatherSvc: CurrentWeatherService) {
+  }
 
+  ngOnInit() {
+    this.curWeatherSvc.dataRetrieved.subscribe(updates => {
+      if (this.curWeatherSvc.updates % 60 === 0 && this.curWeatherSvc.isAutoRefresh()) {
+        this.curWeatherSvc.setAutoRefresh(false);
+        }
+      }
+    
+    );
   }
 
   toggled(event) {

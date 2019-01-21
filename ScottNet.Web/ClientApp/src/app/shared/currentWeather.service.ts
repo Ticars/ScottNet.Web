@@ -1,4 +1,4 @@
-import { Injectable, OnInit } from "@angular/core";
+import { Injectable, OnInit, EventEmitter } from "@angular/core";
 import { WeatherReadingModel } from "./weatherModels"
 import { WeatherDataService } from "./weatherData.service"
 import { Observable, of } from "rxjs";
@@ -8,6 +8,8 @@ export class CurrentWeatherService {
   public currentReading: WeatherReadingModel
   private updaterId: number = -1
   public updates: number = 0
+  dataRetrieved: EventEmitter<number> = new EventEmitter<number>();
+
   constructor(private data: WeatherDataService) {
     this.currentReading = new WeatherReadingModel()
     this.updateReading();
@@ -35,6 +37,7 @@ export class CurrentWeatherService {
     console.log("Updating Current Weather")
     this.data.getCurrentReading().subscribe(data => {
       this.currentReading = data;
+      this.dataRetrieved.emit(this.updates);
     });
   }
   

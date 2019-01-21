@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using ScottNet.Web.AzureStorage;
+using ScottNet.Web.Data.Entities;
 using ScottNet.Web.ViewModels;
 
 namespace ScottNet.Web

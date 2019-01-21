@@ -1,8 +1,16 @@
 
-<footer class="footer">
-  <div class="container">
-    <auto-update></auto-update>
-    <temperature [temperature]='curWeatherSvc.currentReading?.outdoorTemp'></temperature>
+<footer class="footer small">
+  <div class="row">
+    <span class="col-4">
+      <auto-update class="ml-4"></auto-update>
+    </span>
+    <span class="lastUpdate col-4">
+      <b>Updated:</b>
+      {{curWeatherSvc.currentReading?.consoleTime | date: 'shortTime'}}
+    </span>
+    <span class="col-4">
+      <temperature class=" mr-4 float-right" [temperature]='curWeatherSvc.currentReading?.outdoorTemp'></temperature>
+    </span>
   </div>
   </footer>
    

@@ -1,10 +1,7 @@
 ﻿using Microsoft.WindowsAzure.Storage.Table;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
-namespace ScottNet.Web.AzureStorage
+namespace ScottNet.Web.Data.Entities
 {
     public class WeatherReadingEntity : TableEntity
     {

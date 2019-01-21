@@ -6,9 +6,9 @@ using Microsoft.AspNetCore.SpaServices.AngularCli;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using ScottNet.Data;
-using ScottNet.Web.AzureStorage;
+using ScottNet.Web.Services.AzureStorage;
 using AutoMapper;
+using ScottNet.Web.Data;
 
 namespace ScottNet.Web
 {

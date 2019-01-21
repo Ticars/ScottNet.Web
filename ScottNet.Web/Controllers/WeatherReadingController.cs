@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using ScottNet.Web.AzureStorage;
+using ScottNet.Web.Services.AzureStorage;
 using ScottNet.Web.ViewModels;
 using System.Threading.Tasks;
 
