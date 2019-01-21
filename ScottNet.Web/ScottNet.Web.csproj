@@ -35,8 +35,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="ClientApp\src\app\common\footer.component.ts" />
+    <None Remove="ClientApp\src\app\common\index.ts" />
+    <None Remove="ClientApp\src\app\common\toggle.component.ts" />
+    <None Remove="ClientApp\src\app\shared\currentWeather.service.ts" />
     <None Remove="ClientApp\src\app\shared\index.ts" />
-    <None Remove="ClientApp\src\app\shared\weatherDataService.ts" />
+    <None Remove="ClientApp\src\app\shared\weatherData.service.ts" />
     <None Remove="ClientApp\src\app\shared\weatherModels.ts" />
     <None Remove="ClientApp\src\app\to-do\to-do.component.ts" />
     <None Remove="ClientApp\src\app\weather\currentWeather.component.ts" />
@@ -54,8 +58,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <TypeScriptCompile Include="ClientApp\src\app\common\footer.component.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\common\index.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\common\toggle.component.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\shared\currentWeather.service.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\shared\index.ts" />
-    <TypeScriptCompile Include="ClientApp\src\app\shared\weatherDataService.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\shared\weatherData.service.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\shared\weatherModels.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\to-do\to-do.component.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\weather\currentWeather.component.ts" />

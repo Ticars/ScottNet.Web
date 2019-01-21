@@ -7,17 +7,16 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
-var RawWeather = /** @class */ (function () {
-    function RawWeather(currentWeatherService) {
-        this.currentWeatherService = currentWeatherService;
+var ToDoComponent = /** @class */ (function () {
+    function ToDoComponent() {
     }
-    RawWeather = __decorate([
+    ToDoComponent = __decorate([
         core_1.Component({
-            template: "\n<div class=\"container small\">\n  <div  *ngFor=\"let item of currentWeatherService?.currentReading | keyvalue\">\n    <b>{{item.key}}</b>: {{item.value}}\n  </div>\n  <b>Updates</b>: {{currentWeatherService?.updates}}\n</div>\n  ",
-            selector: 'raw-weather'
+            selector: 'app-home',
+            templateUrl: './to-do.component.html'
         })
-    ], RawWeather);
-    return RawWeather;
+    ], ToDoComponent);
+    return ToDoComponent;
 }());
-exports.RawWeather = RawWeather;
-//# sourceMappingURL=rawWeather.component.js.map
+exports.ToDoComponent = ToDoComponent;
+//# sourceMappingURL=to-do.component.js.map

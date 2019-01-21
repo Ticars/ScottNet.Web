@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { CurrentWeatherService } from '../shared';
 
 @Component({
   selector: 'app-home',
@@ -6,4 +7,8 @@ import { Component } from '@angular/core';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent {
+  constructor(private currentWeather: CurrentWeatherService) {
+  }
+  ngOnInit() {
+  }
 }

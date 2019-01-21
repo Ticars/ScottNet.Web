@@ -5,4 +5,6 @@ function __export(m) {
 Object.defineProperty(exports, "__esModule", { value: true });
 __export(require("./currentWeather.component"));
 __export(require("./rawWeather.component"));
+__export(require("./autoUpdateToggle.component"));
+__export(require("./temperature.component"));
 //# sourceMappingURL=index.js.map

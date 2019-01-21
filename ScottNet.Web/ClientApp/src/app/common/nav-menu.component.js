@@ -7,17 +7,24 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
-var RawWeather = /** @class */ (function () {
-    function RawWeather(currentWeatherService) {
-        this.currentWeatherService = currentWeatherService;
+var NavMenuComponent = /** @class */ (function () {
+    function NavMenuComponent() {
+        this.isExpanded = false;
     }
-    RawWeather = __decorate([
+    NavMenuComponent.prototype.collapse = function () {
+        this.isExpanded = false;
+    };
+    NavMenuComponent.prototype.toggle = function () {
+        this.isExpanded = !this.isExpanded;
+    };
+    NavMenuComponent = __decorate([
         core_1.Component({
-            template: "\n<div class=\"container small\">\n  <div  *ngFor=\"let item of currentWeatherService?.currentReading | keyvalue\">\n    <b>{{item.key}}</b>: {{item.value}}\n  </div>\n  <b>Updates</b>: {{currentWeatherService?.updates}}\n</div>\n  ",
-            selector: 'raw-weather'
+            selector: 'app-nav-menu',
+            templateUrl: './nav-menu.component.html',
+            styleUrls: ['./nav-menu.component.css']
         })
-    ], RawWeather);
-    return RawWeather;
+    ], NavMenuComponent);
+    return NavMenuComponent;
 }());
-exports.RawWeather = RawWeather;
-//# sourceMappingURL=rawWeather.component.js.map
+exports.NavMenuComponent = NavMenuComponent;
+//# sourceMappingURL=nav-menu.component.js.map

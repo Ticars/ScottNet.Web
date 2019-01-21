@@ -5,11 +5,11 @@ import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 
 import { AppComponent } from './app.component';
-import { NavMenuComponent } from './nav-menu/nav-menu.component';
+import { NavMenuComponent, Toggler, SNFooter } from './common/index';
 import { HomeComponent } from './home/home.component';
 import { ToDoComponent } from './to-do/to-do.component';
-import { WeatherDataService } from './shared/index'
-import { CurrentWeather, RawWeather } from './weather/index'
+import { WeatherDataService, CurrentWeatherService } from './shared/index'
+import { CurrentWeather, RawWeather, AutoUpdateToggle, Temperature } from './weather/index'
 
 
 @NgModule({
@@ -19,7 +19,12 @@ import { CurrentWeather, RawWeather } from './weather/index'
     HomeComponent,
     ToDoComponent,
     CurrentWeather,
-    RawWeather
+    RawWeather,
+    Toggler,
+    SNFooter,
+    AutoUpdateToggle,
+    Temperature
+
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -32,7 +37,8 @@ import { CurrentWeather, RawWeather } from './weather/index'
     ])
   ],
   providers: [
-    WeatherDataService
+    WeatherDataService,
+    CurrentWeatherService
   ],
   bootstrap: [AppComponent]
 })

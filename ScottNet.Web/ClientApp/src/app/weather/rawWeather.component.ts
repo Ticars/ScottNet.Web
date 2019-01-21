@@ -1,15 +1,19 @@
-import { WeatherReadingModel } from "../shared";
+import { WeatherReadingModel, CurrentWeatherService } from "../shared";
 import { Component, Input } from "@angular/core";
 
 
 @Component({
   template: `
-<div class="container small"  *ngFor="let item of reading | keyvalue">
-  <b>{{item.key}}</b>: {{item.value}}
+<div class="container small">
+  <div  *ngFor="let item of currentWeatherService?.currentReading | keyvalue">
+    <b>{{item.key}}</b>: {{item.value}}
+  </div>
+  <b>Updates</b>: {{currentWeatherService?.updates}}
 </div>
   `,
   selector: 'raw-weather'
 })
 export class RawWeather {
-  @Input() reading: WeatherReadingModel
+  constructor(private currentWeatherService: CurrentWeatherService) {
+  }
 }

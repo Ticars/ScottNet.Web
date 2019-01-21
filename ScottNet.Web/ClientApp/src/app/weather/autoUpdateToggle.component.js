@@ -7,17 +7,20 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
-var RawWeather = /** @class */ (function () {
-    function RawWeather(currentWeatherService) {
-        this.currentWeatherService = currentWeatherService;
+var AutoUpdateToggle = /** @class */ (function () {
+    function AutoUpdateToggle(curWeatherSvc) {
+        this.curWeatherSvc = curWeatherSvc;
     }
-    RawWeather = __decorate([
+    AutoUpdateToggle.prototype.toggled = function (event) {
+        this.curWeatherSvc.setAutoRefresh(event);
+    };
+    AutoUpdateToggle = __decorate([
         core_1.Component({
-            template: "\n<div class=\"container small\">\n  <div  *ngFor=\"let item of currentWeatherService?.currentReading | keyvalue\">\n    <b>{{item.key}}</b>: {{item.value}}\n  </div>\n  <b>Updates</b>: {{currentWeatherService?.updates}}\n</div>\n  ",
-            selector: 'raw-weather'
+            template: "\n  <toggle text=\"Auto Update\" [checked]=\"curWeatherSvc.isAutoRefresh()\" (changed)=\"toggled($event)\" ></toggle>\n",
+            selector: "auto-update"
         })
-    ], RawWeather);
-    return RawWeather;
+    ], AutoUpdateToggle);
+    return AutoUpdateToggle;
 }());
-exports.RawWeather = RawWeather;
-//# sourceMappingURL=rawWeather.component.js.map
+exports.AutoUpdateToggle = AutoUpdateToggle;
+//# sourceMappingURL=autoUpdateToggle.component.js.map

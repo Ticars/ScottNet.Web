@@ -7,17 +7,30 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
-var RawWeather = /** @class */ (function () {
-    function RawWeather(currentWeatherService) {
-        this.currentWeatherService = currentWeatherService;
+var Toggler = /** @class */ (function () {
+    function Toggler() {
+        this.changed = new core_1.EventEmitter();
     }
-    RawWeather = __decorate([
+    Toggler.prototype.toggled = function (value) {
+        this.changed.emit(value);
+    };
+    __decorate([
+        core_1.Input()
+    ], Toggler.prototype, "checked", void 0);
+    __decorate([
+        core_1.Input()
+    ], Toggler.prototype, "text", void 0);
+    __decorate([
+        core_1.Output()
+    ], Toggler.prototype, "changed", void 0);
+    Toggler = __decorate([
         core_1.Component({
-            template: "\n<div class=\"container small\">\n  <div  *ngFor=\"let item of currentWeatherService?.currentReading | keyvalue\">\n    <b>{{item.key}}</b>: {{item.value}}\n  </div>\n  <b>Updates</b>: {{currentWeatherService?.updates}}\n</div>\n  ",
-            selector: 'raw-weather'
+            templateUrl: './toggle.component.html',
+            selector: 'toggle',
+            styleUrls: ['./toggle.component.css']
         })
-    ], RawWeather);
-    return RawWeather;
+    ], Toggler);
+    return Toggler;
 }());
-exports.RawWeather = RawWeather;
-//# sourceMappingURL=rawWeather.component.js.map
+exports.Toggler = Toggler;
+//# sourceMappingURL=toggle.component.js.map

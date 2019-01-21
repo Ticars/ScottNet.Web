@@ -7,7 +7,6 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
-var operators_1 = require("rxjs/operators");
 var WeatherDataService = /** @class */ (function () {
     function WeatherDataService(http) {
         this.http = http;
@@ -15,19 +14,10 @@ var WeatherDataService = /** @class */ (function () {
     WeatherDataService.prototype.getCurrentReading = function () {
         return this.http.get('/api/WeatherReading/Current');
     };
-    WeatherDataService.prototype.getCurrentReadingLegacy = function () {
-        var _this = this;
-        return this.http.get('/api/WeatherReading/Current')
-            .pipe(operators_1.map(function (data) {
-            console.log("Data retrieved");
-            _this.currentWeather = data;
-            return true;
-        }));
-    };
     WeatherDataService = __decorate([
         core_1.Injectable()
     ], WeatherDataService);
     return WeatherDataService;
 }());
 exports.WeatherDataService = WeatherDataService;
-//# sourceMappingURL=weatherDataService.js.map
+//# sourceMappingURL=weatherData.service.js.map
