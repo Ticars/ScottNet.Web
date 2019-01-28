@@ -1,0 +1,70 @@
+
+.compass {
+  width: 120px;
+  height: 120px;
+  background-image: url('/imgs/compass2.jpg');
+  position: relative;
+  background-size: 100% auto;
+}
+
+.hiddenArrow {
+  width: 5px;
+  height: 5%;
+  position: absolute;
+  background-color: transparent;
+}
+
+.visibleArrow {
+  background-color: brown;
+  top: 8%;
+  width: 3px;
+  height: 22%;
+  position: absolute;
+}
+
+.arrow {
+  width: 3px;
+  height: 95%;
+  background-color: transparent;
+  position: absolute;
+  top: 3%;
+  left: 50%;
+  -moz-transition: all 1s ease;
+  -webkit-transition: all 1s ease;
+  -o-transition: all 1s ease;
+  transition: all 1s ease;
+}
+
+.speed {
+  margin: 0;
+  background-color: white;
+  font-family: Sans-serif;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-right: -50%;
+  transform: translate(-50%, -50%);
+  font-size: 22px;
+  z-index: 100;
+  color: brown;
+}
+
+  .speed span {
+    font-size: 9px;
+    color: brown;
+  }
+
+.visibleArrow:after {
+  position: absolute;
+  border-top: 3px solid transparent;
+  border-bottom: 3px solid transparent;
+  border-left: 3px solid brown;
+  -webkit-transform: rotate(270deg);
+  -moz-transform: rotate(270deg);
+  -o-transform: rotate(270deg);
+  -ms-transform: rotate(270deg);
+  width: 0;
+  height: 0;
+  top: -4px;
+  content: "";
+}

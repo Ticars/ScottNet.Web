@@ -16,8 +16,16 @@ namespace ScottNet.Web.Services.AzureStorage
             _storageAccount = CloudStorageAccount.Parse(config.GetConnectionString("StorageKey"));
             _tableClient = _storageAccount.CreateCloudTableClient();
         }
-       
-        
+
+        public async Task AddUpdateCurrentWeather(WeatherReadingEntity weather)
+        {
+            CloudTable table = _tableClient.GetTableReference(WEATHER_TABLE);
+            TableOperation insertOrReplaceOperation = TableOperation.InsertOrReplace(weather);
+
+            var result = await table.ExecuteAsync(insertOrReplaceOperation);
+        }
+
+
         public async Task<WeatherReadingEntity> GetCurrentWeatherAsync()
         {
             CloudTable table = _tableClient.GetTableReference(WEATHER_TABLE);

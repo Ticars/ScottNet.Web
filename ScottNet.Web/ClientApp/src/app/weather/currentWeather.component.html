@@ -1,5 +1,34 @@
 <b>Weather</b>
 
-<raw-weather></raw-weather>
+<div class="row">
+  <div class="card col-lg-4">
+    <div class="card-body">
+      <h3 class="card-title">Indoor</h3>
+      <div class="card-text">
+        <temp-humidty [humTemp]="currentReading?.getOutdoorWeather()"></temp-humidty>
+      </div>
+    </div>
+  </div>
 
 
+  <div class="card col-lg-4">
+    <div class="card-body">
+      <h3 class="card-title">Indoor</h3>
+      <div class="card-text"><temp-humidty [humTemp]="currentReading?.getIndoorWeather()"></temp-humidty></div>
+    </div>
+  </div>
+  </div>
+<div class="row">
+  <div class="card col-lg-4">
+    <div class="card-body">
+      <h3 class="card-title">Wind</h3>
+      <div class="card-text"><wind-vane [windSpeed]="currentReading?.windSpeed" [windDirection]="currentReading?.windDirection"></wind-vane> </div>
+    </div>
+  </div>
+  <div class="card col-lg-4">
+    <div class="card-body">
+      <h3 class="card-title">Rain</h3>
+      <div class="card-text"><rain-summary [rain]="currentReading?.getRainData()"></rain-summary> </div>
+    </div>
+  </div>
+  </div>

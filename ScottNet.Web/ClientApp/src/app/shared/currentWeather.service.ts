@@ -1,19 +1,26 @@
 import { Injectable, OnInit, EventEmitter } from "@angular/core";
 import { WeatherReadingModel } from "./weatherModels"
 import { WeatherDataService } from "./weatherData.service"
-import { Observable, of } from "rxjs";
+import { Observable, of, BehaviorSubject } from "rxjs";
 
 @Injectable()
 export class CurrentWeatherService {
-  public currentReading: WeatherReadingModel
+  private dataStore: { currentReading: WeatherReadingModel,  updates: number }
   private updaterId: number = -1
-  public updates: number = 0
-  dataRetrieved: EventEmitter<number> = new EventEmitter<number>();
+  private _weatherReading: BehaviorSubject<WeatherReadingModel>;
+  public weatherReading: Observable<WeatherReadingModel>
+  public dataRetrieved: EventEmitter<number> = new EventEmitter<number>();
+
 
   constructor(private data: WeatherDataService) {
-    this.currentReading = new WeatherReadingModel()
-    this.updateReading();
+    this.dataStore = { currentReading: null, updates: 0 }
+    this._weatherReading = <BehaviorSubject<WeatherReadingModel>>new BehaviorSubject(this.dataStore.currentReading);
+    this.weatherReading = this._weatherReading.asObservable();
     this.setAutoRefresh(true);
+  }
+
+  get updates():number {
+    return this.dataStore.updates
   }
 
   setAutoRefresh(refresh: boolean) {
@@ -33,12 +40,16 @@ export class CurrentWeatherService {
   }
 
   updateReading() {
-    this.updates++
     console.log("Updating Current Weather")
     this.data.getCurrentReading().subscribe(data => {
-      this.currentReading = data;
-      this.dataRetrieved.emit(this.updates);
+      this.dataStore.currentReading = data;
+      this.dataStore.updates++
+
+      this._weatherReading.next(Object.assign({}, this.dataStore).currentReading);
+      this.dataRetrieved.emit(this.dataStore.updates)
     });
   }
+
+
   
 }

@@ -7,12 +7,15 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
+var operators_1 = require("rxjs/operators");
+var weatherModels_1 = require("./weatherModels");
 var WeatherDataService = /** @class */ (function () {
     function WeatherDataService(http) {
         this.http = http;
     }
     WeatherDataService.prototype.getCurrentReading = function () {
-        return this.http.get('/api/WeatherReading/Current');
+        return this.http.get('/api/WeatherReading/Current')
+            .pipe(operators_1.map(function (res) { return new weatherModels_1.WeatherReadingModel(res); }));
     };
     WeatherDataService = __decorate([
         core_1.Injectable()

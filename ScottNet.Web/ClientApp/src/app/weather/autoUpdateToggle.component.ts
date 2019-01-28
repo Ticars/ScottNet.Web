@@ -13,7 +13,7 @@ export class AutoUpdateToggle {
 
   ngOnInit() {
     this.curWeatherSvc.dataRetrieved.subscribe(updates => {
-      if (this.curWeatherSvc.updates % 60 === 0 && this.curWeatherSvc.isAutoRefresh()) {
+      if (updates % 60 === 0 && this.curWeatherSvc.isAutoRefresh()) {
         this.curWeatherSvc.setAutoRefresh(false);
         }
       }

@@ -14,7 +14,7 @@ var AutoUpdateToggle = /** @class */ (function () {
     AutoUpdateToggle.prototype.ngOnInit = function () {
         var _this = this;
         this.curWeatherSvc.dataRetrieved.subscribe(function (updates) {
-            if (_this.curWeatherSvc.updates % 60 === 0 && _this.curWeatherSvc.isAutoRefresh()) {
+            if (updates % 60 === 0 && _this.curWeatherSvc.isAutoRefresh()) {
                 _this.curWeatherSvc.setAutoRefresh(false);
             }
         });

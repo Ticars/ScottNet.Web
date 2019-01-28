@@ -5,11 +5,15 @@ import { WeatherDataService, WeatherReadingModel, CurrentWeatherService } from "
   templateUrl:'currentWeather.component.html'
 })
 export class CurrentWeather {
+  currentReading: WeatherReadingModel
   constructor(public currentWeatherService: CurrentWeatherService) {
   }
-  
-  updateReading() {
-    this.currentWeatherService.updateReading();
+  ngOnInit() {
+    this.currentWeatherService.weatherReading.subscribe(wr => {
+      this.currentReading = wr
+    });
   }
+  
+  
   
 }

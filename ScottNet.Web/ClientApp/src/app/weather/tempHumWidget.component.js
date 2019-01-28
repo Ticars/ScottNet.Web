@@ -7,22 +7,21 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
-var CurrentWeather = /** @class */ (function () {
-    function CurrentWeather(currentWeatherService) {
-        this.currentWeatherService = currentWeatherService;
+var TempHumWidget = /** @class */ (function () {
+    function TempHumWidget(currentWeather) {
+        this.currentWeather = currentWeather;
     }
-    CurrentWeather.prototype.ngOnInit = function () {
-        var _this = this;
-        this.currentWeatherService.weatherReading.subscribe(function (wr) {
-            _this.currentReading = wr;
-        });
-    };
-    CurrentWeather = __decorate([
+    __decorate([
+        core_1.Input()
+    ], TempHumWidget.prototype, "humTemp", void 0);
+    TempHumWidget = __decorate([
         core_1.Component({
-            templateUrl: 'currentWeather.component.html'
+            selector: 'temp-humidty',
+            template: "\n    <div class='temp-hum'><temperature temperature={{humTemp?.temperature}}></temperature> / {{humTemp?.humidity}}%</div>\n",
+            styles: ['.temp-hum: {font-size:22px;}']
         })
-    ], CurrentWeather);
-    return CurrentWeather;
+    ], TempHumWidget);
+    return TempHumWidget;
 }());
-exports.CurrentWeather = CurrentWeather;
-//# sourceMappingURL=currentWeather.component.js.map
+exports.TempHumWidget = TempHumWidget;
+//# sourceMappingURL=tempHumWidget.component.js.map

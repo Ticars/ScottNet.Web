@@ -16,5 +16,7 @@ html {
 .box-shadow {
   box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
 }
-
-
+.img-header {
+  width: 50px;
+  margin-right:5px;
+}

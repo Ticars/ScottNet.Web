@@ -22,6 +22,8 @@ namespace ScottNet.Web.Controllers
             _mapper = mapper;
         }
 
+
+
         [HttpGet("[action]")]
         public async Task<ActionResult<WeatherReadingViewModel>> Current()
         {

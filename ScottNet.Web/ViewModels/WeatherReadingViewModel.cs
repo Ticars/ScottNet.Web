@@ -27,6 +27,7 @@ namespace ScottNet.Web.ViewModels
         public double RainYear { get; set; }
         public double Rain15M { get; set; }
         public double Rain1H { get; set; }
+        public double Rain24H { get; set; }
         public int DewPoint { get; set; }
         public int HeatIndex { get; set; }
         public int WindChill { get; set; }

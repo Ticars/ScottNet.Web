@@ -9,7 +9,7 @@ import { NavMenuComponent, Toggler, SNFooter } from './common/index';
 import { HomeComponent } from './home/home.component';
 import { ToDoComponent } from './to-do/to-do.component';
 import { WeatherDataService, CurrentWeatherService } from './shared/index'
-import { CurrentWeather, RawWeather, AutoUpdateToggle, Temperature } from './weather/index'
+import { CurrentWeather, RawWeather, AutoUpdateToggle, Temperature, TempHumWidget, WindVane, RainSummary } from './weather/index'
 
 
 @NgModule({
@@ -23,7 +23,10 @@ import { CurrentWeather, RawWeather, AutoUpdateToggle, Temperature } from './wea
     Toggler,
     SNFooter,
     AutoUpdateToggle,
-    Temperature
+    Temperature,
+    TempHumWidget,
+    WindVane,
+    RainSummary
 
   ],
   imports: [
@@ -34,6 +37,8 @@ import { CurrentWeather, RawWeather, AutoUpdateToggle, Temperature } from './wea
       { path: '', component: HomeComponent, pathMatch: 'full' },
       { path: 'to-do', component: ToDoComponent },
       { path: 'weather', component: CurrentWeather },
+      { path: 'rawweather', component: RawWeather },
+
     ])
   ],
   providers: [

@@ -1,5 +1,5 @@
 import { Component } from "@angular/core";
-import { CurrentWeatherService } from "../shared";
+import { CurrentWeatherService, WeatherReadingModel } from "../shared";
 
 @Component({
   templateUrl: './footer.component.html',
@@ -9,11 +9,15 @@ import { CurrentWeatherService } from "../shared";
 })
 export class SNFooter {
   toggleChecked: boolean
+  currentReading: WeatherReadingModel
   constructor(public curWeatherSvc: CurrentWeatherService) {
 
   }
   ngOnInit() {
-    this.toggleChecked=true
+    this.toggleChecked = true
+    this.curWeatherSvc.weatherReading.subscribe(cw => {
+      this.currentReading = cw
+    })
   }
 
   toggled(event:any): void {

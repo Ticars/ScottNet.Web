@@ -11,9 +11,13 @@ var RawWeather = /** @class */ (function () {
     function RawWeather(currentWeatherService) {
         this.currentWeatherService = currentWeatherService;
     }
+    RawWeather.prototype.ngOnInit = function () {
+        var _this = this;
+        this.currentWeatherService.weatherReading.subscribe(function (wr) { return _this.currentReading = wr; });
+    };
     RawWeather = __decorate([
         core_1.Component({
-            template: "\n<div class=\"container small\">\n  <div  *ngFor=\"let item of currentWeatherService?.currentReading | keyvalue\">\n    <b>{{item.key}}</b>: {{item.value}}\n  </div>\n  <b>Updates</b>: {{currentWeatherService?.updates}}\n</div>\n  ",
+            template: "\n<div class=\"container small\">\n  <div  *ngFor=\"let item of currentReading | keyvalue\">\n    <b>{{item.key}}</b>: {{item.value}}\n  </div>\n  <b>Updates</b>: {{currentWeatherService.updates}}\n</div>\n  ",
             selector: 'raw-weather'
         })
     ], RawWeather);

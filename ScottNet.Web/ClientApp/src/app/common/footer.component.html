@@ -6,10 +6,10 @@
     </span>
     <span class="lastUpdate col-4">
       <b>Updated:</b>
-      {{curWeatherSvc.currentReading?.consoleTime | date: 'shortTime'}}
+      {{currentReading?.consoleTime | date: 'shortTime'}}
     </span>
     <span class="col-4">
-      <temperature class=" mr-4 float-right" [temperature]='curWeatherSvc.currentReading?.outdoorTemp'></temperature>
+      <temperature class=" mr-4 float-right" [temperature]='currentReading?.outdoorTemp'></temperature>
     </span>
   </div>
   </footer>

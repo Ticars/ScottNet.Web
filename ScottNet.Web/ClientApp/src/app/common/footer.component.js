@@ -12,7 +12,11 @@ var SNFooter = /** @class */ (function () {
         this.curWeatherSvc = curWeatherSvc;
     }
     SNFooter.prototype.ngOnInit = function () {
+        var _this = this;
         this.toggleChecked = true;
+        this.curWeatherSvc.weatherReading.subscribe(function (cw) {
+            _this.currentReading = cw;
+        });
     };
     SNFooter.prototype.toggled = function (event) {
         console.log(event);

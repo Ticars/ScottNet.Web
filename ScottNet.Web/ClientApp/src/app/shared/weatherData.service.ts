@@ -7,12 +7,12 @@ import { WeatherReadingModel } from "./weatherModels";
 
 @Injectable()
 export class WeatherDataService {
-  public currentWeather: WeatherReadingModel
   constructor(private http: HttpClient) {
   }
 
   getCurrentReading(): Observable<WeatherReadingModel> {
-    return this.http.get<WeatherReadingModel>('/api/WeatherReading/Current');
+    return this.http.get<WeatherReadingModel>('/api/WeatherReading/Current')
+      .pipe(map(res => new WeatherReadingModel(res)));  
   }
 
  
