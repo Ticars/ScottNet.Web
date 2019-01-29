@@ -33,6 +33,13 @@ namespace ScottNet.Web.Services
             return await _ctx.BarometricTrends.FirstOrDefaultAsync(bt => bt.Code == code);
         }
 
+        public async Task<WeatherReading> GetMostRecentReading()
+        {
+            return await _ctx.WeatherReadings
+                .OrderByDescending(r => r.ConsoleTime)
+                .FirstOrDefaultAsync();
+        }
+
         public async Task<WeatherReading> GetWeatherReadingAsync(int id)
         {
             return await _ctx.WeatherReadings

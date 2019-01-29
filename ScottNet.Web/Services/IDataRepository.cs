@@ -7,6 +7,7 @@ namespace ScottNet.Web.Services
     {
         Task<BarometricTrend> GetBarometricTrendByCodeAsync(short code);
         Task<WeatherReading> GetWeatherReadingAsync(int id);
+        Task<WeatherReading> GetMostRecentReading();
 
 
 
