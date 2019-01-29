@@ -9,5 +9,6 @@ namespace ScottNet.Web.Data
         { }
 
         public DbSet<WeatherReading> WeatherReadings { get; set; }
+        public DbSet<BarometricTrend> BarometricTrends { get; set; }
     }
 }

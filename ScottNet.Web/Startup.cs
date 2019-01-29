@@ -9,6 +9,7 @@ using Microsoft.Extensions.DependencyInjection;
 using ScottNet.Web.Services.AzureStorage;
 using AutoMapper;
 using ScottNet.Web.Data;
+using ScottNet.Web.Services;
 
 namespace ScottNet.Web
 {
@@ -35,7 +36,7 @@ namespace ScottNet.Web
             });
 
             services.AddTransient<ScottDbSeeder>();
-            // services.AddScoped<ScottDataRepository, ScottDataRepository>();
+            services.AddScoped<IDataRepository, DataRepository>();
             services.AddScoped<IStorageService, StorageService>();
             services.AddAutoMapper();
             services.AddMvc()

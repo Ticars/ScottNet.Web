@@ -12,10 +12,12 @@
     <BuildServerSideRenderer>false</BuildServerSideRenderer>
     <UserSecretsId>597dc2ff-1674-487c-baf2-22e62ff0f3e4</UserSecretsId>
     <TypeScriptExperimentalDecorators>true</TypeScriptExperimentalDecorators>
-    <Version>1.0.3</Version>
+    <Version>1.0.4</Version>
     <Authors>Scott Ticar</Authors>
     <Company>ticar.org</Company>
     <Product>Scott Ticar Net</Product>
+    <AssemblyVersion>1.0.4.0</AssemblyVersion>
+    <FileVersion>1.0.4.0</FileVersion>
     
   </PropertyGroup>
 
@@ -33,6 +35,11 @@
     <Content Remove="$(SpaRoot)**" />
     <None Remove="$(SpaRoot)**" />
     <None Include="$(SpaRoot)**" Exclude="$(SpaRoot)node_modules\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Remove="Data\Migrations\20190128162355_BarometricTrends.cs" />
+    <Compile Remove="Data\Migrations\20190128162355_BarometricTrends.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

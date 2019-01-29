@@ -3,15 +3,15 @@ using System;
 
 namespace ScottNet.Web.Data.Entities
 {
-    public class WeatherReadingEntity : TableEntity
+    public class WeatherReadingStorageEntity : TableEntity
     {
         public const string PARTITION_KEY = "Main";
         public const string ROW_KEY = "CURRENT_WEATHER";
-        public WeatherReadingEntity(string partitionKey, string rowKey) : base(partitionKey, rowKey)
+        public WeatherReadingStorageEntity(string partitionKey, string rowKey) : base(partitionKey, rowKey)
         {
         }
 
-        public WeatherReadingEntity() : base(PARTITION_KEY, ROW_KEY)
+        public WeatherReadingStorageEntity() : base(PARTITION_KEY, ROW_KEY)
         {
 
         }

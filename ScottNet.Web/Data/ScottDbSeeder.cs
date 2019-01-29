@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Hosting;
+using ScottNet.Web.Data.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,11 +19,33 @@ namespace ScottNet.Web.Data
             _hosting = hosting;
         }
 
-        public Task SeedAsync()
+        public async Task SeedAsync()
         {
             _ctx.Database.EnsureCreated();
-            return Task.CompletedTask;
+            
+            
+            await AddBarometericTrendAsync(1, -60, "Falling Rapidly");
+            await AddBarometericTrendAsync(2, -20, "Falling Slowly");
+            await AddBarometericTrendAsync(3, 0, "Steady");
+            await AddBarometericTrendAsync(4, 20, "Rising Slowly");
+            await AddBarometericTrendAsync(5, 60, "Rising Rapidly");
+            
+            await _ctx.SaveChangesAsync();
+        }
 
+        private async Task AddBarometericTrendAsync(short id, short code, string title)
+        {
+            if (!_ctx.BarometricTrends.Any(bt => bt.Id == id || bt.Code == code))
+            {
+                var trend = new BarometricTrend()
+                {
+                    Id = id,
+                    Code = code,
+                    Title = title
+                };
+                await _ctx.BarometricTrends.AddAsync(trend);
+            }
+            
         }
     }
 }

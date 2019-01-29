@@ -6,7 +6,7 @@ namespace ScottNet.Web.Data.Entities
     public class WeatherReading
     {
 
-        public int WeatherReadingId { get; set; }
+        public int Id { get; set; }
         [Column(TypeName = "DateTime2(1)")]
         public DateTime ConsoleTime { get; set; }
         public BarometricTrend BarometricTrend { get; set; }

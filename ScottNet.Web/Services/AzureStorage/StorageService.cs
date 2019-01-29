@@ -17,7 +17,7 @@ namespace ScottNet.Web.Services.AzureStorage
             _tableClient = _storageAccount.CreateCloudTableClient();
         }
 
-        public async Task AddUpdateCurrentWeather(WeatherReadingEntity weather)
+        public async Task AddUpdateCurrentWeather(WeatherReadingStorageEntity weather)
         {
             CloudTable table = _tableClient.GetTableReference(WEATHER_TABLE);
             TableOperation insertOrReplaceOperation = TableOperation.InsertOrReplace(weather);
@@ -26,15 +26,15 @@ namespace ScottNet.Web.Services.AzureStorage
         }
 
 
-        public async Task<WeatherReadingEntity> GetCurrentWeatherAsync()
+        public async Task<WeatherReadingStorageEntity> GetCurrentWeatherAsync()
         {
             CloudTable table = _tableClient.GetTableReference(WEATHER_TABLE);
 
             // Create a retrieve operation that takes a customer entity.
-            TableOperation retrieveOperation = TableOperation.Retrieve<WeatherReadingEntity>(WeatherReadingEntity.PARTITION_KEY, WeatherReadingEntity.ROW_KEY);
+            TableOperation retrieveOperation = TableOperation.Retrieve<WeatherReadingStorageEntity>(WeatherReadingStorageEntity.PARTITION_KEY, WeatherReadingStorageEntity.ROW_KEY);
 
             TableResult retrievedResult = await table.ExecuteAsync(retrieveOperation);
-            return (WeatherReadingEntity)retrievedResult.Result;
+            return (WeatherReadingStorageEntity)retrievedResult.Result;
         }
     }
 }
