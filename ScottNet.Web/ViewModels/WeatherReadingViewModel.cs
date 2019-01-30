@@ -36,5 +36,6 @@ namespace ScottNet.Web.ViewModels
         public bool ForecastCloudy { get; set; }
         public bool ForecastSun { get; set; }
         public bool ForecastPartlyCloudy { get; set; }
+        public bool IsFromMemory { get; set; }
     }
 }

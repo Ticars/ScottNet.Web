@@ -38,6 +38,7 @@ namespace ScottNet.Web
             services.AddTransient<ScottDbSeeder>();
             services.AddScoped<IDataRepository, DataRepository>();
             services.AddScoped<IStorageService, StorageService>();
+            services.AddSingleton<ICurrentWeatherStore, CurrentWeatherStore>();
             services.AddAutoMapper();
             services.AddMvc()
                 .SetCompatibilityVersion(CompatibilityVersion.Version_2_2)

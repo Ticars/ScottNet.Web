@@ -31,6 +31,7 @@ export class WeatherReadingModel {
   forecastCloudy: boolean
   forecastSun: boolean
   forecastPartlyCloudy: boolean
+  isFromMemory:boolean
   getOutdoorWeather(): ITemperatureHumidity {
     return {
       temperature: this.outdoorTemp,
