@@ -32,8 +32,12 @@
 
   <ItemGroup>
     <!-- Don't publish the SPA source files, but do show them in the project files list -->
+    <Compile Remove="ClientApp\src\app\to-do\**" />
     <Content Remove="$(SpaRoot)**" />
+    <Content Remove="ClientApp\src\app\to-do\**" />
+    <EmbeddedResource Remove="ClientApp\src\app\to-do\**" />
     <None Remove="$(SpaRoot)**" />
+    <None Remove="ClientApp\src\app\to-do\**" />
     <None Include="$(SpaRoot)**" Exclude="$(SpaRoot)node_modules\**" />
   </ItemGroup>
 
@@ -50,13 +54,13 @@
     <None Remove="ClientApp\src\app\shared\index.ts" />
     <None Remove="ClientApp\src\app\shared\weatherData.service.ts" />
     <None Remove="ClientApp\src\app\shared\weatherModels.ts" />
-    <None Remove="ClientApp\src\app\to-do\to-do.component.ts" />
     <None Remove="ClientApp\src\app\weather\currentWeather.component.ts" />
     <None Remove="ClientApp\src\app\weather\index.ts" />
     <None Remove="ClientApp\src\app\weather\rawWeather.component.ts" />
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="ClientApp\src\app\home\" />
     <Folder Include="wwwroot\imgs\" />
   </ItemGroup>
 
@@ -68,10 +72,9 @@
     <TypeScriptCompile Include="ClientApp\src\app\shared\index.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\shared\weatherData.service.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\shared\weatherModels.ts" />
-    <TypeScriptCompile Include="ClientApp\src\app\to-do\to-do.component.ts" />
-    <TypeScriptCompile Include="ClientApp\src\app\weather\currentWeather.component.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\weather\currentWeather\currentWeather.component.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\weather\index.ts" />
-    <TypeScriptCompile Include="ClientApp\src\app\weather\rawWeather.component.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\weather\rawWeather\rawWeather.component.ts" />
   </ItemGroup>
 
   <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">

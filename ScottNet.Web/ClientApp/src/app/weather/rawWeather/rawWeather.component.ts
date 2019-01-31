@@ -1,4 +1,4 @@
-import { WeatherReadingModel, CurrentWeatherService } from "../shared";
+import { WeatherReadingModel, CurrentWeatherService } from "../../shared";
 import { Component, Input } from "@angular/core";
 
 

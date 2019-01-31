@@ -1,5 +1,5 @@
 import { Component, Input } from "@angular/core";
-import { IRain } from "../shared";
+import { IRain } from "../../shared";
 
 @Component({
   template: `

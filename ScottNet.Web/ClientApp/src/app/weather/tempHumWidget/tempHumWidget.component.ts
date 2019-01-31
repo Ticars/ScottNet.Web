@@ -1,11 +1,11 @@
 import { Component, Input } from "@angular/core";
-import { CurrentWeatherService, ITemperatureHumidity } from "../shared";
+import { CurrentWeatherService, ITemperatureHumidity } from "../../shared";
 
 
 @Component({
   selector: 'temp-humidty',
   template: `
-    <div class='temp-hum'><temperature temperature={{humTemp?.temperature}}></temperature> / {{humTemp?.humidity}}%</div>
+    <div class='temp-hum'> <temperature [temperature]="humTemp?.temperature"></temperature>  / {{humTemp?.humidity}}%</div>
 `,
   styles:['.temp-hum: {font-size:22px;}']
 })

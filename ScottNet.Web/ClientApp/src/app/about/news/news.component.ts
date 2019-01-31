@@ -1,12 +1,12 @@
 import { Component } from '@angular/core';
-import { CurrentWeatherService } from '../shared';
+import { CurrentWeatherService } from '../../shared';
 
 @Component({
   selector: 'app-home',
-  templateUrl: './home.component.html',
-  styleUrls: ['./home.component.css']
+  templateUrl: './news.component.html',
+  styleUrls: ['./news.component.css']
 })
-export class HomeComponent {
+export class NewsComponent {
   constructor(private currentWeather: CurrentWeatherService) {
   }
   ngOnInit() {

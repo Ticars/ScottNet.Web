@@ -1,5 +1,5 @@
 import { Component } from "@angular/core";
-import { CurrentWeatherService } from "../shared";
+import { CurrentWeatherService } from "../../shared";
 
 @Component({
   template: `

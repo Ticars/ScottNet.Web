@@ -6,44 +6,33 @@ import { RouterModule } from '@angular/router';
 
 import { AppComponent } from './app.component';
 import { NavMenuComponent, Toggler, SNFooter } from './common/index';
-import { HomeComponent } from './home/home.component';
-import { ToDoComponent } from './to-do/to-do.component';
 import { WeatherDataService, CurrentWeatherService } from './shared/index'
-import { CurrentWeather, RawWeather, AutoUpdateToggle, Temperature, TempHumWidget, WindVane, RainSummary } from './weather/index'
+import { AutoUpdateToggle, Temperature } from './weather/index'
+import { appRoutes } from './routes';
+import { SharedModule } from './shared/shared.module';
 
 
 @NgModule({
   declarations: [
     AppComponent,
     NavMenuComponent,
-    HomeComponent,
-    ToDoComponent,
-    CurrentWeather,
-    RawWeather,
     Toggler,
     SNFooter,
-    AutoUpdateToggle,
-    Temperature,
-    TempHumWidget,
-    WindVane,
-    RainSummary
+    AutoUpdateToggle
 
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
     HttpClientModule,
     FormsModule,
-    RouterModule.forRoot([
-      { path: '', component: HomeComponent, pathMatch: 'full' },
-      { path: 'to-do', component: ToDoComponent },
-      { path: 'weather', component: CurrentWeather },
-      { path: 'rawweather', component: RawWeather },
-
-    ])
+    RouterModule.forRoot(appRoutes, { enableTracing: true }),
+    SharedModule
   ],
   providers: [
     WeatherDataService,
     CurrentWeatherService
+  ],
+  exports: [
   ],
   bootstrap: [AppComponent]
 })

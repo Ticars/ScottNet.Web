@@ -8,20 +8,17 @@
       </button>
       <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse" [ngClass]='{"show": isExpanded}'>
         <ul class="navbar-nav flex-grow">
-          <li class="nav-item" [routerLinkActive]='["link-active"]' [routerLinkActiveOptions]='{ exact: true }'>
-            <a class="nav-link text-dark" [routerLink]='["/"]'>Home</a>
-          </li>
           <li class="nav-item" [routerLinkActive]='["link-active"]'>
             <a class="nav-link text-dark" [routerLink]='["/weather"]'>Weather</a>
           </li>
           <li class="nav-item" [routerLinkActive]='["link-active"]'>
-            <a class="nav-link text-dark" [routerLink]='["/"]'>Movie reviews</a>
+            <a class="nav-link text-dark" [routerLink]='["/about"]'>Movie reviews</a>
           </li>
           <li class="nav-item" [routerLinkActive]='["link-active"]'>
-            <a class="nav-link text-dark" [routerLink]='["/"]'>Recipes</a>
+            <a class="nav-link text-dark" [routerLink]='["/about"]'>Recipes</a>
           </li>
           <li class="nav-item" [routerLinkActive]='["link-active"]'>
-            <a class="nav-link text-dark" [routerLink]='["/to-do"]'>In the works</a>
+            <a class="nav-link text-dark" [routerLink]='["/about"]'>About</a>
           </li>
         </ul>
       </div>

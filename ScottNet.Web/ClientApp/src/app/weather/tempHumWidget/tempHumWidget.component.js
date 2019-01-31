@@ -17,7 +17,7 @@ var TempHumWidget = /** @class */ (function () {
     TempHumWidget = __decorate([
         core_1.Component({
             selector: 'temp-humidty',
-            template: "\n    <div class='temp-hum'><temperature temperature={{humTemp?.temperature}}></temperature> / {{humTemp?.humidity}}%</div>\n",
+            template: "\n    <div class='temp-hum'> <temperature [temperature]=\"humTemp?.temperature\"></temperature>  / {{humTemp?.humidity}}%</div>\n",
             styles: ['.temp-hum: {font-size:22px;}']
         })
     ], TempHumWidget);
