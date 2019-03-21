@@ -10,6 +10,7 @@ using ScottNet.Web.Services.AzureStorage;
 using AutoMapper;
 using ScottNet.Web.Data;
 using ScottNet.Web.Services;
+using ScottNet.Web.Services.WeatherServices;
 
 namespace ScottNet.Web
 {
@@ -39,7 +40,9 @@ namespace ScottNet.Web
             services.AddScoped<IDataRepository, DataRepository>();
       
             services.AddSingleton<ICurrentWeatherStore, CurrentWeatherStore>();
+            services.AddTransient<IWeatherForecastService, DarkSkyService>();
             services.AddAutoMapper();
+            services.AddLazyCache();
             services.AddMvc()
                 .SetCompatibilityVersion(CompatibilityVersion.Version_2_2)
                 .AddJsonOptions(options =>

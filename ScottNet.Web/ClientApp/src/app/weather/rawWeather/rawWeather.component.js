@@ -17,7 +17,7 @@ var RawWeather = /** @class */ (function () {
     };
     RawWeather = __decorate([
         core_1.Component({
-            template: "\n<div class=\"container small\">\n  <div  *ngFor=\"let item of currentReading | keyvalue\">\n    <b>{{item.key}}</b>: {{item.value}}\n  </div>\n  <b>Updates</b>: {{currentWeatherService.updates}}\n</div>\n  ",
+            template: "\n<weather-menu></weather-menu>\n<div class=\"container small\">\n  <div  *ngFor=\"let item of currentReading | keyvalue\">\n    <b>{{item.key}}</b>: {{item.value}}\n  </div>\n  <b>Updates</b>: {{currentWeatherService.updates}}\n</div>\n  ",
             selector: 'raw-weather'
         })
     ], RawWeather);

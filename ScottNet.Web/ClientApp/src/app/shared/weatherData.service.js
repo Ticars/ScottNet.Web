@@ -17,6 +17,9 @@ var WeatherDataService = /** @class */ (function () {
         return this.http.get('/api/WeatherReading/Current')
             .pipe(operators_1.map(function (res) { return new weatherModels_1.WeatherReadingModel(res); }));
     };
+    WeatherDataService.prototype.getDailyForecasts = function () {
+        return this.http.get('/api/Forecast/Daily');
+    };
     WeatherDataService = __decorate([
         core_1.Injectable()
     ], WeatherDataService);

@@ -1,23 +1,23 @@
-<b>Weather</b>
-
+<weather-menu></weather-menu>
 <div class="row">
   <div class="card col-lg-4">
     <div class="card-body">
-      <h3 class="card-title">Indoor</h3>
+      <h3 class="card-title">Outdoor</h3>
       <div class="card-text">
-        <temp-humidty [humTemp]="currentReading?.getOutdoorWeather()"></temp-humidty>
+        <temp-humidty [humTemp]="currentReading?.getOutdoorWeather()" [icon]="currentReading?.getCurrentWeatherIcon()"></temp-humidty>
+        
       </div>
     </div>
   </div>
 
 
   <div class="card col-lg-4">
-    <div class="card-body">
-      <h3 class="card-title">Indoor</h3>
+  
+      <h3 >Indoor</h3>
       <div class="card-text"><temp-humidty [humTemp]="currentReading?.getIndoorWeather()"></temp-humidty></div>
-    </div>
+
   </div>
-  </div>
+</div>
 <div class="row">
   <div class="card col-lg-4">
     <div class="card-body">
@@ -31,4 +31,5 @@
       <div class="card-text"><rain-summary [rain]="currentReading?.getRainData()"></rain-summary> </div>
     </div>
   </div>
-  </div>
+</div>
+<forecasts></forecasts>

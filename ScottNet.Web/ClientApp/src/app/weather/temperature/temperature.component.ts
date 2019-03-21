@@ -2,7 +2,7 @@ import { Component, Input } from "@angular/core";
 
 @Component({
   template: `
-    <span class="temperature ml-4" [ngStyle]="{'color':getColor()}">{{temperature| number:'1.0-0'}}&deg;F</span>
+    <span class="temperature" [ngStyle]="{'color':getColor()}">{{temperature| number:'1.0-0'}}&deg;F</span>
 `,
   selector: 'temperature'
 })

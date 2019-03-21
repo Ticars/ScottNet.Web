@@ -14,11 +14,14 @@ var TempHumWidget = /** @class */ (function () {
     __decorate([
         core_1.Input()
     ], TempHumWidget.prototype, "humTemp", void 0);
+    __decorate([
+        core_1.Input()
+    ], TempHumWidget.prototype, "icon", void 0);
     TempHumWidget = __decorate([
         core_1.Component({
             selector: 'temp-humidty',
-            template: "\n    <div class='temp-hum'> <temperature [temperature]=\"humTemp?.temperature\"></temperature>  / {{humTemp?.humidity}}%</div>\n",
-            styles: ['.temp-hum: {font-size:22px;}']
+            template: "\n<div style='width:100%'>\n    <div class='temp-hum'>\n<temperature [temperature]=\"humTemp?.temperature\"></temperature>  / {{humTemp?.humidity}}%\n<img class=\"forecast-icon float-right\" *ngIf=\"icon?.length>0\" [src]=\"icon\" />\n</div>\n\n</div>\n",
+            styles: ["\n    .temp-hum {font-size:22px;}\n    .forecast-icon { width:80px;}\n"]
         })
     ], TempHumWidget);
     return TempHumWidget;

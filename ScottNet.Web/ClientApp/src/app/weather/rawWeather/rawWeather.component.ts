@@ -4,6 +4,7 @@ import { Component, Input } from "@angular/core";
 
 @Component({
   template: `
+<weather-menu></weather-menu>
 <div class="container small">
   <div  *ngFor="let item of currentReading | keyvalue">
     <b>{{item.key}}</b>: {{item.value}}

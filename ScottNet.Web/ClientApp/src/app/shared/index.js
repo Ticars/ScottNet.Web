@@ -6,4 +6,5 @@ Object.defineProperty(exports, "__esModule", { value: true });
 __export(require("./weatherData.service"));
 __export(require("./currentWeather.service"));
 __export(require("./weatherModels"));
+__export(require("./icon.service"));
 //# sourceMappingURL=index.js.map

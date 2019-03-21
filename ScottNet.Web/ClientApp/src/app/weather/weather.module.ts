@@ -5,6 +5,8 @@ import { weatherRoutes } from "./weather.routes";
 import { CommonModule } from "@angular/common";
 import { AppModule } from "../app.module";
 import { SharedModule } from "../shared/shared.module";
+import { WeatherMenuComponent } from './weather-menu/weather-menu.component';
+import { Forecasts } from "./forecasts/forecast.component";
 
 @NgModule({
   imports: [
@@ -17,7 +19,9 @@ import { SharedModule } from "../shared/shared.module";
     RawWeather,
     TempHumWidget,
     WindVane,
-    RainSummary
+    RainSummary,
+    WeatherMenuComponent,
+    Forecasts
   ],
   providers: [
   ],

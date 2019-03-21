@@ -1,3 +1,5 @@
+import { IconService } from "./icon.service";
+
 export class WeatherReadingModel {
   constructor(obj?: any) {
     Object.assign(this, obj);
@@ -45,10 +47,28 @@ export class WeatherReadingModel {
       humidity: this.indoorHumidity
     };
   }
+  public getCurrentWeatherIcon(): string {
+    if (this.forecastSnow) {
+      return IconService.snowy;
+    } else if (this.forecastRain) {
+      return IconService.rainy;
+    } else if (this.windChill < 30) {
+      return IconService.cold;
+    } else if (this.heatIndex > 95) {
+      return IconService.hot;
+    } else if (this.forecastPartlyCloudy) {
+      return IconService.partlyCloudy;
+    } else if (this.forecastCloudy) {
+      return IconService.cloudy;
+    } else if (this.forecastSun) {
+      return IconService.clear;
+    } else {
+      return "";
+    }
+
+  }
   getRainData(): IRain {
-    console.log("getRain")
     return {
-     
       rateCurrent: this.rainRate,
       total15M: this.rain15M,
       total1H: this.rain1H,
@@ -73,4 +93,11 @@ export interface IRain {
   totalToday: number
   totalMonth: number
   totalYear: number
+}
+
+export interface DailyWeatherForecast {
+  day: Date,
+  lowTemperature: number,
+  highTemperature: number,
+  description: string
 }

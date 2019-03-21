@@ -10,4 +10,5 @@ __export(require("./temperature/temperature.component"));
 __export(require("./tempHumWidget/tempHumWidget.component"));
 __export(require("./windVane/windvane.component"));
 __export(require("./rainSummary/rain-summary.component"));
+__export(require("./forecasts/forecast.component"));
 //# sourceMappingURL=index.js.map

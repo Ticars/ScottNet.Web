@@ -57,7 +57,14 @@ namespace ScottNet.Web
                 .ForMember(se => se.ForecastPartlyCloudyIcon, vm => vm.MapFrom(vmm => (vmm.ForecastIconCode & 0x04) != 0))
                 .ForMember(se => se.ForecastSunIcon, vm => vm.MapFrom(vmm => (vmm.ForecastIconCode & 0x08) != 0))
                 .ForMember(se => se.ForecastSnowIcon, vm => vm.MapFrom(vmm => (vmm.ForecastIconCode & 0x10) != 0));
-                
+
+            CreateMap<Services.WeatherServices.WeatherModels.DarkSkyModels.DailyDatum, DailyWeatherForecastViewModel>()
+                .ForMember(vm => vm.Day, ds => ds.MapFrom(dly => DateTimeOffset.FromUnixTimeSeconds(dly.Time)))
+                .ForMember(vm => vm.Description, ds => ds.MapFrom(dly => dly.Summary))
+                .ForMember(vm => vm.TemperatureHigh, ds => ds.MapFrom(dly => dly.TemperatureMax))
+                .ForMember(vm => vm.TemperatureLow, ds => ds.MapFrom(dly => dly.TemperatureMin));
         }
+
+       
     }
 }

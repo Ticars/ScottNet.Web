@@ -26,7 +26,7 @@ var Temperature = /** @class */ (function () {
     ], Temperature.prototype, "temperature", void 0);
     Temperature = __decorate([
         core_1.Component({
-            template: "\n    <span class=\"temperature ml-4\" [ngStyle]=\"{'color':getColor()}\">{{temperature| number:'1.0-0'}}&deg;F</span>\n",
+            template: "\n    <span class=\"temperature\" [ngStyle]=\"{'color':getColor()}\">{{temperature| number:'1.0-0'}}&deg;F</span>\n",
             selector: 'temperature'
         })
     ], Temperature);
