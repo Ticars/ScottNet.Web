@@ -9,6 +9,7 @@ using Microsoft.Extensions.Logging;
 using ScottNet.Web.Services.WeatherServices.WeatherModels.DarkSkyModels;
 using ScottNet.Web.ViewModels;
 using ScottNet.Web.Utilities;
+using Microsoft.Extensions.Configuration;
 
 namespace ScottNet.Web.Services.WeatherServices
 {
@@ -17,21 +18,31 @@ namespace ScottNet.Web.Services.WeatherServices
         private readonly ILogger<DarkSkyService> _logger;
         private readonly IMapper _mapper;
         private readonly IAppCache _cache;
+        private readonly IConfiguration _configuration;
 
-        public DarkSkyService(ILogger<DarkSkyService> logger, IMapper mapper, IAppCache appCache)
+        public DarkSkyService(ILogger<DarkSkyService> logger, IMapper mapper, IAppCache appCache, IConfiguration configuration)
         {
             _logger = logger;
             _mapper = mapper;
             _cache = appCache;
+            _configuration = configuration;
         }
+        private string GetForecastUrl()
+        {
+            var baseUrl = _configuration["DarkSky:baseUrl"];
+            var apiKey = _configuration["DarkSky:apiKey"];
+            var latitude = _configuration["DarkSky:latitude"];
+            var longitude = _configuration["DarkSky:longitude"];
 
+            return $"{baseUrl}/forecast/{apiKey}/{latitude},{longitude}";
+        }
         private async Task<DarkSkyForecast> CallRestService()
         {
             //TODO: Use configuration
             try
             {
                 var httpClient = new HttpClient();
-                var response = await httpClient.GetAsync("https://api.darksky.net/forecast/4edcd2dab542e211a8994c1e077c322a/39.967390,-75.167790");
+                var response = await httpClient.GetAsync(GetForecastUrl());
                 response.EnsureSuccessStatusCode();
                 var forecastString = await response.Content.ReadAsStringAsync();
                 var forecast = DarkSkyForecast.FromJson(forecastString);
@@ -57,8 +68,8 @@ namespace ScottNet.Web.Services.WeatherServices
 
         public async Task<ICollection<DailyWeatherForecastViewModel>> GetForecasts()
         {
-            var forecast = await GetDarkSkyForecast();
-            return _mapper.Map<ICollection<DailyWeatherForecastViewModel >> (forecast?.Daily?.Data);
+            DarkSkyForecast forecast = await GetDarkSkyForecast();
+            return _mapper.Map<ICollection<DailyWeatherForecastViewModel>>(forecast?.Daily?.Data);
         }
     }
 }
