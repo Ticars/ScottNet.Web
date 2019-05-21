@@ -3,17 +3,28 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using ScottNet.Web.Services;
 
 namespace ScottNet.Web.Controllers
 {
     [Route("api/[controller]")]
     public class SampleDataController : Controller
     {
+        public SampleDataController(IEmailService emailService)
+        {
+            _emailService = emailService;
+        }
         private static string[] Summaries = new[]
         {
             "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
         };
+        private readonly IEmailService _emailService;
 
+        [HttpPost("[action]")]
+        public void SendEmail()
+        {
+          //  _emailService.SendHtmlMessage("ticars@yahoo.com", "Test", "<b>This is a test </b>");
+        }
         [HttpGet("[action]")]
         public IEnumerable<WeatherForecast> WeatherForecasts()
         {

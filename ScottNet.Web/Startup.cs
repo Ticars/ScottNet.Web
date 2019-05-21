@@ -41,6 +41,7 @@ namespace ScottNet.Web
       
             services.AddSingleton<ICurrentWeatherStore, CurrentWeatherStore>();
             services.AddTransient<IWeatherForecastService, DarkSkyService>();
+            services.AddTransient<IEmailService, Office365EmailService>();
             services.AddAutoMapper();
             services.AddLazyCache();
             services.AddMvc()
