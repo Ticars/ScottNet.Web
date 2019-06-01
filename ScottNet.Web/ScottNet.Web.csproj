@@ -24,10 +24,12 @@
   <ItemGroup>
     <PackageReference Include="AutoMapper" Version="8.0.0" />
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="6.0.0" />
+    <PackageReference Include="FluentValidation.AspNetCore" Version="7.3.3" />
     <PackageReference Include="LazyCache.AspNetCore" Version="2.0.0-beta03" />
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.2.0" PrivateAssets="All" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="2.2.1" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.2.3" />
     <PackageReference Include="WindowsAzure.Storage" Version="9.3.3" />
   </ItemGroup>
 
@@ -45,6 +47,8 @@
   <ItemGroup>
     <Compile Remove="Data\Migrations\20190128162355_BarometricTrends.cs" />
     <Compile Remove="Data\Migrations\20190128162355_BarometricTrends.Designer.cs" />
+    <Compile Remove="Data\Migrations\20190521003502_identity.cs" />
+    <Compile Remove="Data\Migrations\20190521003502_identity.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

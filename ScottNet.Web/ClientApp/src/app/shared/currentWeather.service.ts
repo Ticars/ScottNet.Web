@@ -26,7 +26,7 @@ export class CurrentWeatherService {
   setAutoRefresh(refresh: boolean) {
     if (refresh) {
       this.updateReading();
-      this.updaterId = setInterval(() => { this.updateReading(); }, 60 * 1000);
+      this.updaterId = window.setInterval(() => { this.updateReading(); }, 60 * 1000);
     } else {
       if (this.updaterId >= 0) {
         clearInterval(this.updaterId);

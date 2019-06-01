@@ -63,6 +63,9 @@ namespace ScottNet.Web
                 .ForMember(vm => vm.Description, ds => ds.MapFrom(dly => dly.Summary))
                 .ForMember(vm => vm.TemperatureHigh, ds => ds.MapFrom(dly => dly.TemperatureMax))
                 .ForMember(vm => vm.TemperatureLow, ds => ds.MapFrom(dly => dly.TemperatureMin));
+
+            CreateMap<RegistrationViewModel, AppUser>()
+                .ForMember(au => au.UserName, map => map.MapFrom(vm => vm.Email));
         }
 
        
