@@ -1,0 +1,1 @@
+{"version":3,"file":"account.routing.js","sourceRoot":"","sources":["account.routing.ts"],"names":[],"mappings":";;AACA,0CAA+C;AAC/C,iCAAwE;AAE3D,QAAA,OAAO,GAAwB,qBAAY,CAAC,QAAQ,CAAC;IAChE,EAAE,IAAI,EAAE,UAAU,EAAE,SAAS,EAAE,iCAAyB,EAAE;IAC1D,EAAE,IAAI,EAAE,OAAO,EAAE,SAAS,EAAE,0BAAkB,EAAE;CACjD,CAAC,CAAC"}

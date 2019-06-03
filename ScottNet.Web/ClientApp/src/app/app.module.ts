@@ -6,10 +6,11 @@ import { RouterModule } from '@angular/router';
 
 import { AppComponent } from './app.component';
 import { NavMenuComponent, Toggler, SNFooter } from './common/index';
-import { WeatherDataService, CurrentWeatherService } from './shared/index'
+import { WeatherDataService, CurrentWeatherService, UserService } from './shared/index'
 import { AutoUpdateToggle, Temperature } from './weather/index'
 import { appRoutes } from './routes';
 import { SharedModule } from './shared/shared.module';
+import { AccountModule } from './account/account.module';
 
 
 @NgModule({
@@ -26,7 +27,8 @@ import { SharedModule } from './shared/shared.module';
     HttpClientModule,
     FormsModule,
     RouterModule.forRoot(appRoutes, { enableTracing: false }),
-    SharedModule
+    SharedModule,
+    AccountModule
   ],
   providers: [
     WeatherDataService,

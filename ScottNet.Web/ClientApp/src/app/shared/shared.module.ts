@@ -1,18 +1,21 @@
 import { NgModule } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { Temperature } from "../weather";
+import { SpinnerComponent } from "../spinner/spinner.component";
 
 @NgModule({
   imports: [
     CommonModule
   ],
   declarations: [
-    Temperature
+    Temperature,
+    SpinnerComponent
   ],
   providers: [
   ],
   exports: [
-    Temperature
+    Temperature,
+    SpinnerComponent
   ]
 })
 export class SharedModule {

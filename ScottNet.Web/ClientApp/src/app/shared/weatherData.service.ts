@@ -11,6 +11,7 @@ export class WeatherDataService {
   }
 
   getCurrentReading(): Observable<WeatherReadingModel> {
+    
     return this.http.get<WeatherReadingModel>('/api/WeatherReading/Current')
       .pipe(map(res => new WeatherReadingModel(res)));
   }
