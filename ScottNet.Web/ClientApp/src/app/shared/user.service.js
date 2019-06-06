@@ -23,6 +23,7 @@ var core_1 = require("@angular/core");
 var http_1 = require("@angular/common/http");
 var rxjs_1 = require("rxjs");
 var base_service_1 = require("./base.service");
+var operators_1 = require("rxjs/operators");
 var UserService = /** @class */ (function (_super) {
     __extends(UserService, _super);
     function UserService(http) {
@@ -34,7 +35,7 @@ var UserService = /** @class */ (function (_super) {
         // Observable navItem stream
         _this.authNavStatus$ = _this._authNavStatusSource.asObservable();
         _this.loggedIn = false;
-        _this.loggedIn = !!localStorage.getItem('auth_token');
+        _this.loggedIn = !!localStorage.getItem('authObject');
         // ?? not sure if this the best way to broadcast the status but seems to resolve issue on page refresh where auth status is lost in
         // header component resulting in authed user nav links disappearing despite the fact user is still logged in
         _this._authNavStatusSource.next(_this.loggedIn);
@@ -49,20 +50,31 @@ var UserService = /** @class */ (function (_super) {
         return this.http.post(this.baseUrl + "/account", body, httpOptions);
     };
     UserService.prototype.login = function (userName, password) {
+        var _this = this;
         var httpOptions = {
             headers: new http_1.HttpHeaders({ 'Content-Type': 'application/json' })
         };
         return this.http
-            .post(this.baseUrl + '/auth/login', JSON.stringify({ userName: userName, password: password }), httpOptions);
+            .post(this.baseUrl + '/auth/login', JSON.stringify({ userName: userName, password: password }), httpOptions).pipe(operators_1.map(function (res) {
+            _this.setLogin(res);
+            return true;
+        }), operators_1.catchError(function (error) {
+            if (error.status === 401) {
+                return rxjs_1.of(false);
+            }
+            else {
+                return _this.handleError(error);
+            }
+        }));
     };
     UserService.prototype.setLogin = function (auth) {
-        console.log("login authtoken: " + auth.auth_token);
-        localStorage.setItem('auth_token', auth.auth_token);
+        console.log("login authtoken: " + auth.token);
+        localStorage.setItem('authObject', JSON.stringify(auth));
         this.loggedIn = true;
         this._authNavStatusSource.next(true);
     };
     UserService.prototype.logout = function () {
-        localStorage.removeItem('auth_token');
+        localStorage.removeItem('authObject');
         this.loggedIn = false;
         this._authNavStatusSource.next(false);
     };

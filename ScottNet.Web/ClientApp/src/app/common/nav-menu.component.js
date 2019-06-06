@@ -8,9 +8,18 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
 var NavMenuComponent = /** @class */ (function () {
-    function NavMenuComponent() {
+    function NavMenuComponent(userService) {
+        var _this = this;
+        this.userService = userService;
         this.isExpanded = false;
+        userService.authNavStatus$.subscribe(function (loggedIn) {
+            _this.loggedIn = loggedIn;
+            console.log("header loggedIn: " + loggedIn);
+        });
     }
+    NavMenuComponent.prototype.logout = function () {
+        this.userService.logout();
+    };
     NavMenuComponent.prototype.collapse = function () {
         this.isExpanded = false;
     };

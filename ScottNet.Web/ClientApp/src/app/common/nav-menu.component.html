@@ -12,13 +12,19 @@
             <a class="nav-link text-dark" [routerLink]='["/weather"]'>Weather</a>
           </li>
           <li class="nav-item" [routerLinkActive]='["link-active"]'>
-            <a class="nav-link text-dark" [routerLink]='["/about"]'>Movie reviews</a>
+            <a class="nav-link text-dark" [routerLink]='["/about"]'>Reviews</a>
           </li>
           <li class="nav-item" [routerLinkActive]='["link-active"]'>
             <a class="nav-link text-dark" [routerLink]='["/about"]'>Recipes</a>
           </li>
           <li class="nav-item" [routerLinkActive]='["link-active"]'>
             <a class="nav-link text-dark" [routerLink]='["/about"]'>About</a>
+          </li>
+          <li *ngIf="!loggedIn" class="nav-item" [routerLinkActive]='["link-active"]'>
+            <a class="nav-link text-dark" [routerLink]='["/login"]'>Login</a>
+          </li>
+          <li *ngIf="loggedIn" class="nav-item">
+            <span class="nav-link text-dark link" (click)="logout()">Logout</span>
           </li>
         </ul>
       </div>

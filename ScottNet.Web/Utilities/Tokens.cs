@@ -1,6 +1,8 @@
 ﻿using Newtonsoft.Json;
 using ScottNet.Web.Auth;
+using ScottNet.Web.Data.Entities;
 using ScottNet.Web.Models;
+using ScottNet.Web.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,16 +13,20 @@ namespace ScottNet.Web.Utilities
 {
     public class Tokens
     {
-        public static async Task<string> GenerateJwt(ClaimsIdentity identity, IJwtFactory jwtFactory, string userName, JwtIssuerOptions jwtOptions, JsonSerializerSettings serializerSettings)
+        public static async Task<LoginTokenViewModel> GenerateJwt(ClaimsIdentity identity, IJwtFactory jwtFactory, AppUser user, JwtIssuerOptions jwtOptions)
         {
-            var response = new
+            var loginToken = new LoginTokenViewModel()
             {
-                id = identity.Claims.Single(c => c.Type == "id").Value,
-                auth_token = await jwtFactory.GenerateEncodedToken(userName, identity),
-                expires_in = (int)jwtOptions.ValidFor.TotalSeconds
+                IdentityId = identity.Claims.Single(c => c.Type == "id").Value,
+                Email = user.Email,
+                UserName = user.UserName,
+                Token = await jwtFactory.GenerateEncodedToken(user.UserName, identity),
+                ExpiresIn = (int)jwtOptions.ValidFor.TotalSeconds,
+                FirstName = user.FirstName,
+                LastName = user.LastName
             };
 
-            return JsonConvert.SerializeObject(response, serializerSettings);
+            return loginToken;
         }
     }
 }

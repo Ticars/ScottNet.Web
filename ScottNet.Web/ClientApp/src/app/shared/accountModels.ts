@@ -12,8 +12,11 @@ export interface Credentials {
 }
 
 export interface Authorization {
-  id: string;
-  auth_token: string
-  expires_in: number
-
+  identityId: string;
+  token: string
+  expiresIn: number
+  firstName: string
+  lastName: string
+  userName: string
+  email: string
 }

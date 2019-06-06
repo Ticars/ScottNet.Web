@@ -18,21 +18,16 @@ var BaseService = /** @class */ (function () {
         };
     };
     BaseService.prototype.handleError = function (error) {
-        var applicationError = error.headers.get('Application-Error');
-        // either applicationError in header or model error in body
-        if (applicationError) {
-            return rxjs_1.Observable.throw(applicationError);
+        var errorMessage = '';
+        if (error.error instanceof ErrorEvent) {
+            // client-side error
+            errorMessage = "Error: " + error.error.message;
         }
-        var modelStateErrors = '';
-        var serverError = error.json();
-        if (!serverError.type) {
-            for (var key in serverError) {
-                if (serverError[key])
-                    modelStateErrors += serverError[key] + '\n';
-            }
+        else {
+            // server-side error
+            errorMessage = "Error Code: " + error.status + "\nMessage: " + error.error;
         }
-        modelStateErrors = modelStateErrors = '' ? null : modelStateErrors;
-        return rxjs_1.Observable.throw(modelStateErrors || 'Server error');
+        return rxjs_1.throwError(errorMessage);
     };
     return BaseService;
 }());

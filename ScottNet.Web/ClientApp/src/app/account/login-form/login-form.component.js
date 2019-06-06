@@ -13,6 +13,7 @@ var LoginFormComponent = /** @class */ (function () {
         this.router = router;
         this.activatedRoute = activatedRoute;
         this.submitted = false;
+        this.src = "/";
         this.credentials = { email: '', password: '' };
     }
     LoginFormComponent.prototype.ngOnInit = function () {
@@ -21,6 +22,7 @@ var LoginFormComponent = /** @class */ (function () {
         this.subscription = this.activatedRoute.queryParams.subscribe(function (param) {
             _this.brandNew = param['brandNew'];
             _this.credentials.email = param['email'];
+            _this.src = param['src'];
         });
     };
     LoginFormComponent.prototype.ngOnDestroy = function () {
@@ -36,9 +38,17 @@ var LoginFormComponent = /** @class */ (function () {
         if (valid) {
             this.userService.login(value.email, value.password)
                 .subscribe(function (auth) {
-                _this.userService.setLogin(auth);
-                _this.router.navigate(['/']);
-            }, function (errors) { return _this.errors = errors; }, function () { return _this.isRequesting = false; });
+                if (auth) {
+                    _this.router.navigate(_this.src ? [_this.src] : ['/']);
+                }
+                else {
+                    _this.errors = "Invalid username/password";
+                }
+                _this.isRequesting = false;
+            }, function (error) {
+                _this.errors = error;
+                _this.isRequesting = false;
+            });
         }
     };
     LoginFormComponent = __decorate([

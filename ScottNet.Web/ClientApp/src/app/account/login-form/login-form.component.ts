@@ -2,6 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { UserService, Credentials } from '../../shared';
 import { Subscription } from 'rxjs';
 import { Router, ActivatedRoute } from '@angular/router';
+import { HttpErrorResponse } from '@angular/common/http';
 
 
 @Component({
@@ -18,7 +19,9 @@ export class LoginFormComponent implements OnInit, OnDestroy {
   errors: string;
   isRequesting: boolean;
   submitted: boolean = false;
+  src: string = "/"
   credentials: Credentials = { email: '', password: '' };
+
 
   constructor(private userService: UserService, private router: Router, private activatedRoute: ActivatedRoute) { }
 
@@ -29,8 +32,11 @@ export class LoginFormComponent implements OnInit, OnDestroy {
       (param: any) => {
         this.brandNew = param['brandNew'];
         this.credentials.email = param['email'];
+        this.src = param['src']
       });
   }
+
+
 
   ngOnDestroy() {
     // prevent memory leak by unsubscribing
@@ -45,12 +51,17 @@ export class LoginFormComponent implements OnInit, OnDestroy {
       this.userService.login(value.email, value.password)
         .subscribe(
           (auth) => {
-            this.userService.setLogin(auth)
-            this.router.navigate(['/']);
+            if (auth) {
+              this.router.navigate(this.src ? [this.src] : ['/'])
+            } else {
+              this.errors = "Invalid username/password"
+            }
+            this.isRequesting = false;
           },
-          (errors) => this.errors = errors,
-          () => this.isRequesting = false
-      )
+          (error: any) => {
+            this.errors = error
+            this.isRequesting = false;
+          })
     }
   }
 }
