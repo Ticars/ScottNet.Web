@@ -1,3 +1,7 @@
 <form>
-  <input type="file" accept="image/*"/>
+  <input type="file" (change)="selected($event)" accept="image/*"/>
 </form>
+
+<div *ngFor="let item of fileProperties">
+  <b>{{item.prop}}</b>: {{item.value}}
+</div>

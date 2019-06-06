@@ -6,10 +6,16 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./photo-upload.component.css']
 })
 export class PhotoUploadComponent implements OnInit {
-
+  fileProperties: any[]
   constructor() { }
 
   ngOnInit() {
   }
-
+  selected(event) {
+    this.fileProperties = []
+    var file = event.target.files[0]
+    for (let key in event.target.files[0]) {
+      this.fileProperties.push({'prop': key, 'value': file[key]})
+    }
+  }
 }
