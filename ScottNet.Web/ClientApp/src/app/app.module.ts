@@ -11,6 +11,7 @@ import { AutoUpdateToggle, Temperature } from './weather/index'
 import { appRoutes } from './routes';
 import { SharedModule } from './shared/shared.module';
 import { AccountModule } from './account/account.module';
+import { PhotosModule } from './photos/photos.module';
 
 
 @NgModule({
@@ -28,7 +29,8 @@ import { AccountModule } from './account/account.module';
     FormsModule,
     RouterModule.forRoot(appRoutes, { enableTracing: false }),
     SharedModule,
-    AccountModule
+    AccountModule,
+    PhotosModule
   ],
   providers: [
     WeatherDataService,

@@ -57,6 +57,7 @@
     <None Remove="ClientApp\src\app\common\footer.component.ts" />
     <None Remove="ClientApp\src\app\common\index.ts" />
     <None Remove="ClientApp\src\app\common\toggle.component.ts" />
+    <None Remove="ClientApp\src\app\photos\photo.routing.ts" />
     <None Remove="ClientApp\src\app\shared\accountModels.ts" />
     <None Remove="ClientApp\src\app\shared\base.service.ts" />
     <None Remove="ClientApp\src\app\shared\currentWeather.service.ts" />
@@ -79,6 +80,7 @@
     <TypeScriptCompile Include="ClientApp\src\app\common\footer.component.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\common\index.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\common\toggle.component.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\photos\photo.routing.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\shared\accountModels.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\shared\base.service.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\shared\currentWeather.service.ts" />
