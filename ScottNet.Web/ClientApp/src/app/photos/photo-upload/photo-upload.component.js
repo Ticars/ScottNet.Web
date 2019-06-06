@@ -11,6 +11,9 @@ var PhotoUploadComponent = /** @class */ (function () {
     function PhotoUploadComponent() {
     }
     PhotoUploadComponent.prototype.ngOnInit = function () {
+        var connection = navigator['connection'] || navigator['mozConnection'] || navigator['webkitConnection'];
+        var type = connection.effectiveType;
+        alert(type);
     };
     PhotoUploadComponent.prototype.selected = function (event) {
         this.fileProperties = [];

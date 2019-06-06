@@ -10,8 +10,13 @@ export class PhotoUploadComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
+    var connection = navigator['connection'] || navigator['mozConnection'] || navigator['webkitConnection'];
+    var type = connection.effectiveType;
+    alert(type)
+  
   }
   selected(event) {
+
     this.fileProperties = []
     var file = event.target.files[0]
     for (let key in event.target.files[0]) {
