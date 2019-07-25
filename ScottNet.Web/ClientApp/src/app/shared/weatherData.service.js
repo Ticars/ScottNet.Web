@@ -20,6 +20,15 @@ var WeatherDataService = /** @class */ (function () {
     WeatherDataService.prototype.getDailyForecasts = function () {
         return this.http.get('/api/Forecast/Daily');
     };
+    WeatherDataService.prototype.getWeatherSummaries = function () {
+        return this.http.get('/api/weatherSummary')
+            .pipe(operators_1.map(function (items) {
+            return items.map(function (item) {
+                item.readingTime = new Date(item.readingTime.toString());
+                return item;
+            });
+        }));
+    };
     WeatherDataService = __decorate([
         core_1.Injectable()
     ], WeatherDataService);

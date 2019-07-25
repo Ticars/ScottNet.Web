@@ -3,7 +3,7 @@ import { Http, Response, Headers, RequestOptions } from '@angular/http';
 import { HttpClient, HttpResponse, HttpHeaders, HttpErrorResponse } from "@angular/common/http";
 import { Observable, BehaviorSubject, of, throwError } from 'rxjs';
 import { BaseService } from './base.service';
-import { UserRegistration, Authorization } from '.';
+import { IUserRegistration, IAuth, Auth } from './accountModels';
 import { catchError, map } from 'rxjs/operators';
 
 
@@ -13,31 +13,34 @@ import { catchError, map } from 'rxjs/operators';
 export class UserService extends BaseService {
 
   baseUrl: string = '';
-
+  authObj: Auth
   // Observable navItem source
   public _authNavStatusSource = new BehaviorSubject<boolean>(false);
   // Observable navItem stream
   authNavStatus$ = this._authNavStatusSource.asObservable();
 
-  private loggedIn = false;
 
   constructor(private http: HttpClient) {
     super();
-    this.loggedIn = !!localStorage.getItem('authObject');
-    // ?? not sure if this the best way to broadcast the status but seems to resolve issue on page refresh where auth status is lost in
-    // header component resulting in authed user nav links disappearing despite the fact user is still logged in
-    this._authNavStatusSource.next(this.loggedIn);
+    var authString = localStorage.getItem('authObject')
+    if (authString) {
+      this.authObj = new Auth(JSON.parse(authString));
+      console.log("Token expires in: " + this.authObj.expiresIn());
+      // ?? not sure if this the best way to broadcast the status but seems to resolve issue on page refresh where auth status is lost in
+      // header component resulting in authed user nav links disappearing despite the fact user is still logged in
+      this._authNavStatusSource.next(!!this.authObj);
+    }
+   
     this.baseUrl = '/api'
   }
 
 
-  register(email: string, password: string, firstName: string, lastName: string): Observable<UserRegistration> {
+  register(email: string, password: string, firstName: string, lastName: string): Observable<IUserRegistration> {
     let body = JSON.stringify({ email, password, firstName, lastName });
-
     let httpOptions = {
       headers: new HttpHeaders({ 'Content-Type': 'application/json' })
     };
-    return this.http.post<UserRegistration>(this.baseUrl + "/account", body, httpOptions);
+    return this.http.post<IUserRegistration>(this.baseUrl + "/account", body, httpOptions);
 
   }
 
@@ -46,10 +49,10 @@ export class UserService extends BaseService {
       headers: new HttpHeaders({ 'Content-Type': 'application/json' })
     };
     return this.http
-      .post<Authorization>(
+      .post<IAuth>(
         this.baseUrl + '/auth/login',
         JSON.stringify({ userName, password }),
-        httpOptions
+        { headers: this.getHttpHeaders() }
       ).pipe(
         map((res) => {
           this.setLogin(res);
@@ -67,20 +70,18 @@ export class UserService extends BaseService {
   }
 
 
-  setLogin(auth: Authorization) {
+  setLogin(auth: IAuth) {
+    var authObj = new Auth(auth)
     console.log("login authtoken: " + auth.token)
-    localStorage.setItem('authObject', JSON.stringify(auth));
-    this.loggedIn = true;
+    localStorage.setItem('authObject', JSON.stringify(authObj));
+    this.authObj = authObj
     this._authNavStatusSource.next(true);
   }
 
   logout() {
     localStorage.removeItem('authObject');
-    this.loggedIn = false;
+    this.authObj = null
     this._authNavStatusSource.next(false);
   }
 
-  isLoggedIn() {
-    return this.loggedIn;
-  }
 }

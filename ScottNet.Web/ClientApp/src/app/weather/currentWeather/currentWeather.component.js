@@ -10,12 +10,16 @@ var core_1 = require("@angular/core");
 var CurrentWeather = /** @class */ (function () {
     function CurrentWeather(currentWeatherService) {
         this.currentWeatherService = currentWeatherService;
+        this.showChart = false;
     }
     CurrentWeather.prototype.ngOnInit = function () {
         var _this = this;
         this.currentWeatherService.weatherReading.subscribe(function (wr) {
             _this.currentReading = wr;
         });
+    };
+    CurrentWeather.prototype.setShowChart = function (show) {
+        this.showChart = show;
     };
     CurrentWeather = __decorate([
         core_1.Component({

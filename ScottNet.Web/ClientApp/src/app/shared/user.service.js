@@ -23,6 +23,7 @@ var core_1 = require("@angular/core");
 var http_1 = require("@angular/common/http");
 var rxjs_1 = require("rxjs");
 var base_service_1 = require("./base.service");
+var accountModels_1 = require("./accountModels");
 var operators_1 = require("rxjs/operators");
 var UserService = /** @class */ (function (_super) {
     __extends(UserService, _super);
@@ -34,11 +35,14 @@ var UserService = /** @class */ (function (_super) {
         _this._authNavStatusSource = new rxjs_1.BehaviorSubject(false);
         // Observable navItem stream
         _this.authNavStatus$ = _this._authNavStatusSource.asObservable();
-        _this.loggedIn = false;
-        _this.loggedIn = !!localStorage.getItem('authObject');
-        // ?? not sure if this the best way to broadcast the status but seems to resolve issue on page refresh where auth status is lost in
-        // header component resulting in authed user nav links disappearing despite the fact user is still logged in
-        _this._authNavStatusSource.next(_this.loggedIn);
+        var authString = localStorage.getItem('authObject');
+        if (authString) {
+            _this.authObj = new accountModels_1.Auth(JSON.parse(authString));
+            console.log("Token expires in: " + _this.authObj.expiresIn());
+            // ?? not sure if this the best way to broadcast the status but seems to resolve issue on page refresh where auth status is lost in
+            // header component resulting in authed user nav links disappearing despite the fact user is still logged in
+            _this._authNavStatusSource.next(!!_this.authObj);
+        }
         _this.baseUrl = '/api';
         return _this;
     }
@@ -55,7 +59,7 @@ var UserService = /** @class */ (function (_super) {
             headers: new http_1.HttpHeaders({ 'Content-Type': 'application/json' })
         };
         return this.http
-            .post(this.baseUrl + '/auth/login', JSON.stringify({ userName: userName, password: password }), httpOptions).pipe(operators_1.map(function (res) {
+            .post(this.baseUrl + '/auth/login', JSON.stringify({ userName: userName, password: password }), { headers: this.getHttpHeaders() }).pipe(operators_1.map(function (res) {
             _this.setLogin(res);
             return true;
         }), operators_1.catchError(function (error) {
@@ -68,18 +72,16 @@ var UserService = /** @class */ (function (_super) {
         }));
     };
     UserService.prototype.setLogin = function (auth) {
+        var authObj = new accountModels_1.Auth(auth);
         console.log("login authtoken: " + auth.token);
-        localStorage.setItem('authObject', JSON.stringify(auth));
-        this.loggedIn = true;
+        localStorage.setItem('authObject', JSON.stringify(authObj));
+        this.authObj = authObj;
         this._authNavStatusSource.next(true);
     };
     UserService.prototype.logout = function () {
         localStorage.removeItem('authObject');
-        this.loggedIn = false;
+        this.authObj = null;
         this._authNavStatusSource.next(false);
-    };
-    UserService.prototype.isLoggedIn = function () {
-        return this.loggedIn;
     };
     UserService = __decorate([
         core_1.Injectable({

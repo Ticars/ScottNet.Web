@@ -8,4 +8,5 @@ __export(require("./currentWeather.service"));
 __export(require("./weatherModels"));
 __export(require("./icon.service"));
 __export(require("./user.service"));
+__export(require("./accountModels"));
 //# sourceMappingURL=index.js.map

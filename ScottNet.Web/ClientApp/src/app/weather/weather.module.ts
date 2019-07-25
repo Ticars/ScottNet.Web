@@ -3,16 +3,19 @@ import { CurrentWeather, RawWeather, TempHumWidget, WindVane, RainSummary } from
 import { RouterModule } from "@angular/router";
 import { weatherRoutes } from "./weather.routes";
 import { CommonModule } from "@angular/common";
-import { AppModule } from "../app.module";
 import { SharedModule } from "../shared/shared.module";
 import { WeatherMenuComponent } from './weather-menu/weather-menu.component';
 import { Forecasts } from "./forecasts/forecast.component";
+import { TempChartComponent } from "./tempChart/tempChart.component";
+import { NgxChartsModule } from '@swimlane/ngx-charts';
+import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 
 @NgModule({
   imports: [
     CommonModule,
     RouterModule.forChild(weatherRoutes),
-    SharedModule
+    SharedModule,
+    NgxChartsModule
   ],
   declarations: [
     CurrentWeather,
@@ -21,6 +24,7 @@ import { Forecasts } from "./forecasts/forecast.component";
     WindVane,
     RainSummary,
     WeatherMenuComponent,
+    TempChartComponent,
     Forecasts
   ],
   providers: [

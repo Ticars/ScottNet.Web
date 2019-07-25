@@ -38,6 +38,8 @@ namespace ScottNet.Web.Controllers
             return Ok(viewModel);
         }
 
+        
+
         [HttpPost()]
         public async Task<ActionResult> PostAsync([FromBody] ConsoleReadingViewModel data)
         {

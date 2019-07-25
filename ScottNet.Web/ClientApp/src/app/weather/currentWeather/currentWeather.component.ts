@@ -5,6 +5,7 @@ import { WeatherDataService, WeatherReadingModel, CurrentWeatherService } from "
   templateUrl:'currentWeather.component.html'
 })
 export class CurrentWeather {
+  public showChart = false;
   currentReading: WeatherReadingModel
   constructor(public currentWeatherService: CurrentWeatherService) {
   }
@@ -12,6 +13,10 @@ export class CurrentWeather {
     this.currentWeatherService.weatherReading.subscribe(wr => {
       this.currentReading = wr
     });
+  }
+
+  setShowChart(show: boolean) {
+    this.showChart = show;
   }
   
   

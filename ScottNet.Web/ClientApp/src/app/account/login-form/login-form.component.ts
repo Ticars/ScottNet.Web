@@ -1,8 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { UserService, Credentials } from '../../shared';
+import { UserService, ICredentials } from '../../shared';
 import { Subscription } from 'rxjs';
 import { Router, ActivatedRoute } from '@angular/router';
-import { HttpErrorResponse } from '@angular/common/http';
 
 
 @Component({
@@ -20,7 +19,7 @@ export class LoginFormComponent implements OnInit, OnDestroy {
   isRequesting: boolean;
   submitted: boolean = false;
   src: string = "/"
-  credentials: Credentials = { email: '', password: '' };
+  credentials: ICredentials = { email: '', password: '' };
 
 
   constructor(private userService: UserService, private router: Router, private activatedRoute: ActivatedRoute) { }
@@ -43,7 +42,7 @@ export class LoginFormComponent implements OnInit, OnDestroy {
     this.subscription.unsubscribe();
   }
 
-  login({ value, valid }: { value: Credentials, valid: boolean }) {
+  login({ value, valid }: { value: ICredentials, valid: boolean }) {
     this.submitted = true;
     this.isRequesting = true;
     this.errors = '';

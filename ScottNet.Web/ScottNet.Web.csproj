@@ -30,6 +30,7 @@
     <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.2.0" PrivateAssets="All" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="2.2.4" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.2.3" />
+    <PackageReference Include="SixLabors.ImageSharp" Version="1.0.0-beta0006" />
     <PackageReference Include="WindowsAzure.Storage" Version="9.3.3" />
   </ItemGroup>
 
@@ -49,6 +50,16 @@
     <Compile Remove="Data\Migrations\20190128162355_BarometricTrends.Designer.cs" />
     <Compile Remove="Data\Migrations\20190521003502_identity.cs" />
     <Compile Remove="Data\Migrations\20190521003502_identity.Designer.cs" />
+    <Compile Remove="Data\Migrations\20190613172814_Photos.cs" />
+    <Compile Remove="Data\Migrations\20190613172814_Photos.Designer.cs" />
+    <Compile Remove="Data\Migrations\20190613174344_Photos.cs" />
+    <Compile Remove="Data\Migrations\20190613174344_Photos.Designer.cs" />
+    <Compile Remove="Data\Migrations\20190613174517_Photos.cs" />
+    <Compile Remove="Data\Migrations\20190613174517_Photos.Designer.cs" />
+    <Compile Remove="Data\Migrations\20190613175139_Photos.cs" />
+    <Compile Remove="Data\Migrations\20190613175139_Photos.Designer.cs" />
+    <Compile Remove="Data\Migrations\20190613184339_Photos.cs" />
+    <Compile Remove="Data\Migrations\20190613184339_Photos.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>
@@ -71,7 +82,6 @@
 
   <ItemGroup>
     <Folder Include="ClientApp\src\app\home\" />
-    <Folder Include="wwwroot\imgs\" />
   </ItemGroup>
 
   <ItemGroup>

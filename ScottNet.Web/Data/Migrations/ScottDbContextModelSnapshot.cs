@@ -15,7 +15,7 @@ namespace ScottNet.Web.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "2.2.1-servicing-10028")
+                .HasAnnotation("ProductVersion", "2.2.4-servicing-10062")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
@@ -204,6 +204,84 @@ namespace ScottNet.Web.Migrations
                     b.ToTable("BarometricTrends");
                 });
 
+            modelBuilder.Entity("ScottNet.Web.Data.Entities.ImageFormatSpec", b =>
+                {
+                    b.Property<int>("Id");
+
+                    b.Property<string>("FileNameSuffix")
+                        .HasColumnType("VARCHAR(10)");
+
+                    b.Property<int>("FormatOrder");
+
+                    b.Property<int?>("JpegQuality");
+
+                    b.Property<int?>("MaxWidth");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("VARCHAR(50)");
+
+                    b.Property<int?>("PngCompression");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("ImageFormatSpecs");
+                });
+
+            modelBuilder.Entity("ScottNet.Web.Data.Entities.ImageGroup", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Description")
+                        .HasColumnType("VARCHAR(500)");
+
+                    b.Property<string>("OriginalFileName")
+                        .HasColumnType("VARCHAR(100)");
+
+                    b.Property<string>("PathToOriginal")
+                        .HasColumnType("VARCHAR(200)");
+
+                    b.Property<DateTime>("UploadDate");
+
+                    b.Property<string>("UploadUserId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UploadUserId");
+
+                    b.ToTable("ImageGroups");
+                });
+
+            modelBuilder.Entity("ScottNet.Web.Data.Entities.ImageInstance", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime>("CreateDate");
+
+                    b.Property<int>("ImageFormatSpecId");
+
+                    b.Property<int>("ImageGroupId");
+
+                    b.Property<string>("SharedUrl")
+                        .HasColumnType("VARCHAR(500)");
+
+                    b.Property<int>("Size");
+
+                    b.Property<string>("Url")
+                        .HasColumnType("VARCHAR(300)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ImageFormatSpecId");
+
+                    b.HasIndex("ImageGroupId");
+
+                    b.ToTable("ImageInstances");
+                });
+
             modelBuilder.Entity("ScottNet.Web.Data.Entities.WeatherReading", b =>
                 {
                     b.Property<int>("Id")
@@ -320,6 +398,26 @@ namespace ScottNet.Web.Migrations
                     b.HasOne("ScottNet.Web.Data.Entities.AppUser")
                         .WithMany()
                         .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("ScottNet.Web.Data.Entities.ImageGroup", b =>
+                {
+                    b.HasOne("ScottNet.Web.Data.Entities.AppUser", "UploadUser")
+                        .WithMany("Images")
+                        .HasForeignKey("UploadUserId");
+                });
+
+            modelBuilder.Entity("ScottNet.Web.Data.Entities.ImageInstance", b =>
+                {
+                    b.HasOne("ScottNet.Web.Data.Entities.ImageFormatSpec", "ImageFormatSpec")
+                        .WithMany()
+                        .HasForeignKey("ImageFormatSpecId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("ScottNet.Web.Data.Entities.ImageGroup", "ImageGroup")
+                        .WithMany("ImageInstances")
+                        .HasForeignKey("ImageGroupId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 

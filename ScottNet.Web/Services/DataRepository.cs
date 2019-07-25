@@ -2,6 +2,9 @@
 using Microsoft.Extensions.Logging;
 using ScottNet.Web.Data;
 using ScottNet.Web.Data.Entities;
+using ScottNet.Web.Models;
+using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -47,9 +50,62 @@ namespace ScottNet.Web.Services
                 .FirstOrDefaultAsync(wr => wr.Id == id);
         }
 
+        public async Task<IEnumerable<WeatherReading>> GetHourlyReadings(DateTime startDate, DateTime? endTime = null)
+        {
+            return await _ctx
+                .WeatherReadings
+                .Where(wr => wr.ConsoleTime >= startDate && wr.ConsoleTime <= endTime.GetValueOrDefault(DateTime.MaxValue))
+                .GroupBy(wr => new { wr.ConsoleTime.Year, wr.ConsoleTime.Month, wr.ConsoleTime.Day, wr.ConsoleTime.Hour })
+                .Select(x => x.OrderBy(y => y.ConsoleTime).Last())
+                .ToListAsync();
+        }
+
         public async Task<bool> SaveAllAsync()
         {
             return (await _ctx.SaveChangesAsync()) > 0;
         }
+
+        public async Task<ImageGroup> AddImageGroup(string filename, string description, AppUser user)
+        {
+            var imgGroup = new ImageGroup()
+            {
+                OriginalFileName = filename,
+                Description = description,
+                UploadDate = DateTime.Now,
+                UploadUser = user,
+                UploadUserId = user.Id
+            };
+            await _ctx.AddAsync<ImageGroup>(imgGroup);
+            await _ctx.SaveChangesAsync();
+            return imgGroup;
+        }
+
+        public async Task<IEnumerable<ImageFormatSpec>> GetAllImageFormatsAsync()
+        {
+            return await _ctx
+                .ImageFormatSpecs
+                .OrderBy(s => s.FormatOrder)
+                .ToListAsync();
+        }
+
+        public async Task<ImageInstance> AddImageInstanceAsync(ImageGroup group, ImageFormatSpec format, UploadBlobData uploadData)
+        {
+            var image = new ImageInstance()
+            {
+                CreateDate = DateTime.Now,
+                ImageFormatSpec = format,
+                ImageFormatSpecId = format.Id,
+                ImageGroup = group,
+                ImageGroupId = group.Id,
+                Size = uploadData.Size,
+                Url = uploadData.Url,
+                SharedUrl = uploadData.SharedUrl
+            };
+            await _ctx.AddAsync<ImageInstance>(image);
+            await _ctx.SaveChangesAsync();
+            return image;
+        }
+
+
     }
 }

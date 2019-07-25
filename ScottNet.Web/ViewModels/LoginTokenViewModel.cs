@@ -11,7 +11,7 @@ namespace ScottNet.Web.ViewModels
         public string IdentityId { get; set; }
         public string Email { get; set; }
         public string Token { get; set; }
-        public int ExpiresIn { get; set; }
+        public int Duration { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string UserName { get; internal set; }

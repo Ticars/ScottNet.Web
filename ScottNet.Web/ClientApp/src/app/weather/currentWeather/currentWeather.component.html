@@ -5,16 +5,16 @@
       <h3 class="card-title">Outdoor</h3>
       <div class="card-text">
         <temp-humidty [humTemp]="currentReading?.getOutdoorWeather()" [icon]="currentReading?.getCurrentWeatherIcon()"></temp-humidty>
-        
+
       </div>
     </div>
   </div>
 
 
   <div class="card col-lg-4">
-  
-      <h3 >Indoor</h3>
-      <div class="card-text"><temp-humidty [humTemp]="currentReading?.getIndoorWeather()"></temp-humidty></div>
+
+    <h3>Indoor</h3>
+    <div class="card-text"><temp-humidty [humTemp]="currentReading?.getIndoorWeather()"></temp-humidty></div>
 
   </div>
 </div>
@@ -33,3 +33,10 @@
   </div>
 </div>
 <forecasts></forecasts>
+<strong *ngIf="!showChart" (click)="setShowChart(true)">+</strong>
+<strong *ngIf="showChart" (click)="setShowChart(false)">-</strong>
+<h4>Chart</h4>
+<div *ngIf="showChart" style="margin-bottom:100px; padding-bottom:100px;">
+  <temp-chart></temp-chart>
+</div>
+<br />

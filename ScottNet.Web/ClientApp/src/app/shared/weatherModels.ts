@@ -101,3 +101,10 @@ export interface DailyWeatherForecast {
   highTemperature: number,
   description: string
 }
+
+export interface WeatherSummary {
+  indoorTemp: number
+  outdoorTemp: number
+  readingTime: Date
+  readingTimeString: string
+}

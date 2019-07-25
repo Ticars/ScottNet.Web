@@ -12,6 +12,7 @@ import { appRoutes } from './routes';
 import { SharedModule } from './shared/shared.module';
 import { AccountModule } from './account/account.module';
 import { PhotosModule } from './photos/photos.module';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 
 @NgModule({
@@ -30,7 +31,8 @@ import { PhotosModule } from './photos/photos.module';
     RouterModule.forRoot(appRoutes, { enableTracing: false }),
     SharedModule,
     AccountModule,
-    PhotosModule
+    PhotosModule,
+    BrowserAnimationsModule
   ],
   providers: [
     WeatherDataService,

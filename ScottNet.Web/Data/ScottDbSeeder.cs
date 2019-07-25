@@ -29,7 +29,12 @@ namespace ScottNet.Web.Data
             await AddBarometericTrendAsync(3, 0, "Steady");
             await AddBarometericTrendAsync(4, 20, "Rising Slowly");
             await AddBarometericTrendAsync(5, 60, "Rising Rapidly");
-            
+
+            await AddImageFormatSpec(1, "Original", 0, String.Empty, null, null, null);
+            await AddImageFormatSpec(2, "Large", 10, "_lg", 1200, 80, 7);
+            await AddImageFormatSpec(3, "Medium", 20, "_md", 600, 60, 7);
+            await AddImageFormatSpec(4, "Thumbnail", 30, "_tn", 120, 50, 7);
+
             await _ctx.SaveChangesAsync();
         }
 
@@ -45,7 +50,25 @@ namespace ScottNet.Web.Data
                 };
                 await _ctx.BarometricTrends.AddAsync(trend);
             }
-            
+        }
+
+        private async Task AddImageFormatSpec(int id, string name, int order, string fileNameSuffix, int? maxWidth, int? jpgQuality, int? pngCompression)
+        {
+            if (!_ctx.ImageFormatSpecs.Any(bt => bt.Id == id))
+            {
+                var spec = new ImageFormatSpec()
+                {
+                    Id = id,
+                    Name = name,
+                    FormatOrder = order,
+                    FileNameSuffix = fileNameSuffix,
+                    MaxWidth = maxWidth,
+                    PngCompression = pngCompression,
+                    JpegQuality = jpgQuality
+                };
+                await _ctx.ImageFormatSpecs.AddAsync(spec);
+            }
+
         }
     }
 }

@@ -20,11 +20,12 @@ namespace ScottNet.Web.Auth
             ThrowIfInvalidOptions(_jwtOptions);
         }
 
-        public async Task<string> GenerateEncodedToken(string userName, ClaimsIdentity identity)
+        public async Task<string> GenerateEncodedToken(string userName, string email, ClaimsIdentity identity)
         {
             var claims = new[]
          {
                  new Claim(JwtRegisteredClaimNames.Sub, userName),
+                 new Claim(JwtRegisteredClaimNames.Email, email),
                  new Claim(JwtRegisteredClaimNames.Jti, await _jwtOptions.JtiGenerator()),
                  new Claim(JwtRegisteredClaimNames.Iat, ToUnixEpochDate(_jwtOptions.IssuedAt).ToString(), ClaimValueTypes.Integer64),
                  identity.FindFirst(Utilities.Constants.JwtClaimIdentifiers.Rol),

@@ -20,8 +20,8 @@ namespace ScottNet.Web.Utilities
                 IdentityId = identity.Claims.Single(c => c.Type == "id").Value,
                 Email = user.Email,
                 UserName = user.UserName,
-                Token = await jwtFactory.GenerateEncodedToken(user.UserName, identity),
-                ExpiresIn = (int)jwtOptions.ValidFor.TotalSeconds,
+                Token = await jwtFactory.GenerateEncodedToken(user.Id, user.Email, identity),
+                Duration = (int)jwtOptions.ValidFor.TotalSeconds,
                 FirstName = user.FirstName,
                 LastName = user.LastName
             };

@@ -17,3 +17,7 @@ web.config
           </rule>
         </rules>
       </rewrite>
+
+
+	  Refresh Tokens:
+	  https://www.blinkingcaret.com/2018/05/30/refresh-tokens-in-asp-net-core-web-api/

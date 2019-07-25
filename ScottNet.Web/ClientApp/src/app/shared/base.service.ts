@@ -1,5 +1,5 @@
 import { Observable, of, throwError } from "rxjs";
-import { HttpErrorResponse } from "@angular/common/http";
+import { HttpErrorResponse, HttpHeaders } from "@angular/common/http";
 
 export abstract class BaseService {
 
@@ -14,6 +14,15 @@ export abstract class BaseService {
         return of(result as T);
       }
     }
+  }
+
+  getHttpHeaders(authorizationToken: string = null) : HttpHeaders {
+    let headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+
+    if (authorizationToken) {
+      headers = headers.append('Authorization', `Bearer  ${authorizationToken}`)
+    }
+    return headers;
   }
 
   handleError(error) {

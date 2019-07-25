@@ -57,6 +57,10 @@ namespace ScottNet.Web
                 options.Issuer = jwtAppSettingOptions[nameof(JwtIssuerOptions.Issuer)];
                 options.Audience = jwtAppSettingOptions[nameof(JwtIssuerOptions.Audience)];
                 options.SigningCredentials = new SigningCredentials(_signingKey, SecurityAlgorithms.HmacSha256);
+                if(Int32.TryParse(jwtAppSettingOptions[nameof(JwtIssuerOptions.ValidFor)], out int minutes))
+                {
+                    options.ValidFor = TimeSpan.FromMinutes(minutes);
+                }
             });
 
             var tokenValidationParameters = new TokenValidationParameters
@@ -98,6 +102,7 @@ namespace ScottNet.Web
             // add identity
             var builder = services.AddIdentityCore<AppUser>(o =>
             {
+                
                 // configure identity options
                 o.Password.RequireDigit = false;
                 o.Password.RequireLowercase = false;
@@ -121,6 +126,8 @@ namespace ScottNet.Web
             services.AddSingleton<ICurrentWeatherStore, CurrentWeatherStore>();
             services.AddTransient<IWeatherForecastService, DarkSkyService>();
             services.AddTransient<IEmailService, Office365EmailService>();
+            services.AddTransient<IPhotoImportService, PhotoImportService>();
+            services.AddSingleton<IStorageService, StorageService>();
             services.AddAutoMapper();
             services.AddLazyCache();
             services.AddMvc()

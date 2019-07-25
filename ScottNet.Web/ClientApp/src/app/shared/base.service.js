@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var rxjs_1 = require("rxjs");
+var http_1 = require("@angular/common/http");
 var BaseService = /** @class */ (function () {
     function BaseService() {
     }
@@ -16,6 +17,14 @@ var BaseService = /** @class */ (function () {
                 return rxjs_1.of(result);
             }
         };
+    };
+    BaseService.prototype.getHttpHeaders = function (authorizationToken) {
+        if (authorizationToken === void 0) { authorizationToken = null; }
+        var headers = new http_1.HttpHeaders({ 'Content-Type': 'application/json' });
+        if (authorizationToken) {
+            headers.append('Authorization', "Bearer  " + authorizationToken);
+        }
+        return headers;
     };
     BaseService.prototype.handleError = function (error) {
         var errorMessage = '';
