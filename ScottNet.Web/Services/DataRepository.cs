@@ -50,12 +50,12 @@ namespace ScottNet.Web.Services
                 .FirstOrDefaultAsync(wr => wr.Id == id);
         }
 
-        public async Task<IEnumerable<WeatherReading>> GetHourlyReadings(DateTime startDate, DateTime? endTime = null)
+        public async Task<IEnumerable<WeatherReading>> GetSummaryReadings(int minuteGroups, DateTime startDate, DateTime? endTime = null)
         {
             return await _ctx
                 .WeatherReadings
                 .Where(wr => wr.ConsoleTime >= startDate && wr.ConsoleTime <= endTime.GetValueOrDefault(DateTime.MaxValue))
-                .GroupBy(wr => new { wr.ConsoleTime.Year, wr.ConsoleTime.Month, wr.ConsoleTime.Day, wr.ConsoleTime.Hour })
+                .GroupBy(wr => new { wr.ConsoleTime.Year, wr.ConsoleTime.Month, wr.ConsoleTime.Day, minutegroup = (wr.ConsoleTime.Hour * 60 + wr.ConsoleTime.Minute) / minuteGroups })
                 .Select(x => x.OrderBy(y => y.ConsoleTime).Last())
                 .ToListAsync();
         }

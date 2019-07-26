@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using ScottNet.Web.Services;
 using ScottNet.Web.ViewModels;
@@ -18,20 +19,28 @@ namespace ScottNet.Web.Controllers
         private readonly ILogger<WeatherSummaryController> _logger;
         private readonly IMapper _mapper;
         private readonly IDataRepository _repository;
+        private readonly IConfiguration _configuration;
 
         public WeatherSummaryController(ILogger<WeatherSummaryController> logger,
           IMapper mapper,
-          IDataRepository repository)
+          IDataRepository repository,
+          IConfiguration configuration)
         {
             _logger = logger;
             _mapper = mapper;
             _repository = repository;
+            _configuration = configuration;
         }
 
         [HttpGet()]
         public async Task<ActionResult<IEnumerable<WeatherSummaryViewModel>>> GetAsync()
         {
-            var weatherSummaries = await _repository.GetHourlyReadings(DateTime.Now.AddDays(-1));
+            int period;
+            if(!Int32.TryParse(_configuration["WeatherChartSettings:MinutePeriod"], out period))
+            {
+                period = 15;
+            }
+            var weatherSummaries = await _repository.GetSummaryReadings(period, DateTime.Now.AddDays(-1));
             var viewModel = _mapper.Map<IEnumerable<WeatherSummaryViewModel>>(weatherSummaries);
             return Ok(viewModel);
         }

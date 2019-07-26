@@ -10,7 +10,7 @@ namespace ScottNet.Web.Services
     {
         Task<BarometricTrend> GetBarometricTrendByCodeAsync(short code);
         Task<WeatherReading> GetWeatherReadingAsync(int id);
-        Task<IEnumerable<WeatherReading>> GetHourlyReadings(DateTime startDate, DateTime? endTime = null);
+        Task<IEnumerable<WeatherReading>> GetSummaryReadings(int minuteGroups, DateTime startDate, DateTime? endTime = null);
         Task<WeatherReading> GetMostRecentReadingAsync();
         Task AddEntityAsync(object model);
         Task<ImageGroup> AddImageGroup(string filename, string description, AppUser user);
