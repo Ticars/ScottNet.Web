@@ -69,8 +69,6 @@ namespace ScottNet.Web
 
             CreateMap<WeatherReading, WeatherSummaryViewModel>()
                 .ForMember(vm => vm.ReadingTime, map => map.MapFrom(ent => ent.ConsoleTime))
-                .ForMember(vm => vm.SummaryTime, map => map.MapFrom(ent => GetReadingTime(ent.ConsoleTime)))
-                .ForMember(vm => vm.SummaryTimeString, map => map.MapFrom(ent => GetDateString(GetReadingTime(ent.ConsoleTime))))
                 .ForMember(vm => vm.OutdoorTemp, map => map.MapFrom(ent => ent.OutdoorTemp))
                 .ForMember(vm => vm.ReadingTimeString, map => map.MapFrom(ent => GetDateString(ent.ConsoleTime)));
 

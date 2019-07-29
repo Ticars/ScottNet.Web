@@ -43,7 +43,7 @@ export class TempChartComponent {
     this.weatherDataService.getWeatherSummaries().subscribe(
       result => {
         console.log(result);
-        console.log(result.map(function (ws) { return { value: ws.indoorTemp, name: ws.readingTime } }));
+        console.log(result.map(function (ws) { return { value: ws.outdoorTemp, name: ws.readingTime } }));
         console.log(this.series2.length);
         this.series2[0].series = result.map(function (ws) { return { name: ws.readingTime, value: ws.indoorTemp } });
         console.log(this.series2);
