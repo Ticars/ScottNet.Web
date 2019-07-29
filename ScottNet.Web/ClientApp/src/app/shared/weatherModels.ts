@@ -105,6 +105,7 @@ export interface DailyWeatherForecast {
 export interface WeatherSummary {
   indoorTemp: number
   outdoorTemp: number
+  heatIndex: number
   readingTime: Date
   readingTimeString: string
 }

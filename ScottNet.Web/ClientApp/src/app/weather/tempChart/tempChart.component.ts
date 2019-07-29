@@ -43,10 +43,11 @@ export class TempChartComponent {
     this.weatherDataService.getWeatherSummaries().subscribe(
       result => {
         console.log(result);
-        console.log(result.map(function (ws) { return { value: ws.outdoorTemp, name: ws.readingTime } }));
-        console.log(this.series2.length);
-        this.series2[0].series = result.map(function (ws) { return { name: ws.readingTime, value: ws.outdoorTemp } });
+        this.series2.push({ "name": "Temperature", "series": result.map(function (ws) { return { value: ws.outdoorTemp, name: ws.readingTime } }) });
+        this.series2.push({ "name": "Heat Index", "series": result.map(function (ws) { return { value: ws.heatIndex, name: ws.readingTime } }) });
         console.log(this.series2);
+       // this.series2[0].series = result.map(function (ws) { return { name: ws.readingTime, value: ws.outdoorTemp } });
+       // console.log(this.series2);
         this.dataLoaded = true;
       }
     );

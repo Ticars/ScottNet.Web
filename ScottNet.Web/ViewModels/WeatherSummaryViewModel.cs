@@ -11,5 +11,6 @@ namespace ScottNet.Web.ViewModels
         public string ReadingTimeString { get; set; }
         public decimal  OutdoorTemp { get; set; }
         public decimal IndoorTemp { get; set; }
+        public decimal HeatIndex { get; set; }
     }
 }
