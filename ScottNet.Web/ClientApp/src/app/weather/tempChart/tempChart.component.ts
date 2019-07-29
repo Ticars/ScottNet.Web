@@ -45,7 +45,7 @@ export class TempChartComponent {
         console.log(result);
         console.log(result.map(function (ws) { return { value: ws.outdoorTemp, name: ws.readingTime } }));
         console.log(this.series2.length);
-        this.series2[0].series = result.map(function (ws) { return { name: ws.readingTime, value: ws.indoorTemp } });
+        this.series2[0].series = result.map(function (ws) { return { name: ws.readingTime, value: ws.outdoorTemp } });
         console.log(this.series2);
         this.dataLoaded = true;
       }
