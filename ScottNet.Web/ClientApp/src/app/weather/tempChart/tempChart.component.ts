@@ -1,5 +1,6 @@
 import { Component } from "@angular/core";
 import { WeatherDataService } from "../../shared";
+import * as shape from 'd3-shape';
 
 @Component({
   templateUrl: 'tempChart.component.html',
@@ -26,6 +27,7 @@ export class TempChartComponent {
   xAxisLabel = 'Time';
   showYAxisLabel = true;
   yAxisLabel = 'Temperature';
+  curve = shape.curveNatural;
 
   colorScheme = {
     domain: ['#5AA454', '#A10A28', '#C7B42C', '#AAAAAA']
