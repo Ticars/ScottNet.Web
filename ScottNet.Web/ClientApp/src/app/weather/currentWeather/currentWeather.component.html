@@ -4,7 +4,7 @@
     <div class="card-body">
       <h3 class="card-title">Outdoor</h3>
       <div class="card-text">
-        <temp-humidty [humTemp]="currentReading?.getOutdoorWeather()" [icon]="currentReading?.getCurrentWeatherIcon()"></temp-humidty>
+        <temp-humidty [humTemp]="currentReading?.getOutdoorWeather()" [icon]="currentReading?.getCurrentWeatherIcon()" [windChill]="currentReading?.windChill" [heatIndex]="currentReading?.heatIndex"></temp-humidty>
 
       </div>
     </div>
