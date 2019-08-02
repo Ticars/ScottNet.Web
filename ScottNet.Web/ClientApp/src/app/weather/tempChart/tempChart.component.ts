@@ -4,7 +4,8 @@ import * as shape from 'd3-shape';
 
 @Component({
   templateUrl: 'tempChart.component.html',
-  selector: 'temp-chart'
+  selector: 'temp-chart',
+  styles: ['.chart {display:inline-block;}']
 })
 export class TempChartComponent {
 

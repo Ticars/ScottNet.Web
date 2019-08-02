@@ -5,7 +5,7 @@
 
 
 
-.footer {
+footer {
     position: fixed;
     bottom: 0;
     width: 100%;
@@ -16,19 +16,22 @@
 }
 
 @media (max-width: 767px) {
-    .footer {
+    footer {
         height: 30px;
         line-height: 30px; /* Vertically center the text there */
         background-color: yellow;
     }
-    .main-content {
-        margin-bottom: 32px;
+    .main-content::after {
+        content: '';
+        display: block;
+        height: 30px; /* Set same as footer's height */
     }
 }
 
-.main-content 
-{
-    margin-bottom:95px;
+.main-content::after {
+    content: '';
+    display: block;
+    height: 65px; /* Set same as footer's height */
 }
 
 .cursor-pointer 
