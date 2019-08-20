@@ -18,8 +18,6 @@ namespace ScottNet.Web.Data.Entities
         [Column(TypeName = "VARCHAR(300)")]
         public string Url { get; set; }
 
-        [Column(TypeName = "VARCHAR(500)")]
-        public string SharedUrl { get; set; }
         public DateTime CreateDate { get; set; }
     }
 }

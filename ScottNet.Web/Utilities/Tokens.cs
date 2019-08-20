@@ -13,15 +13,14 @@ namespace ScottNet.Web.Utilities
 {
     public class Tokens
     {
-        public static async Task<LoginTokenViewModel> GenerateJwt(ClaimsIdentity identity, IJwtFactory jwtFactory, AppUser user, JwtIssuerOptions jwtOptions)
+        public static async Task<AuthorizationViewModel> GenerateJwt(ClaimsIdentity identity, IJwtFactory jwtFactory, AppUser user, JwtIssuerOptions jwtOptions)
         {
-            var loginToken = new LoginTokenViewModel()
+            var loginToken = new AuthorizationViewModel()
             {
                 IdentityId = identity.Claims.Single(c => c.Type == "id").Value,
                 Email = user.Email,
                 UserName = user.UserName,
                 Token = await jwtFactory.GenerateEncodedToken(user.Id, user.Email, identity),
-                Duration = (int)jwtOptions.ValidFor.TotalSeconds,
                 FirstName = user.FirstName,
                 LastName = user.LastName
             };

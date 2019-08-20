@@ -1,14 +1,14 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-var Auth = /** @class */ (function () {
-    function Auth(other) {
+var obAuth = /** @class */ (function () {
+    function obAuth(other) {
         this.identityId = other.identityId;
         this.token = other.token;
-        this.duration = other.duration;
         this.firstName = other.firstName;
         this.lastName = other.lastName;
         this.userName = other.userName;
         this.email = other.email;
+        this.refreshToken = other.refreshToken;
         if (!other.createDate) {
             this.createDate = Date.now();
         }
@@ -16,10 +16,7 @@ var Auth = /** @class */ (function () {
             this.createDate = other.createDate;
         }
     }
-    Auth.prototype.expiresIn = function () {
-        return (this.createDate + this.duration) - Date.now();
-    };
-    return Auth;
+    return obAuth;
 }());
-exports.Auth = Auth;
+exports.obAuth = obAuth;
 //# sourceMappingURL=accountModels.js.map

@@ -51,8 +51,7 @@ namespace ScottNet.Web.Services.AzureStorage
                 await blob.UploadFromStreamAsync(photoStream);
                 var uploadData = new UploadBlobData()
                 {
-                    Url = blob.Uri.ToString(),
-                    SharedUrl = GetSharedUrl(blob)
+                    Url = blob.Uri.ToString()
                 };
                 return uploadData;
           }

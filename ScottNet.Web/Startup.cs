@@ -21,6 +21,9 @@ using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using System;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using System.Threading.Tasks;
+using ScottNet.Web.Services.Identity;
+using ScottNet.Web.Utilities;
 
 namespace ScottNet.Web
 {
@@ -61,6 +64,7 @@ namespace ScottNet.Web
                 {
                     options.ValidFor = TimeSpan.FromMinutes(minutes);
                 }
+                
             });
 
             var tokenValidationParameters = new TokenValidationParameters
@@ -89,6 +93,17 @@ namespace ScottNet.Web
                 configureOptions.ClaimsIssuer = jwtAppSettingOptions[nameof(JwtIssuerOptions.Issuer)];
                 configureOptions.TokenValidationParameters = tokenValidationParameters;
                 configureOptions.SaveToken = true;
+                configureOptions.Events = new JwtBearerEvents
+                {
+                    OnAuthenticationFailed = context =>
+                    {
+                        if (context.Exception.GetType() == typeof(SecurityTokenExpiredException))
+                        {
+                            context.Response.Headers.Add("Token-Expired", "true");
+                        }
+                        return Task.CompletedTask;
+                    }
+                };
             });
 
 
@@ -119,15 +134,16 @@ namespace ScottNet.Web
             {
                 configuration.RootPath = "ClientApp/dist";
             });
-
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddTransient<ScottDbSeeder>();
             services.AddScoped<IDataRepository, DataRepository>();
-      
+            services.AddTransient<ISNAuthenticationService, SNAuthenticationService>();
             services.AddSingleton<ICurrentWeatherStore, CurrentWeatherStore>();
             services.AddTransient<IWeatherForecastService, DarkSkyService>();
             services.AddTransient<IEmailService, Office365EmailService>();
             services.AddTransient<IPhotoImportService, PhotoImportService>();
             services.AddSingleton<IStorageService, StorageService>();
+            services.AddTransient<IAccountService, AccountService>();
             services.AddAutoMapper();
             services.AddLazyCache();
             services.AddMvc()
@@ -141,6 +157,7 @@ namespace ScottNet.Web
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
+            app.UseHttpContext();
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();

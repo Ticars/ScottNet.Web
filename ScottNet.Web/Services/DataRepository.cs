@@ -98,14 +98,47 @@ namespace ScottNet.Web.Services
                 ImageGroup = group,
                 ImageGroupId = group.Id,
                 Size = uploadData.Size,
-                Url = uploadData.Url,
-                SharedUrl = uploadData.SharedUrl
+                Url = uploadData.Url
             };
             await _ctx.AddAsync<ImageInstance>(image);
             await _ctx.SaveChangesAsync();
             return image;
         }
 
+        public async Task<RefreshToken> AddRefreshToken(AppUser user, string ipAddress = null)
+        {
+            var refreshToken = new RefreshToken()
+            {
+                User = user,
+                IssueUtc = DateTime.UtcNow,
+                RequestingIPAddress = ipAddress,
+                Token = RefreshToken.GenerateRefreshToken()
+            };
+            await _ctx.AddAsync(refreshToken);
+            await _ctx.SaveChangesAsync();
+            return refreshToken;
+        }
 
+        public async Task<AppUser> RemoveRefreshToken(string refreshTokenString)
+        {
+            var refreshToken = await _ctx
+                .RefreshTokens
+                .Where(rt => rt.Token == refreshTokenString )
+                .Include(rt => rt.User)
+                .SingleOrDefaultAsync();
+            
+            if (refreshToken != null)
+            {
+                AppUser user = refreshToken.User;
+                _ctx.Remove<RefreshToken>(refreshToken);
+                await _ctx.SaveChangesAsync();
+                return user;
+            }
+            else
+            {
+                return null;
+            }
+
+        }
     }
 }

@@ -12,7 +12,7 @@ using ScottNet.Web.Utilities;
 namespace ScottNet.Web.Controllers
 {
     [Authorize(Policy = "ApiUser")]
-    [Route("api/[controller]")]
+    [Route("api/secure/[controller]")]
     [ApiController]
     public class TestSecureController : ControllerBase
     {

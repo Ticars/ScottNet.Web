@@ -14,24 +14,24 @@ export interface ICredentials {
 export interface IAuth {
   identityId: string;
   token: string
-  duration: number
   firstName: string
   lastName: string
   userName: string
   email: string
   createDate: number
+  refreshToken: string
 }
 
-export class Auth implements IAuth {
+export class obAuth implements IAuth {
 
   constructor(other: IAuth) {
     this.identityId = other.identityId
     this.token = other.token
-    this.duration = other.duration
     this.firstName = other.firstName
     this.lastName = other.lastName
     this.userName = other.userName
     this.email = other.email
+    this.refreshToken = other.refreshToken
     if (!other.createDate) {
       this.createDate = Date.now()
     } else {
@@ -41,14 +41,11 @@ export class Auth implements IAuth {
 
   identityId: string;
   token: string;
-  duration: number;
   firstName: string;
   lastName: string;
   userName: string;
   email: string;
   createDate: number
+  refreshToken: string
 
-  public expiresIn(): number {
-    return (this.createDate + this.duration) - Date.now()
-  }
 }

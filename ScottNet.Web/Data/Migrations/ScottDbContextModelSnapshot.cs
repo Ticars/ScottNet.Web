@@ -265,9 +265,6 @@ namespace ScottNet.Web.Migrations
 
                     b.Property<int>("ImageGroupId");
 
-                    b.Property<string>("SharedUrl")
-                        .HasColumnType("VARCHAR(500)");
-
                     b.Property<int>("Size");
 
                     b.Property<string>("Url")
@@ -280,6 +277,33 @@ namespace ScottNet.Web.Migrations
                     b.HasIndex("ImageGroupId");
 
                     b.ToTable("ImageInstances");
+                });
+
+            modelBuilder.Entity("ScottNet.Web.Data.Entities.RefreshToken", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime?>("ExpiresUtc");
+
+                    b.Property<DateTime>("IssueUtc");
+
+                    b.Property<string>("RequestingIPAddress")
+                        .HasColumnType("VARCHAR(15)");
+
+                    b.Property<string>("Token")
+                        .IsRequired()
+                        .HasColumnType("VARCHAR(50)");
+
+                    b.Property<string>("UserId")
+                        .IsRequired();
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("RefreshTokens");
                 });
 
             modelBuilder.Entity("ScottNet.Web.Data.Entities.WeatherReading", b =>
@@ -418,6 +442,14 @@ namespace ScottNet.Web.Migrations
                     b.HasOne("ScottNet.Web.Data.Entities.ImageGroup", "ImageGroup")
                         .WithMany("ImageInstances")
                         .HasForeignKey("ImageGroupId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("ScottNet.Web.Data.Entities.RefreshToken", b =>
+                {
+                    b.HasOne("ScottNet.Web.Data.Entities.AppUser", "User")
+                        .WithMany("RefreshTokens")
+                        .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 

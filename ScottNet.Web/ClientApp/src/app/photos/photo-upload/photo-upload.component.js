@@ -9,14 +9,17 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
 var http_1 = require("@angular/common/http");
 var PhotoUploadComponent = /** @class */ (function () {
-    function PhotoUploadComponent(photoService) {
+    function PhotoUploadComponent(photoService, userService) {
         this.photoService = photoService;
+        this.userService = userService;
+        this.isLoggedOn = userService.isAuthenticated();
     }
     PhotoUploadComponent.prototype.ngOnInit = function () {
         this.messages = [];
     };
     PhotoUploadComponent.prototype.uploadFile = function (files) {
         var _this = this;
+        console.log('uploading ' + files.length);
         if (files.length === 0) {
             return;
         }
@@ -47,6 +50,18 @@ var PhotoUploadComponent = /** @class */ (function () {
                 case http_1.HttpEventType.Response:
                     console.log('Done!', event.body);
             }
+        }, function (error) { console.log('component'); });
+    };
+    PhotoUploadComponent.prototype.callSecure = function () {
+        var _this = this;
+        this.messages = [];
+        this.photoService.testSecure().subscribe(function (result) {
+            console.log(result);
+            _this.messages = _this.messages.concat(result);
+        });
+        this.photoService.testSecure().subscribe(function (result) {
+            console.log(result);
+            _this.messages = _this.messages.concat(result);
         });
     };
     PhotoUploadComponent.prototype.uploadFiles = function (files) {

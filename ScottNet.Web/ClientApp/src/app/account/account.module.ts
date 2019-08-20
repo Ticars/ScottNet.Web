@@ -5,13 +5,14 @@ import { LoginFormComponent } from './login-form/login-form.component';
 import { FormsModule } from '@angular/forms';
 import { routing } from './account.routing';
 import { SharedModule } from '../shared/shared.module';
+import { ConfirmEmailComponent } from './confirm-email/confirm-email.component';
 
 
 @NgModule({
   imports: [
     CommonModule, FormsModule, routing, SharedModule
   ],
-  declarations: [RegistrationFormComponent, LoginFormComponent],
+  declarations: [RegistrationFormComponent, LoginFormComponent, ConfirmEmailComponent],
   providers: []
 })
 export class AccountModule { }

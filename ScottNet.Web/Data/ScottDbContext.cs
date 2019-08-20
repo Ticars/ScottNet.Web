@@ -14,5 +14,7 @@ namespace ScottNet.Web.Data
         public DbSet<ImageFormatSpec> ImageFormatSpecs { get; set; }
         public DbSet<ImageGroup> ImageGroups { get; set; }
         public DbSet<ImageInstance> ImageInstances { get; set; }
+
+        public DbSet<RefreshToken> RefreshTokens { get; set; }
     }
 }

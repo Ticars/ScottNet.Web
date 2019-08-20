@@ -9,7 +9,6 @@ namespace ScottNet.Web.Models
     public class UploadBlobData
     {
         public string Url { get; set; }
-        public string SharedUrl { get; set; }
         public int Size { get; set; }
     }
 }

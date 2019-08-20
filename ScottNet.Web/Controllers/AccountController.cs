@@ -1,12 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using ScottNet.Web.Data.Entities;
+using ScottNet.Web.Services;
+using ScottNet.Web.Services.Identity;
 using ScottNet.Web.ViewModels;
 
 namespace ScottNet.Web.Controllers
@@ -17,11 +17,15 @@ namespace ScottNet.Web.Controllers
     {
         private readonly UserManager<AppUser> _userManager;
         private readonly IMapper _mapper;
+        private readonly IAccountService _accountService;
 
-        public AccountController(UserManager<AppUser> userManager, IMapper mapper)
+        public AccountController(UserManager<AppUser> userManager,
+            IMapper mapper,
+            IAccountService accountService)
         {
             _userManager = userManager;
             _mapper = mapper;
+            _accountService = accountService;
         }
 
         [HttpPost]
@@ -31,14 +35,21 @@ namespace ScottNet.Web.Controllers
             {
                 return BadRequest(ModelState);
             }
+            var response = await _accountService.CreateAccountAsync(model);
+            return response.GetResponseObject();
+        }
 
-            var userIdentity = _mapper.Map<AppUser>(model);
+        [HttpPost("confirmEmail")]
+        public async Task<IActionResult> ConfirmEmail([FromBody] ConfirmEmailViewModel confirmEmail)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest("UserId and TOken are required");
+            }
 
-            IdentityResult result = await _userManager.CreateAsync(userIdentity, model.Password);
+            var result = await _accountService.ConfirmEmailAsync(confirmEmail.UserId, confirmEmail.Token);
+            if (result) return Ok(); else return Unauthorized();
 
-            if (!result.Succeeded) return BadRequest(String.Join('\n', result.Errors.Select(e => e.Description)));
-
-            return Ok(true);
         }
     }
 }

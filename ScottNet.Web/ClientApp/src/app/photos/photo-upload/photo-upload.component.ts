@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { PhotoService } from '../../shared/photo.service';
 import { HttpEventType, HttpEvent } from '@angular/common/http';
+import { UserService } from '../../shared';
 
 @Component({
   selector: 'app-photo-upload',
@@ -14,7 +15,10 @@ export class PhotoUploadComponent implements OnInit {
   progress: number
   uploadInProgress: boolean
   messages: string[]
-  constructor(private photoService: PhotoService) { }
+  isLoggedOn: boolean
+  constructor(private photoService: PhotoService, private userService: UserService) {
+    this.isLoggedOn = userService.isAuthenticated();
+  }
 
   ngOnInit() {
     this.messages = []
@@ -22,6 +26,7 @@ export class PhotoUploadComponent implements OnInit {
 
 
   uploadFile(files) {
+    console.log('uploading ' + files.length)
     if (files.length === 0) {
       return;
     }
@@ -54,12 +59,26 @@ export class PhotoUploadComponent implements OnInit {
           case HttpEventType.Response:
             console.log('Done!', event.body);
         }
-      }
+      }, (error) => { console.log('component') }
       );
 
     
   }
 
+  public callSecure() {
+    this.messages = []
+    this.photoService.testSecure().subscribe(
+      (result) => {
+        console.log(result)
+        this.messages = this.messages.concat(result)
+      })
+
+    this.photoService.testSecure().subscribe(
+      (result) => {
+        console.log(result)
+        this.messages = this.messages.concat(result)
+      })
+  }
   public uploadFiles(files: File[]) {
 
     //// The given files collection is actually a "live collection", which means that

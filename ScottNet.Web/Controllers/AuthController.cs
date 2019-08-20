@@ -1,17 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Claims;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
-using Newtonsoft.Json;
 using ScottNet.Web.Auth;
 using ScottNet.Web.Data.Entities;
 using ScottNet.Web.Models;
-using ScottNet.Web.Utilities;
+using ScottNet.Web.Services.Identity;
 using ScottNet.Web.ViewModels;
 
 namespace ScottNet.Web.Controllers
@@ -22,47 +17,63 @@ namespace ScottNet.Web.Controllers
     {
         private readonly UserManager<AppUser> _userManager;
         private readonly IJwtFactory _jwtFactory;
+        private readonly ISNAuthenticationService _authenticationService;
         private readonly JwtIssuerOptions _jwtOptions;
 
-        public AuthController(UserManager<AppUser> userManager, IJwtFactory jwtFactory, IOptions<JwtIssuerOptions> jwtOptions)
+        public AuthController(UserManager<AppUser> userManager, IJwtFactory jwtFactory, IOptions<JwtIssuerOptions> jwtOptions, ISNAuthenticationService authenticationService)
         {
             _userManager = userManager;
             _jwtFactory = jwtFactory;
+            _authenticationService = authenticationService;
             _jwtOptions = jwtOptions.Value;
         }
 
         // POST api/auth/login
         [HttpPost("login")]
-        public async Task<IActionResult> Post([FromBody]CredentialsViewModel credentials)
+        public async Task<IActionResult> Login([FromBody]CredentialsViewModel credentials)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
-
-            var user = await _userManager.FindByNameAsync(credentials.UserName);
-            var identity = await GetClaimsIdentity(user, credentials.Password);
-            if (identity == null)
+            var response = await _authenticationService.LoginAsync(credentials, Request.HttpContext.Connection.RemoteIpAddress.ToString());
+            if(response.StatusCode == StatusCodes.Status200OK)
             {
-                return Unauthorized("Invalid login");
+                return Ok(response.ResponseObject);
             }
-
-            var jwt = await Tokens.GenerateJwt(identity, _jwtFactory, user, _jwtOptions);
-            return Ok(jwt);
+            else
+            {
+                return Unauthorized(response.Message);
+            }
         }
 
-        private async Task<ClaimsIdentity> GetClaimsIdentity(AppUser userToVerify, string password)
+        // POST api/auth/refresh
+        [HttpPost("logout")]
+        public async Task<IActionResult> Logout([FromBody]string refreshToken)
         {
-            if (userToVerify == null) return await Task.FromResult<ClaimsIdentity>(null);
-
-            // check the credentials
-            if (await _userManager.CheckPasswordAsync(userToVerify, password))
-            {
-                return await Task.FromResult(_jwtFactory.GenerateClaimsIdentity(userToVerify.UserName, userToVerify.Id));
-            }
-
-            // Credentials are invalid, or account doesn't exist
-            return await Task.FromResult<ClaimsIdentity>(null);
+            var removed = await _authenticationService.LogoutAsync(refreshToken);
+            return Ok();
         }
+
+        // POST api/auth/refresh
+        [HttpPost("refresh")]
+        public async Task<IActionResult> Refresh([FromBody]string refreshToken)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            var response = await _authenticationService.RefreshAuthenticationAsync(refreshToken, Request.HttpContext.Connection.RemoteIpAddress.ToString());
+            if (response.StatusCode == StatusCodes.Status200OK)
+            {
+                return Ok(response.ResponseObject);
+            }
+            else
+            {
+                return Unauthorized(response.Message);
+            }
+        }
+
+
     }
 }

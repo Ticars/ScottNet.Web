@@ -25,6 +25,10 @@
         <input type="password" class="form-control" id="password" name="password" placeholder="Password" ngModel>
       </div>
       <div class="form-group">
+        <label for="confirmPassword">Confirm Password</label>
+        <input type="password" class="form-control" id="confirmPassword" name="confirmPassword" placeholder="ConfirmPassword" ngModel>
+      </div>
+      <div class="form-group">
         <button type="submit" class="btn btn-primary" [disabled]="f.invalid || isRequesting">Sign Up</button>
         <app-spinner [isRunning]="isRequesting"></app-spinner>
       </div>

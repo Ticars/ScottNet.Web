@@ -14,12 +14,16 @@ export class PhotoService extends BaseService {
     super()
   }
 
+  testSecure(): Observable<string[]> {
+    return this.http.get<string[]>('/api/secure/TestSecure')
+  }
+
   postImage(formData: FormData): Observable<any> {
     return this.http
       .post(
         '/api/Photo',
         formData,
-        { reportProgress: true, observe: 'events', headers: new HttpHeaders({ 'Authorization': `Bearer  ${this.userService.authObj.token}` }) }
+        { reportProgress: true, observe: 'events' }
       )
       
   }

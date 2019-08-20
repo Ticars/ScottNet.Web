@@ -17,5 +17,8 @@ namespace ScottNet.Web.Services
         Task<bool> SaveAllAsync();
         Task<IEnumerable<ImageFormatSpec>> GetAllImageFormatsAsync();
         Task<ImageInstance> AddImageInstanceAsync(ImageGroup group, ImageFormatSpec format, UploadBlobData uploadData);
+
+        Task<RefreshToken> AddRefreshToken(AppUser user, string ipAddress = null);
+        Task<AppUser> RemoveRefreshToken(string refreshTokenString);
     }
 }

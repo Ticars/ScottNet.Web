@@ -21,7 +21,6 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
 var base_service_1 = require("./base.service");
-var http_1 = require("@angular/common/http");
 var PhotoService = /** @class */ (function (_super) {
     __extends(PhotoService, _super);
     function PhotoService(http, userService) {
@@ -30,9 +29,12 @@ var PhotoService = /** @class */ (function (_super) {
         _this.userService = userService;
         return _this;
     }
+    PhotoService.prototype.testSecure = function () {
+        return this.http.get('/api/secure/TestSecure');
+    };
     PhotoService.prototype.postImage = function (formData) {
         return this.http
-            .post('/api/Photo', formData, { reportProgress: true, observe: 'events', headers: new http_1.HttpHeaders({ 'Authorization': "Bearer  " + this.userService.authObj.token }) });
+            .post('/api/Photo', formData, { reportProgress: true, observe: 'events' });
     };
     PhotoService = __decorate([
         core_1.Injectable({

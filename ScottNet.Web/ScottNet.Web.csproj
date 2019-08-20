@@ -60,6 +60,14 @@
     <Compile Remove="Data\Migrations\20190613175139_Photos.Designer.cs" />
     <Compile Remove="Data\Migrations\20190613184339_Photos.cs" />
     <Compile Remove="Data\Migrations\20190613184339_Photos.Designer.cs" />
+    <Compile Remove="Data\Migrations\20190807204255_refreshtokens.cs" />
+    <Compile Remove="Data\Migrations\20190807204255_refreshtokens.Designer.cs" />
+    <Compile Remove="Data\Migrations\20190807222217_refreshtokens.cs" />
+    <Compile Remove="Data\Migrations\20190807222217_refreshtokens.Designer.cs" />
+    <Compile Remove="Data\Migrations\20190808200630_RefreshToken.cs" />
+    <Compile Remove="Data\Migrations\20190808200630_RefreshToken.Designer.cs" />
+    <Compile Remove="Data\Migrations\20190808200733_RefreshToken.cs" />
+    <Compile Remove="Data\Migrations\20190808200733_RefreshToken.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>
@@ -72,6 +80,7 @@
     <None Remove="ClientApp\src\app\shared\accountModels.ts" />
     <None Remove="ClientApp\src\app\shared\base.service.ts" />
     <None Remove="ClientApp\src\app\shared\currentWeather.service.ts" />
+    <None Remove="ClientApp\src\app\shared\httpInterceptor.service.ts" />
     <None Remove="ClientApp\src\app\shared\index.ts" />
     <None Remove="ClientApp\src\app\shared\weatherData.service.ts" />
     <None Remove="ClientApp\src\app\shared\weatherModels.ts" />
@@ -82,6 +91,7 @@
 
   <ItemGroup>
     <Folder Include="ClientApp\src\app\home\" />
+    <Folder Include="wwwroot\imgs\icons\" />
   </ItemGroup>
 
   <ItemGroup>
@@ -94,6 +104,7 @@
     <TypeScriptCompile Include="ClientApp\src\app\shared\accountModels.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\shared\base.service.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\shared\currentWeather.service.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\shared\httpInterceptor.service.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\shared\index.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\shared\weatherData.service.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\shared\weatherModels.ts" />

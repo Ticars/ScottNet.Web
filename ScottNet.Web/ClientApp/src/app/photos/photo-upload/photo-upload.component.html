@@ -1,14 +1,16 @@
-<div class="row" style="margin-bottom:15px;">
-  <div class="col-md-3">
-    <input type="file" #file placeholder="Choose file" (change)="uploadFile(file.files)" style="display:none;">
-    <button type="button" class="btn btn-success" (click)="file.click()" [disabled]="uploadInProgress">Upload File</button>
-    <div class="progress" *ngIf="uploadInProgress">
-      <div class="progress-bar" role="progressbar" [style.width]="progress + '%'" [attr.aria-valuenow]="progress" aria-valuemin="0" aria-valuemax="100"></div>
+LoggedOn: {{isLoggedOn}}
+  <div class="row" style="margin-bottom:15px;">
+    <div class="col-md-3">
+      <input type="file" #file placeholder="Choose file" (change)="uploadFile(file.files)" style="display:none;">
+      <button type="button" class="btn btn-success" (click)="file.click()" [disabled]="uploadInProgress">Upload File</button>
+      <div class="progress" *ngIf="uploadInProgress">
+        <div class="progress-bar" role="progressbar" [style.width]="progress + '%'" [attr.aria-valuenow]="progress" aria-valuemin="0" aria-valuemax="100"></div>
+      </div>
     </div>
-  </div>
+    <button type="button" class="btn btn-success" (click)="callSecure()">Test Secure</button>
 
-  
-</div>
+
+  </div>
 <ul>
   <li *ngFor="let message of messages">
     {{message}}
@@ -42,4 +44,4 @@
       </div>
     </div>
   </div>
-  </div>
+</div>

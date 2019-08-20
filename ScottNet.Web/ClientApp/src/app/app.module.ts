@@ -13,6 +13,9 @@ import { SharedModule } from './shared/shared.module';
 import { AccountModule } from './account/account.module';
 import { PhotosModule } from './photos/photos.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { RefreshTokenInterceptor } from './shared/httpInterceptor.service';
+
 
 
 @NgModule({
@@ -36,7 +39,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
   ],
   providers: [
     WeatherDataService,
-    CurrentWeatherService
+    CurrentWeatherService,
+    { provide: HTTP_INTERCEPTORS, useClass: RefreshTokenInterceptor, multi: true }
   ],
   exports: [
   ],

@@ -17,6 +17,9 @@ namespace ScottNet.Web.Data.Entities
         public string InitialIP { get; set; }
         [ForeignKey("UploadUserId")]
         public ICollection<ImageGroup> Images { get; set; }
+        [ForeignKey("UserId")]
+        public ICollection<RefreshToken> RefreshTokens { get; set; }
+
     }
 
 }
