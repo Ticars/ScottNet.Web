@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { UserService } from '../../shared';
-import { ActivatedRoute } from '@angular/router';
+import { UserService, AlertService } from '../../shared';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-confirm-email',
@@ -9,7 +9,7 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class ConfirmEmailComponent implements OnInit {
 
-  constructor(private userService: UserService, private route: ActivatedRoute) { }
+  constructor(private userService: UserService, private route: ActivatedRoute, private router: Router, private alertService: AlertService) { }
   public emailConfirmed: boolean = false
  
   ngOnInit() {
@@ -17,9 +17,9 @@ export class ConfirmEmailComponent implements OnInit {
     const token: string = this.route.snapshot.queryParamMap.get('token');
     if (userId && token) {
       this.userService.confirmEmail(userId, token).subscribe((result) => {
-        this.emailConfirmed = true;
+        this.alertService.success("Congratulations, your account has been verified.   Please login!", false, true)
+        this.router.navigate(['/login'])
       })
-
     }
   }
 

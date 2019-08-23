@@ -114,6 +114,12 @@ var UserService = /** @class */ (function (_super) {
         this._authNavStatusSource.next(false);
         this.router.navigate(['/login']);
     };
+    UserService.prototype.passwordResetRequest = function (lastName, email) {
+        return this.http.post(this.baseUrl + "/account/passwordResetRequest", JSON.stringify({ lastName: lastName, email: email }));
+    };
+    UserService.prototype.passwordReset = function (userId, token, password) {
+        return this.http.post(this.baseUrl + "/account/passwordReset", JSON.stringify({ userId: userId, token: token, password: password }));
+    };
     UserService = __decorate([
         core_1.Injectable({
             providedIn: 'root'

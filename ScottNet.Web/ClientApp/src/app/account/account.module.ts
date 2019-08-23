@@ -7,13 +7,15 @@ import { routing } from './account.routing';
 import { SharedModule } from '../shared/shared.module';
 import { ConfirmEmailComponent } from './confirm-email/confirm-email.component';
 import { ResendValidationComponent } from './resend-validation/resend-validation.component';
+import { ResetPasswordComponent } from './reset-password/reset-password.component';
+import { ResetPasswordRequestComponent } from './reset-password-request/reset-password-request.component';
 
 
 @NgModule({
   imports: [
     CommonModule, FormsModule, routing, SharedModule, ReactiveFormsModule
   ],
-  declarations: [RegistrationFormComponent, LoginFormComponent, ConfirmEmailComponent, ResendValidationComponent],
+  declarations: [RegistrationFormComponent, LoginFormComponent, ConfirmEmailComponent, ResendValidationComponent, ResetPasswordComponent, ResetPasswordRequestComponent],
   providers: []
 })
 export class AccountModule { }

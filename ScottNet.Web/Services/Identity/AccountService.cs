@@ -73,5 +73,35 @@ namespace ScottNet.Web.Services.Identity
             await SendAccountConfirmationAsync(user);
             return ApiResponse<bool>.GenerateSuccessResponse(true);
         }
+
+        public async Task<ApiResponse<bool>> SendPasswordResetEmail(string lastName, string email)
+        {
+            var user = await _userManager.FindByEmailAsync(email);
+            if(user == null || !user.EmailConfirmed || !user.LastName.Equals(lastName, StringComparison.CurrentCultureIgnoreCase))
+            {
+                return ApiResponse<bool>.GenerateBadRequestWithError(Constants.ApiErrorCodes.ResetRequestInvalid, "Email and last name does not match a registered account");
+            }
+            var token = await _userManager.GeneratePasswordResetTokenAsync(user);
+            var callbackUrl = $"{ScottNetHttpContext.AppBaseUrl}/account/resetPassword?userId={Uri.EscapeDataString(user.Id)}&token={Uri.EscapeDataString(token)}";
+
+            string emailMessage = $"Please reset the password for your account for ScottTicar.Net by <a href='{callbackUrl}'>clicking here</a>.";
+            _emailService.SendHtmlMessage(user.Email, "ScottTicar.Net Password Reset", emailMessage);
+            return ApiResponse<bool>.GenerateSuccessResponse(true);
+        }
+
+        public async Task<ApiResponse<bool>> ResetPassword(string userId, string token, string password)
+        {
+            var user = await _userManager.FindByIdAsync(userId);
+            if (user == null)
+            {
+                return ApiResponse<bool>.GenerateBadRequestWithError(Constants.ApiErrorCodes.PasswordResetInvalidEmail, "Invalid email address");
+            }
+            var result = await _userManager.ResetPasswordAsync(user, token, password);
+            if(!result.Succeeded)
+            {
+                return ApiResponse<bool>.GenerateBadRequestWithError(Constants.ApiErrorCodes.PasswordResetInternalError, String.Join('\n', result.Errors.Select(e => e.Description)));
+            }
+            return ApiResponse<bool>.GenerateSuccessResponse(true);
+        }
     }
 }

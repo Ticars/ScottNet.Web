@@ -11,7 +11,6 @@ import { Router } from '@angular/router';
   providedIn: 'root'
 })
 export class UserService extends BaseService {
-
   baseUrl: string = '';
   authObj: IAuth
   // Observable navItem source
@@ -123,5 +122,14 @@ export class UserService extends BaseService {
     this._authNavStatusSource.next(false);
     this.router.navigate(['/login'])
   }
+
+  passwordResetRequest(lastName: string, email: string) {
+    return this.http.post<boolean>(this.baseUrl + "/account/passwordResetRequest", JSON.stringify({ lastName: lastName, email: email }));
+  }
+
+  passwordReset(userId: string, token: string, password: string) {
+    return this.http.post<boolean>(this.baseUrl + "/account/passwordReset", JSON.stringify({ userId: userId, token: token, password: password }));
+  }
+
 
 }

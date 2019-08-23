@@ -1,11 +1,8 @@
-﻿using System;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using ScottNet.Web.Data.Entities;
-using ScottNet.Web.Services;
 using ScottNet.Web.Services.Identity;
 using ScottNet.Web.ViewModels;
 
@@ -57,6 +54,19 @@ namespace ScottNet.Web.Controllers
         {
             var resendResult = await _accountService.ResendAccountConfirmationAsync(email);
             return resendResult.GetResponseObject(); 
+        }
+
+        [HttpPost("passwordResetRequest")]
+        public async Task<IActionResult> PasswordResetRequest([FromBody]ResetPasswordRequestViewModel request)
+        {
+            var resendResult = await _accountService.SendPasswordResetEmail(request.LastName, request.Email);
+            return resendResult.GetResponseObject();
+        }
+        [HttpPost("passwordReset")]
+        public async Task<IActionResult> PasswordReset([FromBody]ResetPasswordViewModel reset)
+        {
+            var resendResult = await _accountService.ResetPassword(reset.UserId, reset.Token, reset.Password);
+            return resendResult.GetResponseObject();
         }
     }
 }

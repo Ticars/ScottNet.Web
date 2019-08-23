@@ -8,9 +8,11 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
 var ConfirmEmailComponent = /** @class */ (function () {
-    function ConfirmEmailComponent(userService, route) {
+    function ConfirmEmailComponent(userService, route, router, alertService) {
         this.userService = userService;
         this.route = route;
+        this.router = router;
+        this.alertService = alertService;
         this.emailConfirmed = false;
     }
     ConfirmEmailComponent.prototype.ngOnInit = function () {
@@ -19,7 +21,8 @@ var ConfirmEmailComponent = /** @class */ (function () {
         var token = this.route.snapshot.queryParamMap.get('token');
         if (userId && token) {
             this.userService.confirmEmail(userId, token).subscribe(function (result) {
-                _this.emailConfirmed = true;
+                _this.alertService.success("Congratulations, your account has been verified.   Please login!", false, true);
+                _this.router.navigate(['/login']);
             });
         }
     };

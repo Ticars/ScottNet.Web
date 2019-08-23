@@ -21,6 +21,7 @@
         {{errors}}
       </div>
       <small *ngIf="needEmailValidation">Need new validation email?  <a [routerLink]="['/account/resendConfirmation']" queryParamsHandling="merge">Resend Email Validation</a></small>
+      <small>Forgot your password? <a [routerLink]="['/account/resetPasswordRequest']">Reset your password.</a></small>
     </form>
   </div>
 </div>

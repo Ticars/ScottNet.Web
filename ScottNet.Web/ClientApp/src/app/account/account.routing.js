@@ -4,10 +4,14 @@ var router_1 = require("@angular/router");
 var index_1 = require("./index");
 var confirm_email_component_1 = require("./confirm-email/confirm-email.component");
 var resend_validation_component_1 = require("./resend-validation/resend-validation.component");
+var reset_password_component_1 = require("./reset-password/reset-password.component");
+var reset_password_request_component_1 = require("./reset-password-request/reset-password-request.component");
 exports.routing = router_1.RouterModule.forChild([
     { path: 'register', component: index_1.RegistrationFormComponent },
     { path: 'login', component: index_1.LoginFormComponent },
     { path: 'account/resendConfirmation', component: resend_validation_component_1.ResendValidationComponent },
-    { path: 'account/confirm', component: confirm_email_component_1.ConfirmEmailComponent }
+    { path: 'account/confirm', component: confirm_email_component_1.ConfirmEmailComponent },
+    { path: 'account/resetPasswordRequest', component: reset_password_request_component_1.ResetPasswordRequestComponent },
+    { path: 'account/resetPassword', component: reset_password_component_1.ResetPasswordComponent }
 ]);
 //# sourceMappingURL=account.routing.js.map

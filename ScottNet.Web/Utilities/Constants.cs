@@ -26,7 +26,9 @@ namespace ScottNet.Web.Utilities
         {
             public const string ResendEmailInvalidEmail = "REINV";
             public const string ResendEmailAccountVerified = "REACV";
-
+            public const string ResetRequestInvalid = "RRINV";
+            public const string PasswordResetInvalidEmail = "PRIEM";
+            public const string PasswordResetInternalError = "PRIEM";
         }
     }
 }
