@@ -61,19 +61,17 @@ var UserService = /** @class */ (function (_super) {
     UserService.prototype.confirmEmail = function (userId, token) {
         return this.http.post(this.baseUrl + "/account/confirmEmail", JSON.stringify({ userId: userId, token: token }));
     };
+    UserService.prototype.resendConfirmation = function (email) {
+        return this.http.post(this.baseUrl + "/account/resendEmail", JSON.stringify(email));
+    };
     UserService.prototype.login = function (userName, password) {
         var _this = this;
         return this.http
             .post(this.baseUrl + '/auth/login', JSON.stringify({ userName: userName, password: password })).pipe(operators_1.map(function (res) {
             _this.setLogin(res);
-            return true;
+            return { valid: true, error: '', statusCode: 200 };
         }), operators_1.catchError(function (error) {
-            if (error.status === 401) {
-                return rxjs_1.of(false);
-            }
-            else {
-                return _this.handleError(error);
-            }
+            return rxjs_1.of({ valid: false, error: error.error, statusCode: error.status });
         }));
     };
     UserService.prototype.refresh = function () {

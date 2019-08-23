@@ -27,9 +27,9 @@
       </div>
 
       <div *ngIf="errors" class="alert alert-danger" role="alert">
-        <strong>Oops!</strong> {{errors}}
+        {{errors}}
       </div>
-
+      <small *ngIf="needEmailValidation">Need new validation email?  <a [routerLink]="['/account/resendConfirmation']" queryParamsHandling="merge">Resend Email Validation</a></small>
     </form>
   </div>
 </div>
@@ -37,4 +37,5 @@
   <div class="col-md-6">
     <small>Don't have an account?  <a [routerLink]="['/register']" queryParamsHandling="merge">Sign Up</a></small>
   </div>
+
 </div>

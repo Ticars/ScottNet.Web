@@ -1,12 +1,12 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 
 import { AppComponent } from './app.component';
-import { NavMenuComponent, Toggler, SNFooter } from './common/index';
-import { WeatherDataService, CurrentWeatherService, UserService } from './shared/index'
+import { NavMenuComponent, Toggler, SNFooter, AlertComponent } from './common/index';
+import { WeatherDataService, CurrentWeatherService, UserService, AlertService } from './shared/index'
 import { AutoUpdateToggle, Temperature } from './weather/index'
 import { appRoutes } from './routes';
 import { SharedModule } from './shared/shared.module';
@@ -24,7 +24,8 @@ import { RefreshTokenInterceptor } from './shared/httpInterceptor.service';
     NavMenuComponent,
     Toggler,
     SNFooter,
-    AutoUpdateToggle
+    AutoUpdateToggle,
+    AlertComponent
 
   ],
   imports: [
@@ -35,11 +36,13 @@ import { RefreshTokenInterceptor } from './shared/httpInterceptor.service';
     SharedModule,
     AccountModule,
     PhotosModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    ReactiveFormsModule
   ],
   providers: [
     WeatherDataService,
     CurrentWeatherService,
+    AlertService,
     { provide: HTTP_INTERCEPTORS, useClass: RefreshTokenInterceptor, multi: true }
   ],
   exports: [

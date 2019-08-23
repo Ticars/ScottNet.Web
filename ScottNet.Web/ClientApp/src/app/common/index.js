@@ -6,4 +6,5 @@ Object.defineProperty(exports, "__esModule", { value: true });
 __export(require("./nav-menu.component"));
 __export(require("./toggle.component"));
 __export(require("./footer.component"));
+__export(require("./alert.component"));
 //# sourceMappingURL=index.js.map

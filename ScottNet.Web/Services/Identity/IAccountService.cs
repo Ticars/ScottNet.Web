@@ -9,6 +9,6 @@ namespace ScottNet.Web.Services.Identity
     {
         Task<ApiResponse<bool>> CreateAccountAsync(RegistrationViewModel registrationViewModel);
         Task<bool> ConfirmEmailAsync(string userId, string token);
-        Task SendAccountConfirmationAsync(AppUser user);
+        Task<ApiResponse<bool>> ResendAccountConfirmationAsync(string email);
     }
 }

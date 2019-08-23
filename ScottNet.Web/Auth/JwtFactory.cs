@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.Options;
+using ScottNet.Web.Data.Entities;
 using ScottNet.Web.Models;
 using System;
 using System.Collections.Generic;
@@ -22,21 +23,11 @@ namespace ScottNet.Web.Auth
 
         public async Task<string> GenerateEncodedToken(string userName, string email, ClaimsIdentity identity)
         {
-            var claims = new[]
-         {
-                 new Claim(JwtRegisteredClaimNames.Sub, userName),
-                 new Claim(JwtRegisteredClaimNames.Email, email),
-                 new Claim(JwtRegisteredClaimNames.Jti, await _jwtOptions.JtiGenerator()),
-                 new Claim(JwtRegisteredClaimNames.Iat, ToUnixEpochDate(_jwtOptions.IssuedAt).ToString(), ClaimValueTypes.Integer64),
-                 identity.FindFirst(Utilities.Constants.JwtClaimIdentifiers.Rol),
-                 identity.FindFirst(Utilities.Constants.JwtClaimIdentifiers.Id)
-             };
-
             // Create the JWT security token and encode it.
             var jwt = new JwtSecurityToken(
                 issuer: _jwtOptions.Issuer,
                 audience: _jwtOptions.Audience,
-                claims: claims,
+                claims: await GetClaimsAsync(userName, email, identity),
                 notBefore: _jwtOptions.NotBefore,
                 expires: _jwtOptions.Expiration,
                 signingCredentials: _jwtOptions.SigningCredentials);
@@ -46,14 +37,28 @@ namespace ScottNet.Web.Auth
             return encodedJwt;
         }
 
-        public ClaimsIdentity GenerateClaimsIdentity(string userName, string id)
+        private async Task<IEnumerable<Claim>> GetClaimsAsync(string userName, string email, ClaimsIdentity identity)
         {
-            return new ClaimsIdentity(new GenericIdentity(userName, "Token"), new[]
+            var claims = new List<Claim>(new[] {
+                 new Claim(JwtRegisteredClaimNames.Email, email),
+                 new Claim(JwtRegisteredClaimNames.Jti, await _jwtOptions.JtiGenerator()),
+                 new Claim(JwtRegisteredClaimNames.Iat, ToUnixEpochDate(_jwtOptions.IssuedAt).ToString(), ClaimValueTypes.Integer64),
+                 identity.FindFirst(Utilities.Constants.JwtClaimIdentifiers.Rol),
+                 identity.FindFirst(Utilities.Constants.JwtClaimIdentifiers.Id)
+            });
+           
+            return claims;
+        }
+       
+        public ClaimsIdentity GenerateClaimsIdentity(AppUser appUser)
+        {
+            return new ClaimsIdentity(new GenericIdentity(appUser.UserName, "Token"), new[]
             {
-                new Claim(Utilities.Constants.JwtClaimIdentifiers.Id, id),
+                new Claim(Utilities.Constants.JwtClaimIdentifiers.Id, appUser.Id),
                 new Claim(Utilities.Constants.JwtClaimIdentifiers.Rol, Utilities.Constants.JwtClaims.ApiAccess)
             });
         }
+
 
         /// <returns>Date converted to seconds since Unix epoch (Jan 1, 1970, midnight UTC).</returns>
         private static long ToUnixEpochDate(DateTime date)

@@ -40,6 +40,10 @@ namespace ScottNet.Web.Services.Identity
             {
                 return ApiResponse<AuthorizationViewModel>.GenerateUnauthorizedResponse("Invalid login");
             }
+            if(!user.EmailConfirmed)
+            {
+                return ApiResponse<AuthorizationViewModel>.GenerateUnauthorizedResponse("Confirm Email");
+            }
 
             AuthorizationViewModel loginData = await GenerateAuthorizationObject(identity, user, ipAddress);
             return ApiResponse<AuthorizationViewModel>.GenerateSuccessResponse(loginData);
@@ -54,7 +58,7 @@ namespace ScottNet.Web.Services.Identity
             }
             else
             {
-                var claimIdentity = _jwtFactory.GenerateClaimsIdentity(user.UserName, user.Id);
+                var claimIdentity = _jwtFactory.GenerateClaimsIdentity(user);
                 return ApiResponse<AuthorizationViewModel>.GenerateSuccessResponse(await GenerateAuthorizationObject(claimIdentity, user, ipAddress));
             }
         }
@@ -88,7 +92,7 @@ namespace ScottNet.Web.Services.Identity
             // check the credentials
             if (await _userManager.CheckPasswordAsync(userToVerify, password))
             {
-                return await Task.FromResult(_jwtFactory.GenerateClaimsIdentity(userToVerify.UserName, userToVerify.Id));
+                return await Task.FromResult(_jwtFactory.GenerateClaimsIdentity(userToVerify));
             }
 
             // Credentials are invalid, or account doesn't exist

@@ -51,5 +51,12 @@ namespace ScottNet.Web.Controllers
             if (result) return Ok(); else return Unauthorized();
 
         }
+
+        [HttpPost("resendEmail")]
+        public async Task<IActionResult> ResendEmail([FromBody]string email)
+        {
+            var resendResult = await _accountService.ResendAccountConfirmationAsync(email);
+            return resendResult.GetResponseObject(); 
+        }
     }
 }

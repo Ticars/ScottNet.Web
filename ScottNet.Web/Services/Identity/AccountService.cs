@@ -65,5 +65,13 @@ namespace ScottNet.Web.Services.Identity
             _emailService.SendHtmlMessage(user.Email, "ScottTicar.Net Account Confirmation", email);
         }
 
+        public async Task<ApiResponse<bool>> ResendAccountConfirmationAsync(string email)
+        {
+            var user = await _userManager.FindByEmailAsync(email);
+            if (user == null) return ApiResponse<bool>.GenerateBadRequestWithError(Constants.ApiErrorCodes.ResendEmailInvalidEmail, "Email has not been registered.");
+            if (user.EmailConfirmed) return ApiResponse<bool>.GenerateBadRequestWithError(Constants.ApiErrorCodes.ResendEmailAccountVerified, "Account has already been verified.");
+            await SendAccountConfirmationAsync(user);
+            return ApiResponse<bool>.GenerateSuccessResponse(true);
+        }
     }
 }

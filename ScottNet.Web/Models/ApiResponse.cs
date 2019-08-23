@@ -1,35 +1,45 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using Newtonsoft.Json;
+using ScottNet.Web.ViewModels;
 
 namespace ScottNet.Web.Models
 {
     public class ApiResponse<T>
     {
+
         public int StatusCode { get; set; }
         public string Message { get; set; }
-        public T ResponseObject { get; set; }
-
+        public T Value { get; set; }
+        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
+        public ApiResponseError ApiError { get; set; }
+        public bool Success { get; set; }
         public ObjectResult GetResponseObject()
         {
-            if(ResponseObject == null)
-            {
-                return new ObjectResult(Message) { StatusCode = StatusCode };
-            } 
-            else
-            {
-                return new ObjectResult(ResponseObject) { StatusCode = StatusCode };
-            }
+            return new ObjectResult(this) { StatusCode = StatusCode };
+            //if (Value == null)
+            //{
+            //    if(ApiError != null)
+            //    {
+            //        return new ObjectResult(ApiError) { StatusCode = StatusCode };
+            //    }
+            //    else
+            //    {
+            //        return new ObjectResult(Message) { StatusCode = StatusCode };
+            //    }
+            //} 
+            //else
+            //{
+            //    return new ObjectResult(Value) { StatusCode = StatusCode };
+            //}
         }
         public static ApiResponse<T> GenerateSuccessResponse(T returnObject)
         {
             return new ApiResponse<T>()
             {
                 StatusCode = StatusCodes.Status200OK,
-                ResponseObject = returnObject
+                Value = returnObject,
+                Success = true
             };
         }
         public static ApiResponse<T> GenerateUnauthorizedResponse(string message)
@@ -37,7 +47,19 @@ namespace ScottNet.Web.Models
             return new ApiResponse<T>()
             {
                 StatusCode = StatusCodes.Status401Unauthorized,
-                Message = message
+                Message = message,
+                Success = false
+            };
+        }
+
+        public static ApiResponse<T> GenerateBadRequestWithError(string errorCode, string errorDescription)
+        {
+            return new ApiResponse<T>()
+            {
+                StatusCode = StatusCodes.Status400BadRequest,
+                ApiError = new ApiResponseError(errorCode, errorDescription),
+                Message = errorDescription,
+                Success = false
             };
         }
 
@@ -46,7 +68,8 @@ namespace ScottNet.Web.Models
             return new ApiResponse<T>()
             {
                 StatusCode = StatusCodes.Status400BadRequest,
-                Message = message
+                Message = message,
+                Success = false
             };
         }
     }

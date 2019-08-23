@@ -39,7 +39,7 @@ namespace ScottNet.Web.Controllers
             var response = await _authenticationService.LoginAsync(credentials, Request.HttpContext.Connection.RemoteIpAddress.ToString());
             if(response.StatusCode == StatusCodes.Status200OK)
             {
-                return Ok(response.ResponseObject);
+                return Ok(response.Value);
             }
             else
             {
@@ -66,7 +66,7 @@ namespace ScottNet.Web.Controllers
             var response = await _authenticationService.RefreshAuthenticationAsync(refreshToken, Request.HttpContext.Connection.RemoteIpAddress.ToString());
             if (response.StatusCode == StatusCodes.Status200OK)
             {
-                return Ok(response.ResponseObject);
+                return Ok(response.Value);
             }
             else
             {

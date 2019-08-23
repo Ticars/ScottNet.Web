@@ -9,4 +9,5 @@ __export(require("./weatherModels"));
 __export(require("./icon.service"));
 __export(require("./user.service"));
 __export(require("./accountModels"));
+__export(require("./alert.service"));
 //# sourceMappingURL=index.js.map

@@ -6,6 +6,12 @@ export interface IUserRegistration {
   location: string;
 }
 
+export interface ILoginResults {
+  valid: boolean;
+  error: string;
+  statusCode: number
+}
+
 export interface ICredentials {
   email: string;
   password: string;

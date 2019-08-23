@@ -3,7 +3,7 @@ import { Http, Response, Headers, RequestOptions } from '@angular/http';
 import { HttpClient, HttpResponse, HttpHeaders, HttpErrorResponse } from "@angular/common/http";
 import { Observable, BehaviorSubject, of, throwError } from 'rxjs';
 import { BaseService } from './base.service';
-import { IUserRegistration, IAuth } from './accountModels';
+import { IUserRegistration, IAuth, ILoginResults } from './accountModels';
 import { catchError, map } from 'rxjs/operators';
 import { Router } from '@angular/router';
 
@@ -42,7 +42,7 @@ export class UserService extends BaseService {
     }
   }
 
-  register(email: string, password: string, firstName: string, lastName: string): Observable<IUserRegistration> {
+  register(email: string, password: string, firstName: string, lastName: string): Observable<any> {
     let body = JSON.stringify({ email, password, firstName, lastName });
     
     return this.http.post<IUserRegistration>(this.baseUrl + "/account", body);
@@ -50,27 +50,25 @@ export class UserService extends BaseService {
   }
 
   confirmEmail(userId: string, token: string): Observable<boolean> {
-
     return this.http.post<boolean>(this.baseUrl + "/account/confirmEmail", JSON.stringify({ userId: userId, token: token }));
   }
 
+  resendConfirmation(email: string): Observable<boolean> {
+    return this.http.post<boolean>(this.baseUrl + "/account/resendEmail", JSON.stringify(email));
+  }
 
-  login(userName, password): Observable<any> {
+  login(userName, password): Observable<ILoginResults> {
     return this.http
       .post<IAuth>(
         this.baseUrl + '/auth/login',
         JSON.stringify({ userName, password })
       ).pipe(
         map((res) => {
-          this.setLogin(res);
-          return true;
+          this.setLogin(res)
+          return { valid: true, error: '', statusCode: 200 };
         }),
         catchError((error) => {
-          if (error.status === 401) {
-            return of(false);
-          } else {
-            return this.handleError(error)
-          }
+          return of({ valid: false, error: error.error, statusCode: error.status })
         })
       )
   }
