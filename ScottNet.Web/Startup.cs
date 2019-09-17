@@ -51,8 +51,7 @@ namespace ScottNet.Web
 
             services.AddCors(options =>
             {
-                options.AddPolicy("AllowAll",
-                corsBuilder =>
+                options.AddDefaultPolicy(corsBuilder =>
                 {
                     corsBuilder.AllowAnyOrigin();
                 });
