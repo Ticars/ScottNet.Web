@@ -20,7 +20,7 @@ export class PhotoUploadComponent implements OnInit {
   public message: string;
   progress: number
   uploadInProgress: boolean
-
+  submitted: boolean
 
   preview(files) {
     if (files.length === 0)

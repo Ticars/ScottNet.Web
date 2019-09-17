@@ -8,9 +8,9 @@
   <div class="form-group">
     <input #file type="file" style="display:none" id="customFile" (change)="preview(file.files)">
     <label for="fileName">File</label>
-    <input type="text" readonly formControlName="fileName" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.lastName.errors }" />
-    <div *ngIf="submitted && f.lastName.errors" class="invalid-feedback">
-      <div *ngIf="f.lastName.errors.required">Last Name is required</div>
+    <input type="text" readonly formControlName="fileName" class="form-control" [ngClass]="{ 'is-invalid': submitted  }" />
+    <div *ngIf="submitted" class="invalid-feedback">
+      <div >Last Name is required</div>
     </div>
   </div>
 
