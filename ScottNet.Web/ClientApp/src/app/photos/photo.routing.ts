@@ -1,8 +1,10 @@
 import { ModuleWithProviders } from "@angular/core";
 import { RouterModule } from "@angular/router";
 import { PhotoUploadComponent } from "./photo-upload/photo-upload.component";
+import { AuthGuardService } from "../shared";
+import { PhotoUploadTestComponent } from "./photo-upload-test/photo-upload-test.component";
 
 export const photoRouting: ModuleWithProviders = RouterModule.forChild([
-  { path: 'photoUpload', component: PhotoUploadComponent },
-  { path: 'photo/upload', component: PhotoUploadComponent }
+  { path: 'photo/upload', component: PhotoUploadComponent, canActivate: [AuthGuardService] },
+  { path: 'photo/test', component: PhotoUploadTestComponent, canActivate: [AuthGuardService] }
 ]);

@@ -8,31 +8,22 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
 var http_1 = require("@angular/common/http");
-var PhotoUploadComponent = /** @class */ (function () {
-    function PhotoUploadComponent(photoService) {
+var PhotoUploadTestComponent = /** @class */ (function () {
+    function PhotoUploadTestComponent(photoService, userService) {
         this.photoService = photoService;
+        this.userService = userService;
+        this.isLoggedOn = userService.isAuthenticated();
     }
-    PhotoUploadComponent.prototype.ngOnInit = function () {
+    PhotoUploadTestComponent.prototype.ngOnInit = function () {
+        this.messages = [];
     };
-    PhotoUploadComponent.prototype.preview = function (files) {
+    PhotoUploadTestComponent.prototype.uploadFile = function (files) {
         var _this = this;
-        if (files.length === 0)
-            return;
-        var mimeType = files[0].type;
-        if (mimeType.match(/image\/*/) == null) {
-            this.message = "Only images are supported.";
+        console.log('uploading ' + files.length);
+        if (files.length === 0) {
             return;
         }
-        var reader = new FileReader();
-        this.imagePath = files;
-        reader.readAsDataURL(files[0]);
-        reader.onload = function (_event) {
-            _this.imgURL = reader.result;
-        };
-    };
-    PhotoUploadComponent.prototype.upload = function () {
-        var _this = this;
-        var fileToUpload = this.imagePath[0];
+        var fileToUpload = files[0];
         var formData = new FormData();
         formData.append('file', fileToUpload, fileToUpload.name);
         this.progress = 0;
@@ -44,6 +35,7 @@ var PhotoUploadComponent = /** @class */ (function () {
                 case http_1.HttpEventType.Sent:
                     console.log('Request sent!');
                     _this.uploadInProgress = false;
+                    _this.myInputVariable.nativeElement.value = null;
                     break;
                 case http_1.HttpEventType.ResponseHeader:
                     console.log('Response header received!');
@@ -60,14 +52,38 @@ var PhotoUploadComponent = /** @class */ (function () {
             }
         }, function (error) { console.log('component'); });
     };
-    PhotoUploadComponent = __decorate([
+    PhotoUploadTestComponent.prototype.callSecure = function () {
+        var _this = this;
+        this.messages = [];
+        this.photoService.testSecure().subscribe(function (result) {
+            console.log(result);
+            _this.messages = _this.messages.concat(result);
+        });
+        this.photoService.testSecure().subscribe(function (result) {
+            console.log(result);
+            _this.messages = _this.messages.concat(result);
+        });
+    };
+    PhotoUploadTestComponent.prototype.uploadFiles = function (files) {
+        //// The given files collection is actually a "live collection", which means that
+        //// it will be cleared once the Input is cleared. As such, we need to create a
+        //// local copy of it so that it doesn't get cleared during the asynchronous file
+        //// processing within the for-of loop.
+        //for (var file of Array.from(files)) {
+        //  try {
+        //    this.uploads.push(
+    };
+    __decorate([
+        core_1.ViewChild('file')
+    ], PhotoUploadTestComponent.prototype, "myInputVariable", void 0);
+    PhotoUploadTestComponent = __decorate([
         core_1.Component({
-            selector: 'app-photo-upload',
-            templateUrl: './photo-upload.component.html',
-            styleUrls: ['./photo-upload.component.css']
+            selector: 'app-photo-upload-test',
+            templateUrl: './photo-upload-test.component.html',
+            styleUrls: ['./photo-upload-test.component.css']
         })
-    ], PhotoUploadComponent);
-    return PhotoUploadComponent;
+    ], PhotoUploadTestComponent);
+    return PhotoUploadTestComponent;
 }());
-exports.PhotoUploadComponent = PhotoUploadComponent;
-//# sourceMappingURL=photo-upload.component.js.map
+exports.PhotoUploadTestComponent = PhotoUploadTestComponent;
+//# sourceMappingURL=photo-upload-test.component.js.map

@@ -6,7 +6,7 @@ import { RouterModule } from '@angular/router';
 
 import { AppComponent } from './app.component';
 import { NavMenuComponent, Toggler, SNFooter, AlertComponent } from './common/index';
-import { WeatherDataService, CurrentWeatherService, UserService, AlertService } from './shared/index'
+import { WeatherDataService, CurrentWeatherService, AlertService, AuthGuardService } from './shared/index'
 import { AutoUpdateToggle, Temperature } from './weather/index'
 import { appRoutes } from './routes';
 import { SharedModule } from './shared/shared.module';
@@ -43,6 +43,7 @@ import { RefreshTokenInterceptor } from './shared/httpInterceptor.service';
     WeatherDataService,
     CurrentWeatherService,
     AlertService,
+    AuthGuardService,
     { provide: HTTP_INTERCEPTORS, useClass: RefreshTokenInterceptor, multi: true }
   ],
   exports: [

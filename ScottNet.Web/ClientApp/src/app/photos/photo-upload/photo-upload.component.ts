@@ -10,28 +10,39 @@ import { UserService } from '../../shared';
 })
 export class PhotoUploadComponent implements OnInit {
 
-  @ViewChild('file')
-  myInputVariable: ElementRef;
-  progress: number
-  uploadInProgress: boolean
-  messages: string[]
-  isLoggedOn: boolean
-  constructor(private photoService: PhotoService, private userService: UserService) {
-    this.isLoggedOn = userService.isAuthenticated();
-  }
+  constructor(private photoService: PhotoService) { }
 
   ngOnInit() {
-    this.messages = []
   }
 
+  public imagePath;
+  imgURL: any;
+  public message: string;
+  progress: number
+  uploadInProgress: boolean
 
-  uploadFile(files) {
-    console.log('uploading ' + files.length)
-    if (files.length === 0) {
+
+  preview(files) {
+    if (files.length === 0)
+      return;
+
+    var mimeType = files[0].type;
+    if (mimeType.match(/image\/*/) == null) {
+      this.message = "Only images are supported.";
       return;
     }
 
-    let fileToUpload = <File>files[0];
+    var reader = new FileReader();
+    this.imagePath = files;
+    reader.readAsDataURL(files[0]);
+    reader.onload = (_event) => {
+      this.imgURL = reader.result;
+    }
+  }
+
+  upload() {
+
+    let fileToUpload = <File>this.imagePath[0];
     const formData = new FormData();
 
     formData.append('file', fileToUpload, fileToUpload.name);
@@ -43,8 +54,7 @@ export class PhotoUploadComponent implements OnInit {
         switch (event.type) {
           case HttpEventType.Sent:
             console.log('Request sent!');
-            this.uploadInProgress = false
-            this.myInputVariable.nativeElement.value = null
+            this.uploadInProgress = false;
             break;
           case HttpEventType.ResponseHeader:
             console.log('Response header received!');
@@ -61,35 +71,5 @@ export class PhotoUploadComponent implements OnInit {
         }
       }, (error) => { console.log('component') }
       );
-
-    
-  }
-
-  public callSecure() {
-    this.messages = []
-    this.photoService.testSecure().subscribe(
-      (result) => {
-        console.log(result)
-        this.messages = this.messages.concat(result)
-      })
-
-    this.photoService.testSecure().subscribe(
-      (result) => {
-        console.log(result)
-        this.messages = this.messages.concat(result)
-      })
-  }
-  public uploadFiles(files: File[]) {
-
-    //// The given files collection is actually a "live collection", which means that
-    //// it will be cleared once the Input is cleared. As such, we need to create a
-    //// local copy of it so that it doesn't get cleared during the asynchronous file
-    //// processing within the for-of loop.
-    //for (var file of Array.from(files)) {
-
-    //  try {
-
-    //    this.uploads.push(
-
   }
 }

@@ -30,8 +30,37 @@ namespace ScottNet.Web.Controllers
             _userManager = userManager;
             _photoImport = photoImport;
         }
+
+
         [HttpPost, DisableRequestSizeLimit]
         public async Task<IActionResult> UploadAsync()
+        {
+            try
+            {
+                var user = await _userManager.GetUserAsync(User);
+                var file = Request.Form.Files[0];
+                
+                if (file.Length > 0)
+                {
+                    var fileName = file.FileName;
+                    var description = Request.Form["description"].FirstOrDefault();
+                    await _photoImport.UploadPhotoVersionsAsync(user, file.OpenReadStream(), fileName, description);
+
+                    return Ok(new { file.Length });
+                }
+                else
+                {
+                    return BadRequest();
+                }
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.ToString());
+            }
+        }
+
+        [HttpPost, DisableRequestSizeLimit]
+        public async Task<IActionResult> UploadotherAsync()
         {
             try
             {
@@ -56,5 +85,7 @@ namespace ScottNet.Web.Controllers
                 return StatusCode(500, ex.ToString());
             }
         }
+
+
     }
 }

@@ -10,4 +10,5 @@ __export(require("./icon.service"));
 __export(require("./user.service"));
 __export(require("./accountModels"));
 __export(require("./alert.service"));
+__export(require("./auth-guard.service"));
 //# sourceMappingURL=index.js.map

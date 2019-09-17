@@ -49,6 +49,14 @@ namespace ScottNet.Web
                 cfg.UseSqlServer(Configuration.GetConnectionString("ScottConnectionString"));
             });
 
+            services.AddCors(options =>
+            {
+                options.AddPolicy("AllowAll",
+                corsBuilder =>
+                {
+                    corsBuilder.AllowAnyOrigin();
+                });
+            });
 
             services.AddSingleton<IJwtFactory, JwtFactory>();
 

@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using ScottNet.Web.Data.Entities;
@@ -64,6 +65,7 @@ namespace ScottNet.Web.Controllers
         }
 
         [HttpGet("[action]")]
+        [EnableCors]
         public async Task<ActionResult<WeatherReadingViewModel>> Current()
         {
             var reading = _currentWeather.GetLatestWeatherReading();
