@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
 using ScottNet.Web.Data.Entities;
 using ScottNet.Web.Models;
 using ScottNet.Web.Services.AzureStorage;
@@ -47,7 +48,7 @@ namespace ScottNet.Web.Services
                 throw ex;
             }
         }
-
+         
         private string GetFileName(AppUser user, string filename, ImageFormatSpec format, ImageGroup group)
         {
             var extension = Path.GetExtension(filename).ToLower();
