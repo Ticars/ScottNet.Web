@@ -1,7 +1,8 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { PhotoService } from '../../shared/photo.service';
 import { HttpEventType, HttpEvent } from '@angular/common/http';
-import { UserService } from '../../shared';
+import { UserService, AlertService } from '../../shared';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-photo-upload',
@@ -10,44 +11,68 @@ import { UserService } from '../../shared';
 })
 export class PhotoUploadComponent implements OnInit {
 
-  constructor(private photoService: PhotoService) { }
+  photoUploadForm: FormGroup
+  constructor(private formBuilder: FormBuilder,
+    private alertService: AlertService,
+    private photoService: PhotoService) { }
 
   ngOnInit() {
+    this.photoUploadForm = this.formBuilder.group({
+      description: ['', [Validators.required]],
+      file: [null, [Validators.required]]
+    });
   }
 
-  public imagePath;
   imgURL: any;
-  public message: string;
+  fileToUpload: File;
   progress: number
   uploadInProgress: boolean
   submitted: boolean
+  isRequesting: boolean
 
   preview(files) {
     if (files.length === 0)
       return;
-
+    this.fileToUpload = files[0];
     var mimeType = files[0].type;
     if (mimeType.match(/image\/*/) == null) {
-      this.message = "Only images are supported.";
+      this.alertService.error("Only images are supported.");
       return;
     }
 
     var reader = new FileReader();
-    this.imagePath = files;
     reader.readAsDataURL(files[0]);
     reader.onload = (_event) => {
       this.imgURL = reader.result;
     }
   }
 
-  upload() {
+  get f() { return this.photoUploadForm.controls; }
 
-    let fileToUpload = <File>this.imagePath[0];
+
+  clearValues() {
+    this.f.description.setValue('');
+    this.imgURL = null;
+    this.fileToUpload = null;
+
+
+  }
+  photoUpload() {
+    this.submitted = true;
+
+    // stop here if form is invalid
+    if (this.photoUploadForm.invalid) {
+      this.alertService.error('Upload Form Invalid');
+      return;
+    }
+    this.isRequesting = true;
+    
     const formData = new FormData();
 
-    formData.append('file', fileToUpload, fileToUpload.name);
+    formData.append('file', this.fileToUpload, this.fileToUpload.name);
+    formData.append('description', this.f.description.value);
     this.progress = 0
-    this.uploadInProgress = true;
+    
     this.photoService
       .postImage(formData)
       .subscribe((event: HttpEvent<any>) => {
@@ -67,9 +92,12 @@ export class PhotoUploadComponent implements OnInit {
           case HttpEventType.DownloadProgress:
             break;
           case HttpEventType.Response:
-            console.log('Done!', event.body);
+            this.alertService.success('File Uploaded');
+            this.clearValues();
+            this.submitted = false;
         }
       }, (error) => { console.log('component') }
-      );
+    );
+    this.isRequesting = false;
   }
 }

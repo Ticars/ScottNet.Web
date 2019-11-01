@@ -23,12 +23,20 @@ namespace ScottNet.Web.Services.AzureStorage
             _config = config;
         }
 
-        private async Task<CloudBlobContainer> GetBlockContainer()
+        private async Task<CloudBlobContainer> GetBlobContainer()
         {
             var blobContainer = _blobClient.GetContainerReference(_config["PhotoUpload:storageContainer"].ToLower());
             await blobContainer.CreateIfNotExistsAsync();
+            if((await blobContainer.GetPermissionsAsync()).PublicAccess != BlobContainerPublicAccessType.Container)
+            {
+                var permissions = await blobContainer.GetPermissionsAsync();
+                permissions.PublicAccess = BlobContainerPublicAccessType.Container;
+                await blobContainer.SetPermissionsAsync(permissions);
+            }
             return blobContainer;
         }
+
+        
 
         public string GetSharedUrl(CloudBlockBlob blob)
         {
@@ -46,7 +54,7 @@ namespace ScottNet.Web.Services.AzureStorage
             try
             {
                 photoStream.Position = 0;
-                CloudBlobContainer container = await GetBlockContainer();
+                CloudBlobContainer container = await GetBlobContainer();
                 CloudBlockBlob blob = container.GetBlockBlobReference(uploadPath);
                 await blob.UploadFromStreamAsync(photoStream);
                 var uploadData = new UploadBlobData()

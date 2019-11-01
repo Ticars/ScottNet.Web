@@ -15,13 +15,30 @@ export class RefreshTokenInterceptor implements HttpInterceptor {
 
   private addHeaders(request: HttpRequest<any>, authorization: IAuth) {
     let token = authorization ? authorization.token : ''
-    return request.clone({
-      setHeaders: {
-        'Content-Type': 'application/json',
-        'Accept': 'application/json',
-        'Authorization': `Bearer ${token}`
-      }
-    });
+    if (request.headers.has('No-Content-Type')) {
+      return request.clone({
+        setHeaders: {
+          'Accept': 'application/json',
+          'Authorization': `Bearer ${token}`
+        }
+      });
+    } else if (request.headers.has('Content-Type')) {
+      return request.clone({
+        setHeaders: {
+          'Content-Type': request.headers.get('Content-Type'),
+          'Accept': 'application/json',
+          'Authorization': `Bearer ${token}`
+        }
+      });
+    } else {
+      return request.clone({
+        setHeaders: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+          'Authorization': `Bearer ${token}`
+        }
+      });
+    }
   }
 
   intercept(request: HttpRequest<any>, next: HttpHandler):

@@ -18,13 +18,32 @@ var RefreshTokenInterceptor = /** @class */ (function () {
     }
     RefreshTokenInterceptor.prototype.addHeaders = function (request, authorization) {
         var token = authorization ? authorization.token : '';
-        return request.clone({
-            setHeaders: {
-                'Content-Type': 'application/json',
-                'Accept': 'application/json',
-                'Authorization': "Bearer " + token
-            }
-        });
+        if (request.headers.has('No-Content-Type')) {
+            return request.clone({
+                setHeaders: {
+                    'Accept': 'application/json',
+                    'Authorization': "Bearer " + token
+                }
+            });
+        }
+        else if (request.headers.has('Content-Type')) {
+            return request.clone({
+                setHeaders: {
+                    'Content-Type': request.headers.get('Content-Type'),
+                    'Accept': 'application/json',
+                    'Authorization': "Bearer " + token
+                }
+            });
+        }
+        else {
+            return request.clone({
+                setHeaders: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json',
+                    'Authorization': "Bearer " + token
+                }
+            });
+        }
     };
     RefreshTokenInterceptor.prototype.intercept = function (request, next) {
         var _this = this;

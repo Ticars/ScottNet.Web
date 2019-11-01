@@ -20,5 +20,7 @@ namespace ScottNet.Web.Services
 
         Task<RefreshToken> AddRefreshToken(AppUser user, string ipAddress = null);
         Task<AppUser> RemoveRefreshToken(string refreshTokenString);
+
+        Task<ImageGroup> GetRandomPhoto();
     }
 }

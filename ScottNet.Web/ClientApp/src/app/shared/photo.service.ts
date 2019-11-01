@@ -4,6 +4,7 @@ import { UserService } from '.';
 import { HttpClient, HttpResponse, HttpHeaders, HttpErrorResponse } from "@angular/common/http";
 import { catchError } from 'rxjs/operators';
 import { of, Observable } from 'rxjs';
+import { IImageGroup } from './photoModels';
 
 @Injectable({
   providedIn: 'root'
@@ -23,8 +24,16 @@ export class PhotoService extends BaseService {
       .post(
         '/api/Photo',
         formData,
-        { reportProgress: true, observe: 'events' }
+        { reportProgress: true, observe: 'events', headers: { 'No-Content-Type': '' } }
       )
       
+  }
+
+  getRandomImage(): Observable<IImageGroup> {
+    return this.http
+      .get<IImageGroup>(
+        '/api/photo/random'
+      )
+
   }
 }

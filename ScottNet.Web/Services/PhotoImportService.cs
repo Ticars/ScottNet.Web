@@ -50,10 +50,10 @@ namespace ScottNet.Web.Services
 
         private string GetFileName(AppUser user, string filename, ImageFormatSpec format, ImageGroup group)
         {
-            var extension = Path.GetExtension(filename);
+            var extension = Path.GetExtension(filename).ToLower();
             string fileNameFormat = _configuration["PhotoUpload:fileNameFormat"];
-            string fileNamePreix = group.Id.ToString(fileNameFormat);
-            return $"{user.Id.ToLower()}/{fileNamePreix}{format.FileNameSuffix}{extension}";
+            string fileNamePrefix = group.Id.ToString(fileNameFormat);
+            return $"{user.Id.ToLower()}/{fileNamePrefix}{format.FileNameSuffix}{extension}";
         }
 
         private Stream GetImageFile(Stream originalStream, ImageFormatSpec spec)
