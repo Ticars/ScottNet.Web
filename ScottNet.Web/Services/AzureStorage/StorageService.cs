@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
 using Microsoft.WindowsAzure.Storage;
 using Microsoft.WindowsAzure.Storage.Blob;
 using Microsoft.WindowsAzure.Storage.Table;
@@ -15,12 +16,15 @@ namespace ScottNet.Web.Services.AzureStorage
         private CloudStorageAccount _storageAccount;
         private CloudBlobClient _blobClient;
         private readonly IConfiguration _config;
+        private readonly ILogger<StorageService> _logger;
 
-        public StorageService(IConfiguration config)
+        public StorageService(IConfiguration config, ILogger<StorageService> logger)
         {
             _storageAccount = CloudStorageAccount.Parse(config.GetConnectionString("StorageKey"));
             _blobClient = _storageAccount.CreateCloudBlobClient();
             _config = config;
+            _logger = logger;
+            _logger.LogInformation($"Storage Connection String {config.GetConnectionString("StorageKey")}");
         }
 
         private async Task<CloudBlobContainer> GetBlobContainer()
@@ -51,22 +55,15 @@ namespace ScottNet.Web.Services.AzureStorage
 
         public async Task<UploadBlobData> UploadFile(string uploadPath, Stream photoStream)
         {
-            try
+            photoStream.Position = 0;
+            CloudBlobContainer container = await GetBlobContainer();
+            CloudBlockBlob blob = container.GetBlockBlobReference(uploadPath);
+            await blob.UploadFromStreamAsync(photoStream);
+            var uploadData = new UploadBlobData()
             {
-                photoStream.Position = 0;
-                CloudBlobContainer container = await GetBlobContainer();
-                CloudBlockBlob blob = container.GetBlockBlobReference(uploadPath);
-                await blob.UploadFromStreamAsync(photoStream);
-                var uploadData = new UploadBlobData()
-                {
-                    Url = blob.Uri.ToString()
-                };
-                return uploadData;
-          }
-            catch(Exception ex)
-            {
-                throw ex;
-            }
+                Url = blob.Uri.ToString()
+            };
+            return uploadData;
         }
 
      

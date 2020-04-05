@@ -3,8 +3,8 @@
   <div class="form-group">
     <button type="button" class="btn btn-success align-top" (click)="file.click()" [disabled]="isRequesting">Select File</button>
     <input #file formControlName="file" type="file" id="customFile" style="display:none" (change)="preview(file.files)">
-    <div *ngIf="submitted && f.file.errors" class="field-error">
-      <div>File must be selected</div>
+    <div *ngIf="f.file.errors" class="field-error">
+      <div>Error with selected file or file not selected</div>
     </div>
     <img [src]="imgURL" class="ml-3" height="200" *ngIf="imgURL" />
   </div>

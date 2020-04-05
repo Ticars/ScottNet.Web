@@ -3,6 +3,7 @@ import { PhotoService } from '../../shared/photo.service';
 import { HttpEventType, HttpEvent } from '@angular/common/http';
 import { UserService, AlertService } from '../../shared';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { fileValidator } from './fileValidator';
 
 @Component({
   selector: 'app-photo-upload',
@@ -19,7 +20,7 @@ export class PhotoUploadComponent implements OnInit {
   ngOnInit() {
     this.photoUploadForm = this.formBuilder.group({
       description: ['', [Validators.required]],
-      file: [null, [Validators.required]]
+      file: [null, [fileValidator.fileRequired]]
     });
   }
 
@@ -62,10 +63,10 @@ export class PhotoUploadComponent implements OnInit {
 
     // stop here if form is invalid
     if (this.photoUploadForm.invalid) {
-      this.alertService.error('Upload Form Invalid');
+      this.alertService.error('Upload Form Invalid', false);
       return;
     }
-    this.isRequesting = true;
+    
     
     const formData = new FormData();
 

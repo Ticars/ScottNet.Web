@@ -9,6 +9,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
 var http_1 = require("@angular/common/http");
 var forms_1 = require("@angular/forms");
+var fileValidator_1 = require("./fileValidator");
 var PhotoUploadComponent = /** @class */ (function () {
     function PhotoUploadComponent(formBuilder, alertService, photoService) {
         this.formBuilder = formBuilder;
@@ -18,7 +19,7 @@ var PhotoUploadComponent = /** @class */ (function () {
     PhotoUploadComponent.prototype.ngOnInit = function () {
         this.photoUploadForm = this.formBuilder.group({
             description: ['', [forms_1.Validators.required]],
-            file: [null, [forms_1.Validators.required]]
+            file: [null, [fileValidator_1.fileValidator.fileRequired]]
         });
     };
     PhotoUploadComponent.prototype.preview = function (files) {
@@ -52,10 +53,9 @@ var PhotoUploadComponent = /** @class */ (function () {
         this.submitted = true;
         // stop here if form is invalid
         if (this.photoUploadForm.invalid) {
-            this.alertService.error('Upload Form Invalid');
+            this.alertService.error('Upload Form Invalid', false);
             return;
         }
-        this.isRequesting = true;
         var formData = new FormData();
         formData.append('file', this.fileToUpload, this.fileToUpload.name);
         formData.append('description', this.f.description.value);
