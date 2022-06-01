@@ -34,7 +34,11 @@ var PhotoService = /** @class */ (function (_super) {
     };
     PhotoService.prototype.postImage = function (formData) {
         return this.http
-            .post('/api/Photo', formData, { reportProgress: true, observe: 'events' });
+            .post('/api/Photo', formData, { reportProgress: true, observe: 'events', headers: { 'No-Content-Type': '' } });
+    };
+    PhotoService.prototype.getRandomImage = function () {
+        return this.http
+            .get('/api/photo/random');
     };
     PhotoService = __decorate([
         core_1.Injectable({

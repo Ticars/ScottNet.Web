@@ -8,35 +8,58 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
 var http_1 = require("@angular/common/http");
+var forms_1 = require("@angular/forms");
+var fileValidator_1 = require("./fileValidator");
 var PhotoUploadComponent = /** @class */ (function () {
-    function PhotoUploadComponent(photoService) {
+    function PhotoUploadComponent(formBuilder, alertService, photoService) {
+        this.formBuilder = formBuilder;
+        this.alertService = alertService;
         this.photoService = photoService;
     }
     PhotoUploadComponent.prototype.ngOnInit = function () {
+        this.photoUploadForm = this.formBuilder.group({
+            description: ['', [forms_1.Validators.required]],
+            file: [null, [fileValidator_1.fileValidator.fileRequired]]
+        });
     };
     PhotoUploadComponent.prototype.preview = function (files) {
         var _this = this;
         if (files.length === 0)
             return;
+        this.fileToUpload = files[0];
         var mimeType = files[0].type;
         if (mimeType.match(/image\/*/) == null) {
-            this.message = "Only images are supported.";
+            this.alertService.error("Only images are supported.");
             return;
         }
         var reader = new FileReader();
-        this.imagePath = files;
         reader.readAsDataURL(files[0]);
         reader.onload = function (_event) {
             _this.imgURL = reader.result;
         };
     };
-    PhotoUploadComponent.prototype.upload = function () {
+    Object.defineProperty(PhotoUploadComponent.prototype, "f", {
+        get: function () { return this.photoUploadForm.controls; },
+        enumerable: true,
+        configurable: true
+    });
+    PhotoUploadComponent.prototype.clearValues = function () {
+        this.f.description.setValue('');
+        this.imgURL = null;
+        this.fileToUpload = null;
+    };
+    PhotoUploadComponent.prototype.photoUpload = function () {
         var _this = this;
-        var fileToUpload = this.imagePath[0];
+        this.submitted = true;
+        // stop here if form is invalid
+        if (this.photoUploadForm.invalid) {
+            this.alertService.error('Upload Form Invalid', false);
+            return;
+        }
         var formData = new FormData();
-        formData.append('file', fileToUpload, fileToUpload.name);
+        formData.append('file', this.fileToUpload, this.fileToUpload.name);
+        formData.append('description', this.f.description.value);
         this.progress = 0;
-        this.uploadInProgress = true;
         this.photoService
             .postImage(formData)
             .subscribe(function (event) {
@@ -56,9 +79,12 @@ var PhotoUploadComponent = /** @class */ (function () {
                 case http_1.HttpEventType.DownloadProgress:
                     break;
                 case http_1.HttpEventType.Response:
-                    console.log('Done!', event.body);
+                    _this.alertService.success('File Uploaded');
+                    _this.clearValues();
+                    _this.submitted = false;
             }
         }, function (error) { console.log('component'); });
+        this.isRequesting = false;
     };
     PhotoUploadComponent = __decorate([
         core_1.Component({

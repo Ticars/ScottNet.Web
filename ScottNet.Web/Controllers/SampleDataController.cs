@@ -20,6 +20,12 @@ namespace ScottNet.Web.Controllers
         };
         private readonly IEmailService _emailService;
 
+        [HttpGet("Log/{logMessage}")]
+        public ActionResult TestLogger(string logMessage)
+        {
+            System.Diagnostics.Trace.WriteLine($"{DateTime.Now.ToLongTimeString()} Trace: ${logMessage}");
+            return Ok(logMessage);
+        }
         [HttpPost("[action]")]
         public void SendEmail()
         {

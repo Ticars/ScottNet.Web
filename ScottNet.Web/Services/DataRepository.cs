@@ -14,11 +14,13 @@ namespace ScottNet.Web.Services
     {
         private readonly ScottDbContext _ctx;
         private readonly ILogger<DataRepository> _logger;
+        private readonly Random _random;
 
         public DataRepository(ScottDbContext ctx, ILogger<DataRepository> logger)
         {
             _ctx = ctx;
             _logger = logger;
+            _random = new Random();
         }
 
         public async Task AddEntityAsync(object model)
@@ -86,6 +88,23 @@ namespace ScottNet.Web.Services
                 .ImageFormatSpecs
                 .OrderBy(s => s.FormatOrder)
                 .ToListAsync();
+        }
+
+
+        public async Task<ImageGroup> GetRandomPhoto()
+        {
+            var ids = await _ctx.ImageGroups
+                .Select(ig => ig.Id)
+                .ToListAsync();
+            var rndIdx = _random.Next(0, ids.Count);
+
+            var image = await _ctx.ImageGroups
+                .Where(ig=> ig.Id == ids[rndIdx])
+                .Include(ig => ig.ImageInstances)
+                    .ThenInclude(ii => ii.ImageFormatSpec)
+                .Include(ig => ig.UploadUser)
+                .FirstOrDefaultAsync();
+            return image;
         }
 
         public async Task<ImageInstance> AddImageInstanceAsync(ImageGroup group, ImageFormatSpec format, UploadBlobData uploadData)

@@ -73,6 +73,19 @@ namespace ScottNet.Web
                 .ForMember(vm => vm.HeatIndex, map => map.MapFrom(ent => ent.HeatIndex))
                 .ForMember(vm => vm.ReadingTimeString, map => map.MapFrom(ent => GetDateString(ent.ConsoleTime)));
 
+            CreateMap<ImageInstance, ImageInstanceViewModel>()
+                .ForMember(vm => vm.Url, map => map.MapFrom(ent => ent.Url))
+                .ForMember(vm => vm.FileSize, map => map.MapFrom(ent => ent.Size))
+                .ForMember(vm => vm.FormatName, map => map.MapFrom(ent => ent.ImageFormatSpec == null ? String.Empty : ent.ImageFormatSpec.Name))
+                .ForMember(vm => vm.FormatOrder, map => map.MapFrom(ent => ent.ImageFormatSpec == null ? -1 : ent.ImageFormatSpec.FormatOrder));
+
+            CreateMap<ImageGroup, ImageGroupViewModel>()
+                .ForMember(vm => vm.UploadDate, map => map.MapFrom(ent => ent.UploadDate))
+                .ForMember(vm => vm.UploadUser, map => map.MapFrom(ent => ent.UploadUser == null ? String.Empty : ent.UploadUser.UserName))
+                .ForMember(vm => vm.Description, map => map.MapFrom(ent => ent.Description))
+                .ForMember(vm => vm.Instances, map => map.MapFrom(ent => ent.ImageInstances))
+                .ForMember(vm => vm.FileName, map => map.MapFrom(ent => ent.OriginalFileName));
+
         }
         public static string GetDateString(DateTime date)
         {
@@ -84,6 +97,8 @@ namespace ScottNet.Web
             var nextHour = date.AddSeconds(3599);
             return new DateTime(nextHour.Year, nextHour.Month, nextHour.Day, nextHour.Hour, 0, 0);
         }
+
+     
 
     }
 }
