@@ -40,7 +40,7 @@ namespace ScottNet.Web.Controllers
             {
                 period = 15;
             }
-            var weatherSummaries = await _repository.GetSummaryReadings(period, DateTime.Now.AddDays(-1));
+            var weatherSummaries = await _repository.GetSummaryReadings(period, DateTime.Now.AddHours(-36));
             var viewModel = _mapper.Map<IEnumerable<WeatherSummaryViewModel>>(weatherSummaries);
             return Ok(viewModel);
         }
